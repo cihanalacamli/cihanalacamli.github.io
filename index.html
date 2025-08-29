@@ -417,6 +417,17 @@ function calc(){
   el('eng').textContent=eng.toFixed(2);
   el('total').textContent=total.toFixed(2);
   el('bar').style.width=(total*10)+'%';
+  el("bar").style.width = (total*10)+"%";
+
+  // renk değişimi
+  const bar = el("bar");
+  bar.style.background = "linear-gradient(90deg,#22c55e,#38bdf8)"; // default mavi
+  if(total >= 5 && total < 7.5){
+    bar.style.background = "linear-gradient(90deg,#f59e0b,#fbbf24)"; // turuncu
+  }
+  else if(total >= 7.5){
+    bar.style.background = "linear-gradient(90deg,#22c55e,#4ade80)"; // yeşil
+  }
 
   let status='';
   if(total<1){status='Pre‑enablement'; el('unlock').textContent='Reach 1.0 to unlock NFR & Hunting/Teaming.'}
