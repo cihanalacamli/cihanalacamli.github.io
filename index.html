@@ -172,7 +172,7 @@ const SUBW={
   Networking:{cap:{bb:0.40,cc:0.60}, perf:{acv:0.25,tcv:0.25,buy:0.50}, eng:{a:0.50,b:0.50}},
   Security:{cap:{bb:0.40,cc:0.60}, perf:{acv:0.25,tcv:0.25,buy:0.50}, eng:{a:0.50,b:0.50}},
   Collaboration:{cap:{bb:0.30,cc:0.40,cps:0.30}, perf:{acv:0.50,tcv:0.50,buy:0}, eng:{deploy:0.50,adopt:0.50}},
-  "Cloud & AI":{cap:{bb:0.40,cc:0.60}, perf:{acv:0.50,tcv:0.50,buy:0}, eng:{a:0.50,b:0.50}},
+ "Cloud & AI":{cap:{bb:0.40,cc:0.60}, perf:{acv:0.25,tcv:0.25,buy:0.25,ai:0.25}, eng:{a:0.50,b:0.50}}, 
   /* CHANGED */ Services:{cap:{bb:1.00}, perf:{acv:0.50,premium:0.50}, eng:{otrr:1.00}},
   Splunk:{cap:{bb:0.40,cc:0.60}, perf:{acv:0.50,tcv:0.50,buy:0}, eng:{a:0.50,b:0.50}}
 };
@@ -327,12 +327,30 @@ function renderInputs(){
         <div><label>ACV YoY growth (%)</label><input type="number" id="acv" step="0.1" value="0"></div>
         <div><label>Premium Services Penetration (%)</label><input type="number" id="premium" step="0.1" value="0"></div>
       </div>`;
-  } else { // Collab, Cloud & AI, Splunk
-    pr.innerHTML = `
-      <div class="row">
-        <div><label>ACV YoY growth (%)</label><input type="number" id="acv" step="0.1" value="0"></div>
-        <div><label>TCV YoY growth (%)</label><input type="number" id="tcv" step="0.1" value="0"></div>
-      </div>`;
+  } else if(p==='Cloud & AI'){
+  pr.innerHTML = `
+    <div class="row">
+      <div><label>ACV YoY growth (%)</label><input type="number" id="acv" step="0.1" value="0"></div>
+      <div><label>TCV YoY growth (%)</label><input type="number" id="tcv" step="0.1" value="0"></div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Buying Program Penetration (%)</label>
+        <input type="number" id="penetration" step="0.1" value="0">
+        <div class="hint">EA / MSLA / WPA etc.</div>
+      </div>
+      <div>
+        <label>Cisco AI Dedicated SKUs (%)</label>
+        <input type="number" id="ai_skus" step="0.1" value="0">
+        <div class="hint">(coming soon – non-scored for now)</div>
+      </div>
+    </div>`;
+} else { // Collaboration, Splunk
+  pr.innerHTML = `
+    <div class="row">
+      <div><label>ACV YoY growth (%)</label><input type="number" id="acv" step="0.1" value="0"></div>
+      <div><label>TCV YoY growth (%)</label><input type="number" id="tcv" step="0.1" value="0"></div>
+    </div>`;
   }
 
   // Engagement
@@ -413,8 +431,15 @@ function calc(){
     const prem = Number((document.getElementById('premium')||{value:0}).value||0);
     const premIdx = upperIndex(prem, SERVICES.PREMIUM[band]);
     perf=(acvIdx/10)*(W.P*SW.perf.acv) + (premIdx/10)*(W.P*SW.perf.premium);
-  } else { // Collab, Cloud, Splunk
-    perf=(acvIdx/10)*(W.P*(SW.perf.acv||0.5))+(tcvIdx/10)*(W.P*(SW.perf.tcv||0.5));
+  } else if(p==='Cloud & AI'){
+  const pen = Number((document.getElementById('penetration')||{value:0}).value||0);
+  const buyIdx = upperIndex(pen, NET.BUY);
+  // AI SKUs input’u alınır ama şimdilik skorlanmaz
+  perf = (acvIdx/10)*(W.P*(SW.perf.acv||0))
+       + (tcvIdx/10)*(W.P*(SW.perf.tcv||0))
+       + (buyIdx/10)*(W.P*(SW.perf.buy||0));
+} else { // Collaboration, Splunk
+  perf=(acvIdx/10)*(W.P*(SW.perf.acv||0.5))+(tcvIdx/10)*(W.P*(SW.perf.tcv||0.5));
   }
 
   // Engagement
