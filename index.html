@@ -37,13 +37,9 @@
   .cta:hover{border-color:#3b6fb6}
   @media (max-width: 920px){.grid{grid-template-columns:1fr}}
 
-  /* yeni renkler */
-  .bar-orange { 
-    background: linear-gradient(90deg,#f59e0b,#fbbf24); 
-  }
-  .bar-green  { 
-    background: linear-gradient(90deg,#22c55e,#4ade80); 
-  }
+  /* score renkleri */
+  .bar-orange { background: linear-gradient(90deg,#f59e0b,#fbbf24); }
+  .bar-green  { background: linear-gradient(90deg,#22c55e,#4ade80); }
 </style>
 
   
@@ -74,7 +70,7 @@
             </select>
           </div>
           <div>
-            <label>T‑shirt (TCV band)</label>
+            <label>T-shirt (TCV band)</label>
             <select id="tsize">
               <option value="XS">XS (≤ $2M)</option>
               <option value="S">S ($2–10M)</option>
@@ -167,8 +163,8 @@ const WEIGHTS={
   "Security":{F:2.5,C:4.5,P:2.0,E:1.0},
   "Collaboration":{F:2.5,C:2.5,P:2.0,E:3.0},
   "Cloud & AI":{F:2.5,C:4.5,P:2.0,E:1.0},
-  "Services":{F:2.5,C:4.5,P:2.0,E:1.0},
-  "Splunk":{F:0.0,C:5.0,P:4.0,E:1.0} // Foundational 0
+  /* CHANGED */ "Services":{F:2.5,C:2.5,P:2.5,E:3.0},
+  "Splunk":{F:0.0,C:5.0,P:4.0,E:1.0}
 };
 
 // ===== Sub-weights inside categories =====
@@ -177,11 +173,11 @@ const SUBW={
   Security:{cap:{bb:0.40,cc:0.60}, perf:{acv:0.25,tcv:0.25,buy:0.50}, eng:{a:0.50,b:0.50}},
   Collaboration:{cap:{bb:0.30,cc:0.40,cps:0.30}, perf:{acv:0.50,tcv:0.50,buy:0}, eng:{deploy:0.50,adopt:0.50}},
   "Cloud & AI":{cap:{bb:0.40,cc:0.60}, perf:{acv:0.50,tcv:0.50,buy:0}, eng:{a:0.50,b:0.50}},
-  Services:{cap:{bb:1.00}, perf:{acv:0.50,tcv:0.25,buy:0.25}, eng:{a:0.50,b:0.50}},
+  /* CHANGED */ Services:{cap:{bb:1.00}, perf:{acv:0.50,premium:0.50}, eng:{otrr:1.00}},
   Splunk:{cap:{bb:0.40,cc:0.60}, perf:{acv:0.50,tcv:0.50,buy:0}, eng:{a:0.50,b:0.50}}
 };
 
-// ===== Threshold tables (reuse calibrated Net defaults unless noted) =====
+// ===== Threshold tables =====
 const NET={
   BB:{XS:[0,1,2,3,4,5,6,7,8,9], S:[5,11,17,23,29,35,41,47,53,59], M:[13,27,41,55,69,83,97,111,125,139], L:[18,37,56,75,94,113,132,151,170,189], XL:[22,45,68,91,114,137,160,183,206,229]},
   CC:{XS:[1,2,4,5,7,8,10,11,13,14], S:[7,14,22,29,37,44,52,59,67,74], M:[14,29,44,59,74,89,104,119,134,149], L:[22,44,67,89,112,134,157,179,202,224], XL:[44,89,134,179,224,269,314,359,404,449]},
@@ -195,7 +191,11 @@ NET.TCV=NET.ACV;
 
 const COL={BB:NET.BB, CC:NET.CC, ACV:NET.ACV, TCV:NET.TCV, DEPLOY_UP:[6,8,12,18,24,32,40,46,54,60], ADOPT_UP:[4,6,8,12,16,20,24,28,30,40]};
 const CLOUD={BB:NET.BB, CC:NET.CC, ACV:NET.ACV, TCV:NET.ACV};
-const SERVICES={BB:NET.BB, CC:NET.CC, ACV:NET.ACV, PREMIUM:{XS:[0,1,2,3,4,5,6,8,10,12], S:[0,1,2,3,4,6,8,10,12,15], M:[0,2,3,4,6,8,10,12,15,20], L:[0,2,4,6,8,10,15,20,25,30], XL:[0,3,6,9,12,15,20,25,30,35]}, OTRR:[0,10,20,25,30,35,45,50,55,60], ONB_UP:NET.ONB_UP, ONB_LO:NET.ONB_LO, ADP_UP:NET.ADP_UP, ADP_LO:NET.ADP_LO};
+const SERVICES={
+  BB:NET.BB, CC:NET.CC, ACV:NET.ACV,
+  PREMIUM:{XS:[0,1,2,3,4,5,6,8,10,12], S:[0,1,2,3,4,6,8,10,12,15], M:[0,2,3,4,6,8,10,12,15,20], L:[0,2,4,6,8,10,15,20,25,30], XL:[0,3,6,9,12,15,20,25,30,35]},
+  OTRR:[0,10,20,25,30,35,45,50,55,60]
+};
 const SPLUNK={BB:NET.BB, CC:NET.CC, ACV:NET.ACV, TCV:NET.TCV, ONB_UP:NET.ONB_UP, ONB_LO:NET.ONB_LO, ADP_UP:NET.ADP_UP, ADP_LO:NET.ADP_LO};
 
 function TB(){
@@ -240,7 +240,8 @@ function renderInputs(){
       </div>`;
   }
 
-  // Capabilities (all)
+  // Capabilities
+  let capsHTML = '';
   const cpsBlock = (p==='Collaboration') ? `
     <div class="row" id="cpsRow">
       <div>
@@ -253,38 +254,61 @@ function renderInputs(){
         <div class="hint">0→0, 1→5, 2+→10</div>
       </div>
     </div>` : '';
-  c.innerHTML = `
-    <div class="row">
-      <div>
-        <label>Black Belt – Stage 1 (count)</label>
-        <input type="number" id="bb1" min="0" step="1" value="0">
+
+  if (p === 'Services') {
+    // Services: ONLY Black Belt counts
+    capsHTML = `
+      <div class="row">
+        <div>
+          <label>Black Belt – Stage 1 (count)</label>
+          <input type="number" id="bb1" min="0" step="1" value="0">
+        </div>
+        <div>
+          <label>Black Belt – Stage 2 (count)</label>
+          <input type="number" id="bb2" min="0" step="1" value="0">
+        </div>
       </div>
-      <div>
-        <label>Black Belt – Stage 2 (count)</label>
-        <input type="number" id="bb2" min="0" step="1" value="0">
+      <div class="row">
+        <div>
+          <label>Black Belt – Stage 3 (count)</label>
+          <input type="number" id="bb3" min="0" step="1" value="0">
+        </div>
+      </div>`;
+  } else {
+    // Other portfolios: BB + Career Cert (existing)
+    capsHTML = `
+      <div class="row">
+        <div>
+          <label>Black Belt – Stage 1 (count)</label>
+          <input type="number" id="bb1" min="0" step="1" value="0">
+        </div>
+        <div>
+          <label>Black Belt – Stage 2 (count)</label>
+          <input type="number" id="bb2" min="0" step="1" value="0">
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div>
-        <label>Black Belt – Stage 3 (count)</label>
-        <input type="number" id="bb3" min="0" step="1" value="0">
+      <div class="row">
+        <div>
+          <label>Black Belt – Stage 3 (count)</label>
+          <input type="number" id="bb3" min="0" step="1" value="0">
+        </div>
+        <div>
+          <label>Career Cert – Expert badges</label>
+          <input type="number" id="cert_expert" min="0" step="1" value="0">
+        </div>
       </div>
-      <div>
-        <label>Career Cert – Expert badges</label>
-        <input type="number" id="cert_expert" min="0" step="1" value="0">
-      </div>
-    </div>
-    <div class="row">
-      <div>
-        <label>Career Cert – Professional badges</label>
-        <input type="number" id="cert_prof" min="0" step="1" value="0">
-      </div>
-      <div>
-        <label>Career Cert – Associate badges</label>
-        <input type="number" id="cert_assoc" min="0" step="1" value="0">
-      </div>
-    </div>
-    ${cpsBlock}`;
+      <div class="row">
+        <div>
+          <label>Career Cert – Professional badges</label>
+          <input type="number" id="cert_prof" min="0" step="1" value="0">
+        </div>
+        <div>
+          <label>Career Cert – Associate badges</label>
+          <input type="number" id="cert_assoc" min="0" step="1" value="0">
+        </div>
+      </div>`;
+  }
+  c.innerHTML = capsHTML + (p==='Collaboration' ? cpsBlock : '');
 
   // Performance
   if(p==='Networking' || p==='Security'){
@@ -301,11 +325,8 @@ function renderInputs(){
     pr.innerHTML = `
       <div class="row">
         <div><label>ACV YoY growth (%)</label><input type="number" id="acv" step="0.1" value="0"></div>
-        <div><label>Premium Services Penetration (%)</label><input type="number" id="tcv" step="0.1" value="0"></div>
-      </div>
-      <div class="row"><div>
-        <label>On‑Time Renewal Rate – OTRR (%)</label><input type="number" id="penetration" step="0.1" value="0">
-      </div></div>`;
+        <div><label>Premium Services Penetration (%)</label><input type="number" id="premium" step="0.1" value="0"></div>
+      </div>`;
   } else { // Collab, Cloud & AI, Splunk
     pr.innerHTML = `
       <div class="row">
@@ -322,6 +343,11 @@ function renderInputs(){
         <div><label>Webex Adoption (%)</label><input type="number" id="eng2" step="0.1" value="0"></div>
       </div>
       <div class="hint">Collab: son 3 ay penceresi.</div>`;
+  } else if (p==='Services') {
+    e.innerHTML = `
+      <div class="row">
+        <div><label>On-Time Renewal Rate — OTRR (%)</label><input type="number" id="otrr" step="0.1" value="0"></div>
+      </div>`;
   } else {
     e.innerHTML = `
       <div class="row">
@@ -384,10 +410,9 @@ function calc(){
     const buyIdx = upperIndex(pen, NET.BUY);
     perf=(acvIdx/10)*(W.P*SW.perf.acv)+(tcvIdx/10)*(W.P*SW.perf.tcv)+(buyIdx/10)*(W.P*SW.perf.buy);
   } else if(p==='Services'){
-    const premIdx = upperIndex(tcv, SERVICES.PREMIUM[band]);
-    const ot=Number((document.getElementById('penetration')||{value:0}).value||0);
-    const otIdx = upperIndex(ot, SERVICES.OTRR);
-    perf=(acvIdx/10)*(W.P*SW.perf.acv)+(premIdx/10)*(W.P*SW.perf.tcv); // OTRR engagementte
+    const prem = Number((document.getElementById('premium')||{value:0}).value||0);
+    const premIdx = upperIndex(prem, SERVICES.PREMIUM[band]);
+    perf=(acvIdx/10)*(W.P*SW.perf.acv) + (premIdx/10)*(W.P*SW.perf.premium);
   } else { // Collab, Cloud, Splunk
     perf=(acvIdx/10)*(W.P*(SW.perf.acv||0.5))+(tcvIdx/10)*(W.P*(SW.perf.tcv||0.5));
   }
@@ -401,9 +426,9 @@ function calc(){
     const aIdx = upperIndex(e2, COL.ADOPT_UP);
     eng=(dIdx/10)*(W.E*SUBW.Collaboration.eng.deploy)+(aIdx/10)*(W.E*SUBW.Collaboration.eng.adopt);
   } else if(p==='Services'){
-    const ot=Number((document.getElementById('penetration')||{value:0}).value||0);
+    const ot = Number((document.getElementById('otrr')||{value:0}).value||0);
     const otIdx = upperIndex(ot, SERVICES.OTRR);
-    eng=(otIdx/10)*(W.E*SUBW.Services.eng.a); // full E weight (0.5+0.5) eşleniği
+    eng=(otIdx/10) * (W.E * SUBW.Services.eng.otrr);
   } else {
     const onIdx = boundedIndex(e1, NET.ONB_LO, NET.ONB_UP);
     const adIdx = boundedIndex(e2, NET.ADP_LO, NET.ADP_UP);
@@ -417,32 +442,34 @@ function calc(){
   el('eng').textContent=eng.toFixed(2);
   el('total').textContent=total.toFixed(2);
   el('bar').style.width=(total*10)+'%';
-  el("bar").style.width = (total*10)+"%";
 
   // renk değişimi
   const bar = el("bar");
-  bar.style.background = "linear-gradient(90deg,#22c55e,#38bdf8)"; // default mavi
+  bar.style.background = "linear-gradient(90deg,#22c55e,#38bdf8)"; // default
   if(total >= 5 && total < 7.5){
-    bar.style.background = "linear-gradient(90deg,#f59e0b,#fbbf24)"; // turuncu
-  }
-  else if(total >= 7.5){
-    bar.style.background = "linear-gradient(90deg,#22c55e,#4ade80)"; // yeşil
+    bar.style.background = "linear-gradient(90deg,#f59e0b,#fbbf24)"; // orange
+  } else if(total >= 7.5){
+    bar.style.background = "linear-gradient(90deg,#22c55e,#4ade80)"; // green
   }
 
+  // Status + simple tips (değiştirmedim)
   let status='';
-  if(total<1){status='Pre‑enablement'; el('unlock').textContent='Reach 1.0 to unlock NFR & Hunting/Teaming.'}
+  if(total<1){status='Pre-enablement'; el('unlock').textContent='Reach 1.0 to unlock NFR & Hunting/Teaming.'}
   else if(total<5){status=`Enabled – on track for Cisco ${p} Partner (≥5.0)`; el('unlock').textContent='NFR/Hunting unlocked. Push Capabilities & Performance.'}
   else if(total<7.5){status=`Cisco ${p} Partner (≥5.0 reached)`; el('unlock').textContent='Next: Preferred (≥7.5).'}
   else {status=`Preferred ${p} Partner (≥7.5)`; el('unlock').textContent='Maintain momentum to stay Preferred.'}
   el('status').textContent=status;
 
   const tips=[];
-  if(bbIdx<7) tips.push('Increase Stage‑2/3 BB to lift capabilities.');
-  if(ccIdx<7) tips.push('Add Expert/Professional badges.');
+  if(bbIdx<7) tips.push('Increase Stage-2/3 BB to lift capabilities.');
+  if(ccIdx<7 && p!=='Services') tips.push('Add Expert/Professional badges.');
   if(p==='Networking'||p==='Security'){
     const pen=Number((document.getElementById('penetration')||{value:0}).value||0);
     const buyIdx = upperIndex(pen, NET.BUY);
     if(buyIdx<7) tips.push('Raise Buying Program penetration.');
+  }
+  if(p==='Services'){
+    tips.push('Balance ACV growth with Premium Services penetration and improve OTRR.');
   }
   el('tips').innerHTML=tips.map(t=>`<li>• ${t}</li>`).join('');
 }
@@ -453,19 +480,18 @@ document.getElementById('tsize').addEventListener('change', calc);
 // init
 renderInputs();
 calc();
+
 // integer-only guard for Capabilities inputs
 function attachIntGuards(ids){
   ids.forEach(id=>{
     const n = el(id);
     if(!n) return;
     n.addEventListener("input", ()=>{
-      let v = n.value.replace(/[^0-9]/g,''); // sadece rakam
+      let v = n.value.replace(/[^0-9]/g,'');
       n.value = v === "" ? "" : parseInt(v,10);
     });
   });
 }
-
-// Black Belt & Career Cert alanlarına uygula
 attachIntGuards(["bb1","bb2","bb3","cert_expert","cert_prof","cert_assoc"]);
 
 document.getElementById('showThresh').addEventListener('click', ()=>{
