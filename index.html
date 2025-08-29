@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cisco 360 – Self-Check (Networking • Security • Collaboration • Cloud & AI • Services • Splunk)</title>
+  <style>
+    :root{--bg:#0b1320; --card:#111a2b; --muted:#94a3b8; --text:#e5e7eb; --accent:#38bdf8; --good:#22c55e; --warn:#f59e0b; --bad:#ef4444; --line:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#0b1320,#0b1320 60%,#0c172a);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--text)}
+    a{color:var(--accent)}
+    .wrap{max-width:1100px;margin:24px auto;padding:0 16px}
+    .header{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .title{font-weight:800;font-size:24px;letter-spacing:.3px}
+    .subtitle{color:var(--muted);font-size:13px}
+    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+    .card{background:rgba(17,26,43,.9);border:1px solid var(--line);border-radius:16px;padding:18px}
+    .card h3{margin:0 0 10px 0;font-size:16px}
+    label{display:block;font-size:12px;color:var(--muted);margin:10px 0 6px}
+    select,input[type="number"],input[type="text"]{width:100%;background:#0a1220;border:1px solid #1f2a44;color:var(--text);border-radius:10px;padding:10px;font-size:14px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    .hint{font-size:12px;color:var(--muted)}
+    .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+    .kpi .k{background:#0a1220;border:1px dashed #243044;color:var(--muted);border-radius:12px;padding:10px}
+    .big{font-size:44px;font-weight:800}
+    .pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;border:1px solid #273043;color:var(--muted)}
+    .scorebar{height:10px;border-radius:6px;background:#0a1220;border:1px solid #22314e;overflow:hidden}
+    .scorebar>div{height:100%;background:linear-gradient(90deg,#22c55e,#38bdf8)}
+    .tips li{margin:6px 0}
+    .foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .tag{font-size:11px;border:1px solid #2a3a5f;color:#a3b2d1;padding:4px 8px;border-radius:999px}
+    .divider{height:1px;background:#1f2b43;margin:12px 0}
+    .note{font-size:12px;color:#9fb3d7}
+    .cta{background:#0a1220;border:1px solid #27406a;color:#dbe7ff;padding:10px 12px;border-radius:10px;cursor:pointer}
+    .cta:hover{border-color:#3b6fb6}
+    @media (max-width: 920px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div>
+        <div class="title">Cisco 360 – Self-Check <span class="pill">Networking • Security • Collaboration • Cloud & AI • Services • Splunk</span></div>
+        <div class="subtitle">Calibrated to <b>Networking</b>, <b>Security</b>, <b>Collaboration</b>, <b>Cloud & AI</b>, <b>Services</b> ve <b>Splunk</b> portföyleri (resmi eşiklerle).</div>
+      </div>
+      <div class="pill" style="white-space:nowrap">provided by Cihan Alaçamlı</div>
+    </div>
+
+    <div class="grid">
+      <!-- INPUTS -->
+      <div class="card">
+        <h3>Portfolio & Size</h3>
+        <div class="row">
+          <div>
+            <label>Portfolio</label>
+            <select id="portfolio">
+              <option selected>Networking</option>
+              <option>Security</option>
+              <option>Collaboration</option>
+              <option>Cloud & AI</option>
+              <option>Services</option>
+              <option>Splunk</option>
+            </select>
+          </div>
+          <div>
+            <label>T‑shirt (TCV band)</label>
+            <select id="tsize">
+              <option value="XS">XS (≤ $2M)</option>
+              <option value="S">S ($2–10M)</option>
+              <option value="M">M ($10–25M)</option>
+              <option value="L" selected>L ($25–100M)</option>
+              <option value="XL">XL (≥ $100M)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <h3>Foundational (portfolio weight)</h3>
+        <div id="foundationalInputs"></div>
+
+        <div class="divider"></div>
+        <h3>Capabilities (portfolio weight)</h3>
+        <div id="capabilityInputs"></div>
+
+        <div class="divider"></div>
+        <h3>Performance (portfolio weight)</h3>
+        <div id="performanceInputs"></div>
+
+        <div class="divider"></div>
+        <h3>Engagement (portfolio weight)</h3>
+        <div id="engagementInputs"></div>
+      </div>
+
+      <!-- OUTPUTS -->
+      <div class="card">
+        <h3>Result</h3>
+        <div class="kpi">
+          <div class="k">
+            <div class="hint">Total (0–10)</div>
+            <div id="total" class="big">0.0</div>
+            <div class="scorebar"><div id="bar" style="width:0%"></div></div>
+          </div>
+          <div class="k">
+            <div class="hint">Status</div>
+            <div id="status" style="font-weight:700;font-size:18px">–</div>
+            <div class="note" id="unlock"> </div>
+          </div>
+          <div class="k">
+            <div class="hint">Key thresholds</div>
+            <div class="note">1.0 – NFR & Hunting/Teaming</div>
+            <div class="note">5.0 – Cisco Partner (portfolio)</div>
+            <div class="note">7.5 – Preferred Partner (portfolio)</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <h3>Breakdown</h3>
+        <div class="kpi">
+          <div class="k"><div class="hint">Foundational</div><div id="fnd">0.00</div></div>
+          <div class="k"><div class="hint">Capabilities</div><div id="cap">0.00</div></div>
+          <div class="k"><div class="hint">Performance</div><div id="perf">0.00</div></div>
+        </div>
+        <div class="kpi" style="grid-template-columns:1fr">
+          <div class="k"><div class="hint">Engagement</div><div id="eng">0.00</div></div>
+        </div>
+
+        <div class="divider"></div>
+        <h3>Recommendations</h3>
+        <ul class="tips" id="tips"></ul>
+
+        <div class="divider"></div>
+        <h3>Diagnostics</h3>
+        <div class="kpi" style="grid-template-columns:1fr">
+          <div class="k">
+            <div class="hint">Threshold tables for current selection</div>
+            <button class="cta" id="showThresh">Show thresholds</button>
+            <pre id="thdump" style="white-space:pre-wrap;max-height:240px;overflow:auto;margin-top:10px"></pre>
+          </div>
+        </div>
+
+        <div class="foot">
+          <span class="tag">Unofficial estimator</span>
+          <span class="tag">Calibrated: Networking • Security • Collaboration • Cloud & AI • Services • Splunk</span>
+          <span class="tag">Check PXP for official score</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const el=id=>document.getElementById(id);
+
+// ===== Weights (out of 10) =====
+const WEIGHTS={
+  "Networking":{F:2.5,C:4.5,P:2.0,E:1.0},
+  "Security":{F:2.5,C:4.5,P:2.0,E:1.0},
+  "Collaboration":{F:2.5,C:2.5,P:2.0,E:3.0},
+  "Cloud & AI":{F:2.5,C:4.5,P:2.0,E:1.0},
+  "Services":{F:2.5,C:4.5,P:2.0,E:1.0},
+  "Splunk":{F:0.0,C:5.0,P:4.0,E:1.0} // Foundational 0
+};
+
+// ===== Sub-weights inside categories =====
+const SUBW={
+  Networking:{cap:{bb:0.40,cc:0.60}, perf:{acv:0.25,tcv:0.25,buy:0.50}, eng:{a:0.50,b:0.50}},
+  Security:{cap:{bb:0.40,cc:0.60}, perf:{acv:0.25,tcv:0.25,buy:0.50}, eng:{a:0.50,b:0.50}},
+  Collaboration:{cap:{bb:0.30,cc:0.40,cps:0.30}, perf:{acv:0.50,tcv:0.50,buy:0}, eng:{deploy:0.50,adopt:0.50}},
+  "Cloud & AI":{cap:{bb:0.40,cc:0.60}, perf:{acv:0.50,tcv:0.50,buy:0}, eng:{a:0.50,b:0.50}},
+  Services:{cap:{bb:0.40,cc:0.60}, perf:{acv:0.50,tcv:0.25,buy:0.25}, eng:{a:0.50,b:0.50}},
+  Splunk:{cap:{bb:0.40,cc:0.60}, perf:{acv:0.50,tcv:0.50,buy:0}, eng:{a:0.50,b:0.50}}
+};
+
+// ===== Threshold tables (reuse calibrated Net defaults unless noted) =====
+const NET={
+  BB:{XS:[0,1,2,3,4,5,6,7,8,9], S:[5,11,17,23,29,35,41,47,53,59], M:[13,27,41,55,69,83,97,111,125,139], L:[18,37,56,75,94,113,132,151,170,189], XL:[22,45,68,91,114,137,160,183,206,229]},
+  CC:{XS:[1,2,4,5,7,8,10,11,13,14], S:[7,14,22,29,37,44,52,59,67,74], M:[14,29,44,59,74,89,104,119,134,149], L:[22,44,67,89,112,134,157,179,202,224], XL:[44,89,134,179,224,269,314,359,404,449]},
+  ACV:{XS:[0,2,4,6,8,10,12,14,16,18], S:[0,1,2,3,4,5,6,7,8,9], M:[0,1,2,3,4,5,6,7,8,9], L:[0,1,1.5,2,2.5,3,3.5,4,4.5,5], XL:[0,1,1.5,2,2.5,3,3.5,4,4.5,5]},
+  TCV:null,
+  BUY:[0,5,10,15,20,25,30,35,40,45],
+  ONB_UP:[0,10,15,20,25,30,35,40,45,50], ONB_LO:[0,10,15,20,25,30,35,40,45,50,55],
+  ADP_UP:[0,3,6,9,12,15,18,21,24,27], ADP_LO:[0,3,6,9,12,15,18,21,24,27,30]
+};
+NET.TCV=NET.ACV;
+
+const COL={BB:NET.BB, CC:NET.CC, ACV:NET.ACV, TCV:NET.TCV, DEPLOY_UP:[6,8,12,18,24,32,40,46,54,60], ADOPT_UP:[4,6,8,12,16,20,24,28,30,40]};
+const CLOUD={BB:NET.BB, CC:NET.CC, ACV:NET.ACV, TCV:NET.ACV};
+const SERVICES={BB:NET.BB, CC:NET.CC, ACV:NET.ACV, PREMIUM:{XS:[0,1,2,3,4,5,6,8,10,12], S:[0,1,2,3,4,6,8,10,12,15], M:[0,2,3,4,6,8,10,12,15,20], L:[0,2,4,6,8,10,15,20,25,30], XL:[0,3,6,9,12,15,20,25,30,35]}, OTRR:[0,10,20,25,30,35,45,50,55,60], ONB_UP:NET.ONB_UP, ONB_LO:NET.ONB_LO, ADP_UP:NET.ADP_UP, ADP_LO:NET.ADP_LO};
+const SPLUNK={BB:NET.BB, CC:NET.CC, ACV:NET.ACV, TCV:NET.TCV, ONB_UP:NET.ONB_UP, ONB_LO:NET.ONB_LO, ADP_UP:NET.ADP_UP, ADP_LO:NET.ADP_LO};
+
+function TB(){
+  const p=el('portfolio').value;
+  return p==='Networking'?NET: p==='Security'?NET: p==='Collaboration'?COL: p==='Cloud & AI'?CLOUD: p==='Services'?SERVICES: SPLUNK;
+}
+
+// ===== Dynamic input rendering =====
+function renderInputs(){
+  const p=el('portfolio').value;
+  const f=el('foundationalInputs');
+  const c=el('capabilityInputs');
+  const pr=el('performanceInputs');
+  const e=el('engagementInputs');
+  f.innerHTML=c.innerHTML=pr.innerHTML=e.innerHTML='';
+
+  // Foundational (Splunk -> disabled, others -> active)
+  if(p==='Splunk'){
+    f.innerHTML = `<div class="note">Foundational bu portföy için uygulanmıyor (ağırlık 0). Bölüm pasif.</div>`;
+  } else {
+    f.innerHTML = `
+      <div class="row">
+        <div>
+          <label>Customer Success Practice Maturity</label>
+          <select id="cx_level">
+            <option value="0">None</option>
+            <option value="7">Specialized</option>
+            <option value="10">Advanced</option>
+          </select>
+          <div class="hint">Index: 0 / 7 / 10</div>
+        </div>
+        <div>
+          <label>Managed Services Practice Maturity</label>
+          <select id="ms_level">
+            <option value="0">None</option>
+            <option value="2">Select</option>
+            <option value="7">Premier</option>
+            <option value="10">Gold</option>
+          </select>
+          <div class="hint">Index: 0 / 2 / 7 / 10</div>
+        </div>
+      </div>`;
+  }
+
+  // Capabilities (all)
+  const cpsBlock = (p==='Collaboration') ? `
+    <div class="row" id="cpsRow">
+      <div>
+        <label>Cisco Powered Collaboration Services (count)</label>
+        <select id="cps">
+          <option value="0" selected>0</option>
+          <option value="1">1</option>
+          <option value="2">2+</option>
+        </select>
+        <div class="hint">0→0, 1→5, 2+→10</div>
+      </div>
+    </div>` : '';
+  c.innerHTML = `
+    <div class="row">
+      <div>
+        <label>Black Belt – Stage 1 (count)</label>
+        <input type="number" id="bb1" min="0" step="1" value="0">
+      </div>
+      <div>
+        <label>Black Belt – Stage 2 (count)</label>
+        <input type="number" id="bb2" min="0" step="1" value="0">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Black Belt – Stage 3 (count)</label>
+        <input type="number" id="bb3" min="0" step="1" value="0">
+      </div>
+      <div>
+        <label>Career Cert – Expert badges</label>
+        <input type="number" id="cert_expert" min="0" step="1" value="0">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Career Cert – Professional badges</label>
+        <input type="number" id="cert_prof" min="0" step="1" value="0">
+      </div>
+      <div>
+        <label>Career Cert – Associate badges</label>
+        <input type="number" id="cert_assoc" min="0" step="1" value="0">
+      </div>
+    </div>
+    ${cpsBlock}`;
+
+  // Performance
+  if(p==='Networking' || p==='Security'){
+    pr.innerHTML = `
+      <div class="row">
+        <div><label>ACV YoY growth (%)</label><input type="number" id="acv" step="0.1" value="0"></div>
+        <div><label>TCV YoY growth (%)</label><input type="number" id="tcv" step="0.1" value="0"></div>
+      </div>
+      <div class="row" id="buyRow"><div>
+        <label>Buying Program Penetration (%)</label><input type="number" id="penetration" step="0.1" value="0">
+        <div class="hint">EA / MSLA / WPA vb.</div>
+      </div></div>`;
+  } else if(p==='Services'){
+    pr.innerHTML = `
+      <div class="row">
+        <div><label>ACV YoY growth (%)</label><input type="number" id="acv" step="0.1" value="0"></div>
+        <div><label>Premium Services Penetration (%)</label><input type="number" id="tcv" step="0.1" value="0"></div>
+      </div>
+      <div class="row"><div>
+        <label>On‑Time Renewal Rate – OTRR (%)</label><input type="number" id="penetration" step="0.1" value="0">
+      </div></div>`;
+  } else { // Collab, Cloud & AI, Splunk
+    pr.innerHTML = `
+      <div class="row">
+        <div><label>ACV YoY growth (%)</label><input type="number" id="acv" step="0.1" value="0"></div>
+        <div><label>TCV YoY growth (%)</label><input type="number" id="tcv" step="0.1" value="0"></div>
+      </div>`;
+  }
+
+  // Engagement
+  if(p==='Collaboration'){
+    e.innerHTML = `
+      <div class="row">
+        <div><label>Webex Deployment (%)</label><input type="number" id="eng1" step="0.1" value="0"></div>
+        <div><label>Webex Adoption (%)</label><input type="number" id="eng2" step="0.1" value="0"></div>
+      </div>
+      <div class="hint">Collab: son 3 ay penceresi.</div>`;
+  } else {
+    e.innerHTML = `
+      <div class="row">
+        <div><label>Deals Completed – Onboard (%)</label><input type="number" id="eng1" step="0.1" value="0"></div>
+        <div><label>Deals Completed – Adopt (%)</label><input type="number" id="eng2" step="0.1" value="0"></div>
+      </div>
+      <div class="hint">Onboard/Adopt: 18 ay penceresi.</div>`;
+  }
+
+  // Attach handlers
+  document.querySelectorAll('#foundationalInputs select, #capabilityInputs input, #capabilityInputs select, #performanceInputs input, #engagementInputs input, #capabilityInputs select').forEach(x=>{
+    x.addEventListener('input', calc);
+    x.addEventListener('change', calc);
+  });
+}
+
+function upperIndex(value, uppers){ for(let i=0;i<uppers.length;i++){ if(value<=uppers[i]) return i; } return 10; }
+function boundedIndex(value, lowers, uppers){ if(value<=uppers[0]) return 0; for(let i=1;i<lowers.length-1;i++){ if(value>lowers[i] && value<=uppers[i]) return i; } return 10; }
+
+function currentTB(){ const p=el('portfolio').value; return p==='Networking'?NET: p==='Security'?NET: p==='Collaboration'?COL: p==='Cloud & AI'?CLOUD: p==='Services'?SERVICES: SPLUNK; }
+
+function calc(){
+  const p=el('portfolio').value; const band=el('tsize').value;
+  const W=WEIGHTS[p]; const SW=SUBW[p]; const TB=currentTB();
+
+  // Foundational
+  let fnd=0;
+  if(p!=='Splunk'){
+    const cx=Number((document.getElementById('cx_level')||{value:0}).value||0);
+    const ms=Number((document.getElementById('ms_level')||{value:0}).value||0);
+    fnd=(cx/10)*(W.F*0.5)+(ms/10)*(W.F*0.5);
+  }
+
+  // Capabilities
+  const s1=Number((document.getElementById('bb1')||{value:0}).value||0);
+  const s2=Number((document.getElementById('bb2')||{value:0}).value||0);
+  const s3=Number((document.getElementById('bb3')||{value:0}).value||0);
+  const bbWeighted = s1*1 + s2*1.5 + s3*2;
+  const bbIdx = upperIndex(bbWeighted, TB.BB[band]);
+  const cexp=Number((document.getElementById('cert_expert')||{value:0}).value||0);
+  const cpro=Number((document.getElementById('cert_prof')||{value:0}).value||0);
+  const cass=Number((document.getElementById('cert_assoc')||{value:0}).value||0);
+  const ccWeighted = cexp*10 + cpro*3 + cass*1;
+  const ccIdx = upperIndex(ccWeighted, TB.CC[band]);
+  let cap=(bbIdx/10)*(W.C*(SW.cap.bb||0)) + (ccIdx/10)*(W.C*(SW.cap.cc||0));
+  if(p==='Collaboration'){
+    const cpsVal = Number((document.getElementById('cps')||{value:0}).value||0);
+    const cpsIdx = cpsVal>=2?10 : (cpsVal===1?5:0);
+    cap += (cpsIdx/10)*(W.C*(SW.cap.cps||0));
+  }
+
+  // Performance
+  const acv=Number((document.getElementById('acv')||{value:0}).value||0);
+  const tcv=Number((document.getElementById('tcv')||{value:0}).value||0);
+  const acvIdx = upperIndex(acv, TB.ACV[band] || NET.ACV[band]);
+  const tcvIdx = upperIndex(tcv, (TB.TCV?TB.TCV[band]:NET.TCV[band]));
+  let perf=0;
+  if(p==='Networking' || p==='Security'){
+    const pen=Number((document.getElementById('penetration')||{value:0}).value||0);
+    const buyIdx = upperIndex(pen, NET.BUY);
+    perf=(acvIdx/10)*(W.P*SW.perf.acv)+(tcvIdx/10)*(W.P*SW.perf.tcv)+(buyIdx/10)*(W.P*SW.perf.buy);
+  } else if(p==='Services'){
+    const premIdx = upperIndex(tcv, SERVICES.PREMIUM[band]);
+    const ot=Number((document.getElementById('penetration')||{value:0}).value||0);
+    const otIdx = upperIndex(ot, SERVICES.OTRR);
+    perf=(acvIdx/10)*(W.P*SW.perf.acv)+(premIdx/10)*(W.P*SW.perf.tcv); // OTRR engagementte
+  } else { // Collab, Cloud, Splunk
+    perf=(acvIdx/10)*(W.P*(SW.perf.acv||0.5))+(tcvIdx/10)*(W.P*(SW.perf.tcv||0.5));
+  }
+
+  // Engagement
+  let eng=0;
+  const e1=Number((document.getElementById('eng1')||{value:0}).value||0);
+  const e2=Number((document.getElementById('eng2')||{value:0}).value||0);
+  if(p==='Collaboration'){
+    const dIdx = upperIndex(e1, COL.DEPLOY_UP);
+    const aIdx = upperIndex(e2, COL.ADOPT_UP);
+    eng=(dIdx/10)*(W.E*SUBW.Collaboration.eng.deploy)+(aIdx/10)*(W.E*SUBW.Collaboration.eng.adopt);
+  } else if(p==='Services'){
+    const ot=Number((document.getElementById('penetration')||{value:0}).value||0);
+    const otIdx = upperIndex(ot, SERVICES.OTRR);
+    eng=(otIdx/10)*(W.E*SUBW.Services.eng.a); // full E weight (0.5+0.5) eşleniği
+  } else {
+    const onIdx = boundedIndex(e1, NET.ONB_LO, NET.ONB_UP);
+    const adIdx = boundedIndex(e2, NET.ADP_LO, NET.ADP_UP);
+    eng=(onIdx/10)*(W.E*SUBW[p].eng.a)+(adIdx/10)*(W.E*SUBW[p].eng.b);
+  }
+
+  const total = +(fnd+cap+perf+eng).toFixed(2);
+  el('fnd').textContent=fnd.toFixed(2);
+  el('cap').textContent=cap.toFixed(2);
+  el('perf').textContent=perf.toFixed(2);
+  el('eng').textContent=eng.toFixed(2);
+  el('total').textContent=total.toFixed(1);
+  el('bar').style.width=(total*10)+'%';
+
+  let status='';
+  if(total<1){status='Pre‑enablement'; el('unlock').textContent='Reach 1.0 to unlock NFR & Hunting/Teaming.'}
+  else if(total<5){status=`Enabled – on track for Cisco ${p} Partner (≥5.0)`; el('unlock').textContent='NFR/Hunting unlocked. Push Capabilities & Performance.'}
+  else if(total<7.5){status=`Cisco ${p} Partner (≥5.0 reached)`; el('unlock').textContent='Next: Preferred (≥7.5).'}
+  else {status=`Preferred ${p} Partner (≥7.5)`; el('unlock').textContent='Maintain momentum to stay Preferred.'}
+  el('status').textContent=status;
+
+  const tips=[];
+  if(bbIdx<7) tips.push('Increase Stage‑2/3 BB to lift capabilities.');
+  if(ccIdx<7) tips.push('Add Expert/Professional badges.');
+  if(p==='Networking'||p==='Security'){
+    const pen=Number((document.getElementById('penetration')||{value:0}).value||0);
+    const buyIdx = upperIndex(pen, NET.BUY);
+    if(buyIdx<7) tips.push('Raise Buying Program penetration.');
+  }
+  el('tips').innerHTML=tips.map(t=>`<li>• ${t}</li>`).join('');
+}
+
+document.getElementById('portfolio').addEventListener('change', ()=>{renderInputs(); calc();});
+document.getElementById('tsize').addEventListener('change', calc);
+
+// init
+renderInputs();
+calc();
+
+document.getElementById('showThresh').addEventListener('click', ()=>{
+  const p=el('portfolio').value; const band=el('tsize').value; const tb=currentTB();
+  const obj={portfolio:p, band, weights:WEIGHTS[p], subweights:SUBW[p]};
+  obj.BlackBelt_uppers=tb.BB[band]; obj.CareerCert_uppers=tb.CC[band];
+  obj.ACV_uppers=(tb.ACV||NET.ACV)[band]; obj.TCV_uppers=(tb.TCV||NET.TCV)[band];
+  if(p==='Networking'||p==='Security'){ obj.BuyingProgram_uppers=NET.BUY; }
+  if(p==='Collaboration'){ obj.WebexDeploy_uppers=COL.DEPLOY_UP; obj.WebexAdopt_uppers=COL.ADOPT_UP; obj.CPS_index_map={"0":0,"1":5,"2+":10}; }
+  if(p==='Services'){ obj.PremiumServices_uppers=SERVICES.PREMIUM[band]; obj.OTRR_uppers=SERVICES.OTRR; }
+  el('thdump').textContent=JSON.stringify(obj,null,2);
+});
+</script>
+</body>
+</html>
