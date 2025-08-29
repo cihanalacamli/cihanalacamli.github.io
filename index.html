@@ -434,10 +434,13 @@ function calc(){
   } else if(p==='Cloud & AI'){
   const pen = Number((document.getElementById('penetration')||{value:0}).value||0);
   const buyIdx = upperIndex(pen, NET.BUY);
-  // AI SKUs input’u alınır ama şimdilik skorlanmaz
+  const aiVal = Number((document.getElementById('ai_skus')||{value:0}).value||0);
+  const aiIdx = upperIndex(aiVal, (CLOUD.AI || NET.BUY)); // AI eşikleri
+
   perf = (acvIdx/10)*(W.P*(SW.perf.acv||0))
        + (tcvIdx/10)*(W.P*(SW.perf.tcv||0))
-       + (buyIdx/10)*(W.P*(SW.perf.buy||0));
+       + (buyIdx/10)*(W.P*(SW.perf.buy||0))
+       + (aiIdx/10) *(W.P*(SW.perf.ai ||0));
 } else { // Collaboration, Splunk
   perf=(acvIdx/10)*(W.P*(SW.perf.acv||0.5))+(tcvIdx/10)*(W.P*(SW.perf.tcv||0.5));
   }
