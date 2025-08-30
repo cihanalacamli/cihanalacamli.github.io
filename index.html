@@ -461,21 +461,33 @@ function calc(){
 
   // Engagement
   let eng=0;
-  const e1=Number((document.getElementById('eng1')||{value:0}).value||0);
-  const e2=Number((document.getElementById('eng2')||{value:0}).value||0);
+  const tier = (x, T=[0,10,20,30,50]) => {
+  if (x >= T[4]) return 1;
+  if (x >= T[3]) return 0.75;
+  if (x >= T[2]) return 0.50;
+  if (x >= T[1]) return 0.25;
+  return 0;
+};
   if(p==='Collaboration'){
     const dIdx = upperIndex(e1, COL.DEPLOY_UP);
     const aIdx = upperIndex(e2, COL.ADOPT_UP);
     eng=(dIdx/10)*(W.E*SUBW.Collaboration.eng.deploy)+(aIdx/10)*(W.E*SUBW.Collaboration.eng.adopt);
-  } else if(p==='Services'){
+  } 
+  else if(p==='Services'){
     const ot = Number((document.getElementById('otrr')||{value:0}).value||0);
     const otIdx = upperIndex(ot, SERVICES.OTRR);
     eng=(otIdx/10) * (W.E * SUBW.Services.eng.otrr);
-  } else {
-    const onIdx = boundedIndex(e1, NET.ONB_LO, NET.ONB_UP);
-    const adIdx = boundedIndex(e2, NET.ADP_LO, NET.ADP_UP);
-    eng=(onIdx/10)*(W.E*SUBW[p].eng.a)+(adIdx/10)*(W.E*SUBW[p].eng.b);
-  }
+  } 
+  
+  else {
+  // Networking, Security, Cloud & AI → ikisi de % alan
+  const e1 = num('eng1');    // Onboard %
+  const e2 = num('eng2');    // Adopt %
+  // Eğer özel eşik tablon yoksa (Collab’tekiyle aynı hissi versin diye) default T=[0,10,20,30,50]
+  const eScore = 0.5 * tier(e1) + 0.5 * tier(e2);   // 0..1
+  eng = eScore;                                      // 0..1
+  total += WEIGHTS[p].E * eng;                       // E ağırlığı portföye göre
+}
 
   const total = +(fnd+cap+perf+eng).toFixed(2);
   el('fnd').textContent=fnd.toFixed(2);
