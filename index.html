@@ -525,6 +525,13 @@ document.addEventListener('focusin', (e) => {
   }
 });
 
+  // tüm number alanlarda 'e', 'E', '+', '-' girişini blokla
+document.addEventListener('keydown', (e) => {
+  if (e.target && e.target.matches('input[type="number"]')) {
+    if (['e','E','+','-'].includes(e.key)) e.preventDefault();
+  }
+});
+
   
 // integer-only guard for Capabilities inputs
 function attachIntGuards(ids){
