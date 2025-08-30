@@ -82,19 +82,19 @@
         </div>
 
         <div class="divider"></div>
-        <h3>Foundational (portfolio weight)</h3>
+        <h3>Foundational <span id="lblFnd" class="hint"></span></h3>
         <div id="foundationalInputs"></div>
 
         <div class="divider"></div>
-        <h3>Capabilities (portfolio weight)</h3>
+        <h3>Capabilities <span id="lblCap" class="hint"></span></h3>
         <div id="capabilityInputs"></div>
 
         <div class="divider"></div>
-        <h3>Performance (portfolio weight)</h3>
+        <h3>Performance <span id="lblPerf" class="hint"></span></h3>
         <div id="performanceInputs"></div>
 
         <div class="divider"></div>
-        <h3>Engagement (portfolio weight)</h3>
+        <h3>Engagement <span id="lblEng" class="hint"></span></h3>
         <div id="engagementInputs"></div>
       </div>
 
@@ -469,7 +469,16 @@ function calc(){
   el('eng').textContent=eng.toFixed(2);
   el('total').textContent=total.toFixed(2);
   el('bar').style.width=(total*10)+'%';
-  
+
+  // section weight etiketlerini güncelle
+{
+  const maxTotal = (p === 'Services') ? 10.5 : 10;
+  const W = WEIGHTS[p];
+  if (el('lblFnd'))  el('lblFnd').textContent  = `(${W.F}/${maxTotal})`;
+  if (el('lblCap'))  el('lblCap').textContent  = `(${W.C}/${maxTotal})`;
+  if (el('lblPerf')) el('lblPerf').textContent = `(${W.P}/${maxTotal})`;
+  if (el('lblEng'))  el('lblEng').textContent  = `(${W.E}/${maxTotal})`;
+}
 
   // renk değişimi
   const bar = el("bar");
