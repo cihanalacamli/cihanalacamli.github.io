@@ -376,7 +376,7 @@ function renderInputs(){
 
     // === render sonrası input guard bağlama ===
   // TAMSAYI ZORUNLU ALANLAR (headcount): BB & Career Certs
-  attachIntGuards(["bb1","bb2","bb3","cert_expert","cert_prof","cert_assoc"]);
+ // attachIntGuards(["bb1","bb2","bb3","cert_expert","cert_prof","cert_assoc"]);
 
   // ONDALIK İZİNLİ ALANLAR (yüzdeler): portföye göre
   if (p==='Networking' || p==='Security'){
@@ -540,27 +540,37 @@ document.addEventListener('focusin', (e) => {
   }
 });
 
-  // number input'larda istenmeyen karakterleri engelle + ',' → '.' yap, caret'i koru
+ // ondalık alanlar listesi (sadece bunlarda ',' -> '.'; nokta serbest)
+const DECIMAL_IDS = new Set(['acv','tcv','penetration','ai_skus','eng1','eng2','premium','otrr']);
+
+// klavye: e/E/+/- blokla; ',' basılırsa '.' yaz ve caret'i koru
 document.addEventListener('keydown', (e) => {
-  if (e.target && e.target.matches('input[type="number"]')) {
-    // bilimsel gösterim/işaretleri tamamen engelle
-    if (['e','E','+','-'].includes(e.key)) {
-      e.preventDefault();
-      return;
-    }
-    // TR klavyede ondalık için genelde ',' basılıyor → '.' olarak yaz, caret bozulmasın
-    if (e.key === ',') {
-      e.preventDefault();
-      const el = e.target;
-      const { selectionStart: s, selectionEnd: t, value: v } = el;
-      const nv = v.slice(0, s) + '.' + v.slice(t);
-      el.value = nv;
-      el.setSelectionRange(s + 1, s + 1);
-      // anında hesap tetiklensin
-      el.dispatchEvent(new Event('input', { bubbles: true }));
-    }
+  const t = e.target;
+  if (!(t instanceof HTMLInputElement) || t.type !== 'number') return;
+
+  if (['e','E','+','-'].includes(e.key)) { e.preventDefault(); return; }
+
+  if (e.key === ',' && DECIMAL_IDS.has(t.id)) {
+    e.preventDefault();
+    const s = t.selectionStart, en = t.selectionEnd, v = t.value;
+    t.value = v.slice(0, s) + '.' + v.slice(en);
+    t.setSelectionRange(s + 1, s + 1);
+    t.dispatchEvent(new Event('input', { bubbles: true }));
   }
 });
+
+// paste/IME: ',' -> '.' ; sadece 0-9 ve tek '.' kalsın (sadece ondalık alanlarda)
+document.addEventListener('input', (e) => {
+  const t = e.target;
+  if (!(t instanceof HTMLInputElement) || t.type !== 'number') return;
+  if (!DECIMAL_IDS.has(t.id)) return;
+
+  let v = t.value.replace(/,/g, '.').replace(/[^0-9.]/g, '');
+  const i = v.indexOf('.');
+  if (i !== -1) v = v.slice(0, i + 1) + v.slice(i + 1).replace(/\./g, '');
+  t.value = v;
+});
+
 
 // paste/IME durumunda da temizle: sadece 0-9 ve tek '.' kalsın, ',' → '.'
 document.addEventListener('input', (e) => {
