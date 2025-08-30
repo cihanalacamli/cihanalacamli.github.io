@@ -374,6 +374,21 @@ function renderInputs(){
       <div class="hint">Onboard/Adopt: 18 ay penceresi.</div>`;
   }
 
+    // === render sonrası input guard bağlama ===
+  // TAMSAYI ZORUNLU ALANLAR (headcount): BB & Career Certs
+  attachIntGuards(["bb1","bb2","bb3","cert_expert","cert_prof","cert_assoc"]);
+
+  // ONDALIK İZİNLİ ALANLAR (yüzdeler): portföye göre
+  if (p==='Networking' || p==='Security'){
+    attachDecimalGuards(["acv","tcv","penetration","eng1","eng2"]);
+  } else if (p==='Services'){
+    attachDecimalGuards(["acv","premium","otrr"]);
+  } else if (p==='Cloud & AI'){
+    attachDecimalGuards(["acv","tcv","penetration","ai_skus","eng1","eng2"]);
+  } else { // Collaboration, Splunk
+    attachDecimalGuards(["acv","tcv","eng1","eng2"]);
+  }
+
   // Attach handlers
   document.querySelectorAll('#foundationalInputs select, #capabilityInputs input, #capabilityInputs select, #performanceInputs input, #engagementInputs input, #capabilityInputs select').forEach(x=>{
     x.addEventListener('input', calc);
@@ -544,7 +559,22 @@ function attachIntGuards(ids){
     });
   });
 }
-attachIntGuards(["bb1","bb2","bb3","cert_expert","cert_prof","cert_assoc"]);
+
+  // decimal (ondalık) alan koruması: sadece 0-9 ve tek '.' izin ver
+function attachDecimalGuards(ids){
+  ids.forEach(id=>{
+    const n = el(id);
+    if(!n) return;
+    n.addEventListener("input", ()=>{
+      let v = n.value.replace(/[^0-9.]/g,'');      // harf vs. temizle
+      const parts = v.split('.');
+      if (parts.length > 2) {
+        v = parts[0] + '.' + parts.slice(1).join('').replace(/\./g,''); // tek '.' bırak
+      }
+      n.value = v;
+    });
+  });
+}
 
 document.getElementById('showThresh').addEventListener('click', ()=>{
   const p=el('portfolio').value; const band=el('tsize').value; const tb=currentTB();
