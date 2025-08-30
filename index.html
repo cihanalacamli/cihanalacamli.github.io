@@ -383,15 +383,17 @@ function renderInputs(){
   attachIntGuards(["bb1","bb2","bb3","cert_expert","cert_prof","cert_assoc"]);
 
   // ONDALIK İZİNLİ ALANLAR (yüzdeler): portföye göre
-  if (p==='Networking' || p==='Security'){
-    attachDecimalGuards(["acv","tcv","penetration","eng1","eng2"]);
-  } else if (p==='Services'){
-    attachDecimalGuards(["acv","premium","otrr"]);
-  } else if (p==='Cloud & AI'){
-    attachDecimalGuards(["acv","tcv","penetration","ai_skus","eng1","eng2"]);
-  } else { // Collaboration, Splunk
-    attachDecimalGuards(["acv","tcv","eng1","eng2"]);
-  }
+  // YÜZDE ALANLARI: ondalık guard yerine "percent guard"
+if (p==='Networking' || p==='Security'){
+  attachPercentGuards(["acv","tcv","penetration","eng1","eng2"]);
+} else if (p==='Services'){
+  attachPercentGuards(["acv","premium","otrr"]);
+} else if (p==='Cloud & AI'){
+  attachPercentGuards(["acv","tcv","penetration","ai_skus","eng1","eng2"]);
+} else { // Collaboration, Splunk
+  attachPercentGuards(["acv","tcv","eng1","eng2"]);
+}
+
 
 // --- locale fix: decimal inputlarda nokta (.) i in 'lang=en' ---
 (function forceEnLocaleForDecimals(){
@@ -574,44 +576,26 @@ document.addEventListener('focusin', (e) => {
 
   // number input'larda istenmeyen karakterleri engelle + ',' → '.' yap, caret'i koru
 
-// number input'larda yasaklıları engelle + '.' ve ',' yönetimi (caret korunur)
+
+// YERİNE GEÇER
 document.addEventListener('keydown', (e) => {
   if (!(e.target && e.target.matches('input[type="number"]'))) return;
 
-  const INT_IDS = ['bb1','bb2','bb3','cert_expert','cert_prof','cert_assoc']; // sadece tamsayı
-  const isInt = INT_IDS.includes(e.target.id);
-  const el = e.target;
+  const INT_IDS = ['bb1','bb2','bb3','cert_expert','cert_prof','cert_assoc'];
+  const PCT_IDS = ['acv','tcv','penetration','ai_skus','eng1','eng2','premium','otrr']; // tüm yüzde alanları
+  const id = e.target.id;
 
-  // Bilimsel gösterim ve işaretler her yerde yasak
+  // Bilimsel gösterim ve işaretleri kapat
   if (['e','E','+','-'].includes(e.key)) { e.preventDefault(); return; }
 
-  // Tamsayı alanlarda '.' ve ',' tamamen yasak
-  if (isInt && (e.key === '.' || e.key === ',')) { e.preventDefault(); return; }
+  // Tüm tam sayılar: . , yasak
+  if (INT_IDS.includes(id) && (e.key === '.' || e.key === ',')) { e.preventDefault(); return; }
 
-  // Virgül basılırsa: decimal alanlarda '.' olarak yaz (caret sabit kalsın)
-  if (!isInt && e.key === ',') {
-    e.preventDefault();
-    const { selectionStart: s, selectionEnd: t, value: v } = el;
-    const nv = v.slice(0, s) + '.' + v.slice(t);
-    el.value = nv;
-    el.setSelectionRange(s + 1, s + 1);
-    el.dispatchEvent(new Event('input', { bubbles: true }));
-    return;
-  }
-
-  // Nokta basılırsa: bazı tarayıcılar yutuyor; biz elle yerleştiriyoruz
-  if (!isInt && e.key === '.') {
-    e.preventDefault();
-    const { selectionStart: s, selectionEnd: t, value: v } = el;
-    // İkinci noktayı engelle (örn. "12.3.4" olmasın)
-    if (v.includes('.') && s === t && v.indexOf('.') !== -1) return;
-    const nv = v.slice(0, s) + '.' + v.slice(t);
-    el.value = nv;
-    el.setSelectionRange(s + 1, s + 1);
-    el.dispatchEvent(new Event('input', { bubbles: true }));
-    return;
-  }
+  // YÜZDE ALANLARI: . , TAMAMEN YASAK (artık ondalık yok)
+  if (PCT_IDS.includes(id) && (e.key === '.' || e.key === ',')) { e.preventDefault(); return; }
 });
+
+
 
 
   
@@ -630,27 +614,26 @@ function attachIntGuards(ids){
   // decimal (ondalık) alan koruması: sadece 0-9 ve tek '.' izin ver
 
 
-
-function attachDecimalGuards(ids){
+function attachPercentGuards(ids){
   ids.forEach(id=>{
     const n = el(id);
     if(!n) return;
+
     n.addEventListener("input", ()=>{
-      const s = n.selectionStart;
-      let v = n.value.replace(/,/g,'.');   // paste durumunda , ? .
-      v = v.replace(/[^0-9.]/g,'');
-      const parts = v.split('.');
-      if (parts.length > 2) {
-        v = parts[0] + '.' + parts.slice(1).join('');
+      // Yalnızca rakam kalsın
+      let v = (n.value || '').replace(/[^0-9]/g,'');
+      // Önde sıfır normal (örn. "0"), ama boş ise 0 yapma — kullanıcı yazıyor olabilir
+      // 0–100 aralığına kırp
+      if (v !== '') {
+        let num = parseInt(v,10);
+        if (Number.isNaN(num)) num = 0;
+        v = String(num);
       }
       n.value = v;
-      if(document.activeElement===n){
-        const ns = Math.min(s, v.length);
-        n.setSelectionRange(ns, ns);
-      }
     });
   });
 }
+
 
 
 document.getElementById('showThresh').addEventListener('click', ()=>{
