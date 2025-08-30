@@ -359,8 +359,7 @@ function renderInputs(){
         <div><label>Webex Deployment (%)</label><input type="number" id="eng1" step="0.1" value="0"></div>
         <div><label>Webex Adoption (%)</label><input type="number" id="eng2" step="0.1" value="0"></div>
       </div>
-      <div class="hint">Collab: Last 3 months </div>`;
-      
+      <div class="hint">Collab: son 3 ay penceresi.</div>`;
   } else if (p==='Services') {
     e.innerHTML = `
       <div class="row">
@@ -372,10 +371,14 @@ function renderInputs(){
         <div><label>Deals Completed – Onboard (%)</label><input type="number" id="eng1" step="0.1" value="0"></div>
         <div><label>Deals Completed – Adopt (%)</label><input type="number" id="eng2" step="0.1" value="0"></div>
       </div>
-      <div class="hint">Onboard/Adopt: Last 18 months </div>`;
+      <div class="hint">Onboard/Adopt: 18 ay penceresi.</div>`;
   }
 
     // === render sonrası input guard bağlama ===
+
+
+
+
   // TAMSAYI ZORUNLU ALANLAR (headcount): BB & Career Certs
   attachIntGuards(["bb1","bb2","bb3","cert_expert","cert_prof","cert_assoc"]);
 
@@ -389,6 +392,27 @@ function renderInputs(){
   } else { // Collaboration, Splunk
     attachDecimalGuards(["acv","tcv","eng1","eng2"]);
   }
+
+// --- locale fix: decimal inputlarda nokta (.) i in 'lang=en' ---
+(function forceEnLocaleForDecimals(){
+  const p = el('portfolio').value;
+  const ids =
+    (p==='Networking'||p==='Security') ? ["acv","tcv","penetration","eng1","eng2"] :
+    (p==='Services')                   ? ["acv","premium","otrr"] :
+    (p==='Cloud & AI')                 ? ["acv","tcv","penetration","ai_skus","eng1","eng2"] :
+                                         ["acv","tcv","eng1","eng2"]; // Collaboration/Splunk
+
+  ids.forEach(id=>{
+    const n = document.getElementById(id);
+    if (n) {
+      n.setAttribute('lang','en');       // nokta klavyeden kabul edilir
+      n.setAttribute('inputmode','decimal');
+      n.setAttribute('step','0.1');      // sa?lamla?t?rma
+    }
+  });
+})();
+
+
 
   // Attach handlers
   document.querySelectorAll('#foundationalInputs select, #capabilityInputs input, #capabilityInputs select, #performanceInputs input, #engagementInputs input, #capabilityInputs select').forEach(x=>{
@@ -460,29 +484,30 @@ function calc(){
   perf=(acvIdx/10)*(W.P*(SW.perf.acv||0.5))+(tcvIdx/10)*(W.P*(SW.perf.tcv||0.5));
   }
 
-  // Engagement
+  
   let eng=0;
   const e1=Number((document.getElementById('eng1')||{value:0}).value||0);
   const e2=Number((document.getElementById('eng2')||{value:0}).value||0);
  
-  if(p==='Collaboration'){
+ if(p==='Collaboration'){
     const dIdx = upperIndex(e1, COL.DEPLOY_UP);
     const aIdx = upperIndex(e2, COL.ADOPT_UP);
     eng=(dIdx/10)*(W.E*SUBW.Collaboration.eng.deploy)+(aIdx/10)*(W.E*SUBW.Collaboration.eng.adopt);
+
   } 
-  
-  else if(p==='Services'){
+
+else if(p==='Services'){
     const ot = Number((document.getElementById('otrr')||{value:0}).value||0);
     const otIdx = upperIndex(ot, SERVICES.OTRR);
     eng=(otIdx/10) * (W.E * SUBW.Services.eng.otrr);
   } 
-  
-  else {
-    const onIdx = upperIndex(e1, NET.ONB_UP); // 0..10 → %0→0, %10→1, %15→2, ...
-  const adIdx = upperIndex(e2, NET.ADP_UP); // 0..10 → %0→0,  %3→1,  %6→2, ...
+
+else {
+    const onIdx = upperIndex(e1, NET.ONB_UP); // 0..10 ? %0?0, %10?1, %15?2, ...
+  const adIdx = upperIndex(e2, NET.ADP_UP); // 0..10 ? %0?0,  %3?1,  %6?2, ...
   eng = (onIdx/10)*(W.E*SUBW[p].eng.a)
       + (adIdx/10)*(W.E*SUBW[p].eng.b);
-  }
+}
 
   const total = +(fnd+cap+perf+eng).toFixed(2);
   el('fnd').textContent=fnd.toFixed(2);
@@ -548,35 +573,43 @@ document.addEventListener('focusin', (e) => {
 });
 
   // number input'larda istenmeyen karakterleri engelle + ',' → '.' yap, caret'i koru
-document.addEventListener('keydown', (e) => {
-  if (e.target && e.target.matches('input[type="number"]')) {
-    // bilimsel gösterim/işaretleri tamamen engelle
-    if (['e','E','+','-'].includes(e.key)) {
-      e.preventDefault();
-      return;
-    }
-    // TR klavyede ondalık için genelde ',' basılıyor → '.' olarak yaz, caret bozulmasın
-    if (e.key === ',') {
-      e.preventDefault();
-      const el = e.target;
-      const { selectionStart: s, selectionEnd: t, value: v } = el;
-      const nv = v.slice(0, s) + '.' + v.slice(t);
-      el.value = nv;
-      el.setSelectionRange(s + 1, s + 1);
-      // anında hesap tetiklensin
-      el.dispatchEvent(new Event('input', { bubbles: true }));
-    }
-  }
-});
 
-// paste/IME durumunda da temizle: sadece 0-9 ve tek '.' kalsın, ',' → '.'
-document.addEventListener('input', (e) => {
-  if (e.target && e.target.matches('input[type="number"]')) {
-    let v = e.target.value.replace(/,/g, '.');     // virgülleri noktaya çevir
-    v = v.replace(/[^0-9.]/g, '');                 // harf vs. sil
-    const parts = v.split('.');
-    if (parts.length > 2) v = parts[0] + '.' + parts.slice(1).join(''); // tek '.' bırak
-    e.target.value = v;
+// number input'larda yasaklıları engelle + '.' ve ',' yönetimi (caret korunur)
+document.addEventListener('keydown', (e) => {
+  if (!(e.target && e.target.matches('input[type="number"]'))) return;
+
+  const INT_IDS = ['bb1','bb2','bb3','cert_expert','cert_prof','cert_assoc']; // sadece tamsayı
+  const isInt = INT_IDS.includes(e.target.id);
+  const el = e.target;
+
+  // Bilimsel gösterim ve işaretler her yerde yasak
+  if (['e','E','+','-'].includes(e.key)) { e.preventDefault(); return; }
+
+  // Tamsayı alanlarda '.' ve ',' tamamen yasak
+  if (isInt && (e.key === '.' || e.key === ',')) { e.preventDefault(); return; }
+
+  // Virgül basılırsa: decimal alanlarda '.' olarak yaz (caret sabit kalsın)
+  if (!isInt && e.key === ',') {
+    e.preventDefault();
+    const { selectionStart: s, selectionEnd: t, value: v } = el;
+    const nv = v.slice(0, s) + '.' + v.slice(t);
+    el.value = nv;
+    el.setSelectionRange(s + 1, s + 1);
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    return;
+  }
+
+  // Nokta basılırsa: bazı tarayıcılar yutuyor; biz elle yerleştiriyoruz
+  if (!isInt && e.key === '.') {
+    e.preventDefault();
+    const { selectionStart: s, selectionEnd: t, value: v } = el;
+    // İkinci noktayı engelle (örn. "12.3.4" olmasın)
+    if (v.includes('.') && s === t && v.indexOf('.') !== -1) return;
+    const nv = v.slice(0, s) + '.' + v.slice(t);
+    el.value = nv;
+    el.setSelectionRange(s + 1, s + 1);
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    return;
   }
 });
 
@@ -595,20 +628,30 @@ function attachIntGuards(ids){
 }
 
   // decimal (ondalık) alan koruması: sadece 0-9 ve tek '.' izin ver
+
+
+
 function attachDecimalGuards(ids){
   ids.forEach(id=>{
     const n = el(id);
     if(!n) return;
     n.addEventListener("input", ()=>{
-      let v = n.value.replace(/[^0-9.]/g,'');      // harf vs. temizle
+      const s = n.selectionStart;
+      let v = n.value.replace(/,/g,'.');   // paste durumunda , ? .
+      v = v.replace(/[^0-9.]/g,'');
       const parts = v.split('.');
       if (parts.length > 2) {
-        v = parts[0] + '.' + parts.slice(1).join('').replace(/\./g,''); // tek '.' bırak
+        v = parts[0] + '.' + parts.slice(1).join('');
       }
       n.value = v;
+      if(document.activeElement===n){
+        const ns = Math.min(s, v.length);
+        n.setSelectionRange(ns, ns);
+      }
     });
   });
 }
+
 
 document.getElementById('showThresh').addEventListener('click', ()=>{
   const p=el('portfolio').value; const band=el('tsize').value; const tb=currentTB();
