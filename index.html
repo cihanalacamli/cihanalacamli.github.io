@@ -509,6 +509,11 @@ document.getElementById('tsize').addEventListener('change', calc);
 renderInputs();
 calc();
 
+  // sayfa init’inde bir kere çalıştır
+document.querySelectorAll('input[type="number"]').forEach(inp => {
+  inp.addEventListener('focus', e => e.target.select());
+});
+  
 // integer-only guard for Capabilities inputs
 function attachIntGuards(ids){
   ids.forEach(id=>{
