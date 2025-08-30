@@ -464,18 +464,24 @@ function calc(){
   let eng=0;
   const e1=Number((document.getElementById('eng1')||{value:0}).value||0);
   const e2=Number((document.getElementById('eng2')||{value:0}).value||0);
+ 
   if(p==='Collaboration'){
     const dIdx = upperIndex(e1, COL.DEPLOY_UP);
     const aIdx = upperIndex(e2, COL.ADOPT_UP);
     eng=(dIdx/10)*(W.E*SUBW.Collaboration.eng.deploy)+(aIdx/10)*(W.E*SUBW.Collaboration.eng.adopt);
-  } else if(p==='Services'){
+  } 
+  
+  else if(p==='Services'){
     const ot = Number((document.getElementById('otrr')||{value:0}).value||0);
     const otIdx = upperIndex(ot, SERVICES.OTRR);
     eng=(otIdx/10) * (W.E * SUBW.Services.eng.otrr);
-  } else {
-    const onIdx = boundedIndex(e1, NET.ONB_LO, NET.ONB_UP);
-    const adIdx = boundedIndex(e2, NET.ADP_LO, NET.ADP_UP);
-    eng=(onIdx/10)*(W.E*SUBW[p].eng.a)+(adIdx/10)*(W.E*SUBW[p].eng.b);
+  } 
+  
+  else {
+    const onIdx = upperIndex(e1, NET.ONB_UP); // 0..10 → %0→0, %10→1, %15→2, ...
+  const adIdx = upperIndex(e2, NET.ADP_UP); // 0..10 → %0→0,  %3→1,  %6→2, ...
+  eng = (onIdx/10)*(W.E*SUBW[p].eng.a)
+      + (adIdx/10)*(W.E*SUBW[p].eng.b);
   }
 
   const total = +(fnd+cap+perf+eng).toFixed(2);
