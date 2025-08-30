@@ -461,33 +461,21 @@ function calc(){
 
   // Engagement
   let eng=0;
-  const tier = (x, T=[0,10,20,30,50]) => {
-  if (x >= T[4]) return 1;
-  if (x >= T[3]) return 0.75;
-  if (x >= T[2]) return 0.50;
-  if (x >= T[1]) return 0.25;
-  return 0;
-};
+  const e1=Number((document.getElementById('eng1')||{value:0}).value||0);
+  const e2=Number((document.getElementById('eng2')||{value:0}).value||0);
   if(p==='Collaboration'){
     const dIdx = upperIndex(e1, COL.DEPLOY_UP);
     const aIdx = upperIndex(e2, COL.ADOPT_UP);
     eng=(dIdx/10)*(W.E*SUBW.Collaboration.eng.deploy)+(aIdx/10)*(W.E*SUBW.Collaboration.eng.adopt);
-  } 
-  else if(p==='Services'){
+  } else if(p==='Services'){
     const ot = Number((document.getElementById('otrr')||{value:0}).value||0);
     const otIdx = upperIndex(ot, SERVICES.OTRR);
     eng=(otIdx/10) * (W.E * SUBW.Services.eng.otrr);
-  } 
-  
-  else {
-  // Networking, Security, Cloud & AI → ikisi de % alan
-  const e1 = num('eng1');    // Onboard %
-  const e2 = num('eng2');    // Adopt %
-  // Eğer özel eşik tablon yoksa (Collab’tekiyle aynı hissi versin diye) default T=[0,10,20,30,50]
-  const eScore = 0.5 * tier(e1) + 0.5 * tier(e2);   // 0..1
-  eng = eScore;                                      // 0..1
-  total += WEIGHTS[p].E * eng;                       // E ağırlığı portföye göre
-}
+  } else {
+    const onIdx = boundedIndex(e1, NET.ONB_LO, NET.ONB_UP);
+    const adIdx = boundedIndex(e2, NET.ADP_LO, NET.ADP_UP);
+    eng=(onIdx/10)*(W.E*SUBW[p].eng.a)+(adIdx/10)*(W.E*SUBW[p].eng.b);
+  }
 
   const total = +(fnd+cap+perf+eng).toFixed(2);
   el('fnd').textContent=fnd.toFixed(2);
@@ -552,46 +540,38 @@ document.addEventListener('focusin', (e) => {
   }
 });
 
-
-// sadece ondalık alanlar: ',' → '.' ; integer alanlarda virgül tamamen engellenir
-const DECIMAL_IDS = new Set(['acv','tcv','penetration','ai_skus','eng1','eng2','premium','otrr']);
-
+  // number input'larda istenmeyen karakterleri engelle + ',' → '.' yap, caret'i koru
 document.addEventListener('keydown', (e) => {
-  const t = e.target;
-  if (!(t instanceof HTMLInputElement) || t.type !== 'number') return;
-
-  // bilimsel gösterim/işaretleri engelle
-  if (['e','E','+','-'].includes(e.key)) { e.preventDefault(); return; }
-
-  if (e.key === ',') {
-    if (!DECIMAL_IDS.has(t.id)) {
-      // integer alanda virgül tamamen yasak
+  if (e.target && e.target.matches('input[type="number"]')) {
+    // bilimsel gösterim/işaretleri tamamen engelle
+    if (['e','E','+','-'].includes(e.key)) {
       e.preventDefault();
       return;
     }
-    // ondalık alanda ',' → '.' ve caret'i koru
-    e.preventDefault();
-    const s = t.selectionStart, en = t.selectionEnd, v = t.value;
-    t.value = v.slice(0, s) + '.' + v.slice(en);
-    t.setSelectionRange(s + 1, s + 1);
-    t.dispatchEvent(new Event('input', { bubbles: true }));
+    // TR klavyede ondalık için genelde ',' basılıyor → '.' olarak yaz, caret bozulmasın
+    if (e.key === ',') {
+      e.preventDefault();
+      const el = e.target;
+      const { selectionStart: s, selectionEnd: t, value: v } = el;
+      const nv = v.slice(0, s) + '.' + v.slice(t);
+      el.value = nv;
+      el.setSelectionRange(s + 1, s + 1);
+      // anında hesap tetiklensin
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    }
   }
 });
 
-  
-
-// sadece ondalık alanlarda paste/IME temizliği: ',' -> '.' ; sadece 0-9 ve tek '.'
+// paste/IME durumunda da temizle: sadece 0-9 ve tek '.' kalsın, ',' → '.'
 document.addEventListener('input', (e) => {
-  const t = e.target;
-  if (!(t instanceof HTMLInputElement) || t.type !== 'number') return;
-  if (!DECIMAL_IDS.has(t.id)) return; // integer alanlara dokunma
-
-  let v = t.value.replace(/,/g, '.').replace(/[^0-9.]/g, '');
-  const i = v.indexOf('.');
-  if (i !== -1) v = v.slice(0, i + 1) + v.slice(i + 1).replace(/\./g, '');
-  t.value = v;
+  if (e.target && e.target.matches('input[type="number"]')) {
+    let v = e.target.value.replace(/,/g, '.');     // virgülleri noktaya çevir
+    v = v.replace(/[^0-9.]/g, '');                 // harf vs. sil
+    const parts = v.split('.');
+    if (parts.length > 2) v = parts[0] + '.' + parts.slice(1).join(''); // tek '.' bırak
+    e.target.value = v;
+  }
 });
-
 
 
   
