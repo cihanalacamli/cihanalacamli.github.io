@@ -376,7 +376,31 @@ function renderInputs(){
 
     // === render sonrası input guard bağlama ===
   // TAMSAYI ZORUNLU ALANLAR (headcount): BB & Career Certs
- // attachIntGuards(["bb1","bb2","bb3","cert_expert","cert_prof","cert_assoc"]);
+ // Guard for integer-only fields
+["bb1","bb2","bb3","certs"].forEach(id=>{
+  el(id).addEventListener("keydown", e=>{
+    if(
+      !(
+        (e.key >= "0" && e.key <= "9") ||
+        ["Backspace","Delete","ArrowLeft","ArrowRight","Tab"].includes(e.key)
+      )
+    ){ e.preventDefault(); }
+  });
+});
+
+// Guard for decimal-allowed fields
+["penetration","growth","hubw","ea"].forEach(id=>{
+  el(id).addEventListener("keydown", e=>{
+    if(
+      !(
+        (e.key >= "0" && e.key <= "9") ||
+        (e.key === "." && !e.target.value.includes(".")) ||
+        ["Backspace","Delete","ArrowLeft","ArrowRight","Tab"].includes(e.key)
+      )
+    ){ e.preventDefault(); }
+  });
+});
+
 
   // ONDALIK İZİNLİ ALANLAR (yüzdeler): portföye göre
   if (p==='Networking' || p==='Security'){
