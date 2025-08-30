@@ -103,7 +103,7 @@
         <h3>Result</h3>
         <div class="kpi">
           <div class="k">
-            <div class="hint">Total (0–10)</div>
+            <div class="hint">Total (0–<span id="totalMax">10</span>)</div>
             <div id="total" class="big">0.00</div>
             <div class="scorebar"><div id="bar" style="width:0%"></div></div>
           </div>
@@ -469,6 +469,7 @@ function calc(){
   el('eng').textContent=eng.toFixed(2);
   el('total').textContent=total.toFixed(2);
   el('bar').style.width=(total*10)+'%';
+  
 
   // renk değişimi
   const bar = el("bar");
@@ -503,7 +504,7 @@ function calc(){
 
 document.getElementById('portfolio').addEventListener('change', ()=>{renderInputs(); calc();});
 document.getElementById('tsize').addEventListener('change', calc);
-
+el("totalMax").textContent = (port === "Services" ? "10.5" : "10");
 // init
 renderInputs();
 calc();
