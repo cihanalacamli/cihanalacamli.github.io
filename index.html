@@ -540,38 +540,46 @@ document.addEventListener('focusin', (e) => {
   }
 });
 
-  // number input'larda istenmeyen karakterleri engelle + ',' → '.' yap, caret'i koru
+
+// sadece ondalık alanlar: ',' → '.' ; integer alanlarda virgül tamamen engellenir
+const DECIMAL_IDS = new Set(['acv','tcv','penetration','ai_skus','eng1','eng2','premium','otrr']);
+
 document.addEventListener('keydown', (e) => {
-  if (e.target && e.target.matches('input[type="number"]')) {
-    // bilimsel gösterim/işaretleri tamamen engelle
-    if (['e','E','+','-'].includes(e.key)) {
+  const t = e.target;
+  if (!(t instanceof HTMLInputElement) || t.type !== 'number') return;
+
+  // bilimsel gösterim/işaretleri engelle
+  if (['e','E','+','-'].includes(e.key)) { e.preventDefault(); return; }
+
+  if (e.key === ',') {
+    if (!DECIMAL_IDS.has(t.id)) {
+      // integer alanda virgül tamamen yasak
       e.preventDefault();
       return;
     }
-    // TR klavyede ondalık için genelde ',' basılıyor → '.' olarak yaz, caret bozulmasın
-    if (e.key === ',') {
-      e.preventDefault();
-      const el = e.target;
-      const { selectionStart: s, selectionEnd: t, value: v } = el;
-      const nv = v.slice(0, s) + '.' + v.slice(t);
-      el.value = nv;
-      el.setSelectionRange(s + 1, s + 1);
-      // anında hesap tetiklensin
-      el.dispatchEvent(new Event('input', { bubbles: true }));
-    }
+    // ondalık alanda ',' → '.' ve caret'i koru
+    e.preventDefault();
+    const s = t.selectionStart, en = t.selectionEnd, v = t.value;
+    t.value = v.slice(0, s) + '.' + v.slice(en);
+    t.setSelectionRange(s + 1, s + 1);
+    t.dispatchEvent(new Event('input', { bubbles: true }));
   }
 });
 
-// paste/IME durumunda da temizle: sadece 0-9 ve tek '.' kalsın, ',' → '.'
+  
+
+// sadece ondalık alanlarda paste/IME temizliği: ',' -> '.' ; sadece 0-9 ve tek '.'
 document.addEventListener('input', (e) => {
-  if (e.target && e.target.matches('input[type="number"]')) {
-    let v = e.target.value.replace(/,/g, '.');     // virgülleri noktaya çevir
-    v = v.replace(/[^0-9.]/g, '');                 // harf vs. sil
-    const parts = v.split('.');
-    if (parts.length > 2) v = parts[0] + '.' + parts.slice(1).join(''); // tek '.' bırak
-    e.target.value = v;
-  }
+  const t = e.target;
+  if (!(t instanceof HTMLInputElement) || t.type !== 'number') return;
+  if (!DECIMAL_IDS.has(t.id)) return; // integer alanlara dokunma
+
+  let v = t.value.replace(/,/g, '.').replace(/[^0-9.]/g, '');
+  const i = v.indexOf('.');
+  if (i !== -1) v = v.slice(0, i + 1) + v.slice(i + 1).replace(/\./g, '');
+  t.value = v;
 });
+
 
 
   
