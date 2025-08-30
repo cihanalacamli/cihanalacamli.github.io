@@ -103,7 +103,7 @@
         <h3>Result</h3>
         <div class="kpi">
           <div class="k">
-            <div class="hint">Total (0–<span id="totalMax">10</span>)</div>
+            <div class="hint">Total (0–10)</div>
             <div id="total" class="big">0.00</div>
             <div class="scorebar"><div id="bar" style="width:0%"></div></div>
           </div>
@@ -387,9 +387,7 @@ function boundedIndex(value, lowers, uppers){ if(value<=uppers[0]) return 0; for
 function currentTB(){ const p=el('portfolio').value; return p==='Networking'?NET: p==='Security'?NET: p==='Collaboration'?COL: p==='Cloud & AI'?CLOUD: p==='Services'?SERVICES: SPLUNK; }
 
 function calc(){
-  const p=el('portfolio').value; 
-  el("totalMax").textContent = (port === "Services" ? "10.5" : "10");
-  const band=el('tsize').value;
+  const p=el('portfolio').value;  const band=el('tsize').value;
   const W=WEIGHTS[p]; const SW=SUBW[p]; const TB=currentTB();
 
   // Foundational
