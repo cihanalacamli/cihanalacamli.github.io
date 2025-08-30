@@ -540,12 +540,39 @@ document.addEventListener('focusin', (e) => {
   }
 });
 
-  // tüm number alanlarda 'e', 'E', '+', '-' girişini blokla
+  // number input'larda istenmeyen karakterleri engelle + ',' → '.' yap, caret'i koru
 document.addEventListener('keydown', (e) => {
   if (e.target && e.target.matches('input[type="number"]')) {
-    if (['e','E','+','-'].includes(e.key)) e.preventDefault();
+    // bilimsel gösterim/işaretleri tamamen engelle
+    if (['e','E','+','-'].includes(e.key)) {
+      e.preventDefault();
+      return;
+    }
+    // TR klavyede ondalık için genelde ',' basılıyor → '.' olarak yaz, caret bozulmasın
+    if (e.key === ',') {
+      e.preventDefault();
+      const el = e.target;
+      const { selectionStart: s, selectionEnd: t, value: v } = el;
+      const nv = v.slice(0, s) + '.' + v.slice(t);
+      el.value = nv;
+      el.setSelectionRange(s + 1, s + 1);
+      // anında hesap tetiklensin
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    }
   }
 });
+
+// paste/IME durumunda da temizle: sadece 0-9 ve tek '.' kalsın, ',' → '.'
+document.addEventListener('input', (e) => {
+  if (e.target && e.target.matches('input[type="number"]')) {
+    let v = e.target.value.replace(/,/g, '.');     // virgülleri noktaya çevir
+    v = v.replace(/[^0-9.]/g, '');                 // harf vs. sil
+    const parts = v.split('.');
+    if (parts.length > 2) v = parts[0] + '.' + parts.slice(1).join(''); // tek '.' bırak
+    e.target.value = v;
+  }
+});
+
 
   
 // integer-only guard for Capabilities inputs
