@@ -376,45 +376,38 @@ function renderInputs(){
 
     // === render sonrası input guard bağlama ===
 
-
-
-
   // TAMSAYI ZORUNLU ALANLAR (headcount): BB & Career Certs
   attachIntGuards(["bb1","bb2","bb3","cert_expert","cert_prof","cert_assoc"]);
 
-  // ONDALIK İZİNLİ ALANLAR (yüzdeler): portföye göre
-  // YÜZDE ALANLARI: ondalık guard yerine "percent guard"
-if (p==='Networking' || p==='Security'){
-  attachPercentGuards(["acv","tcv","penetration","eng1","eng2"]);
-} else if (p==='Services'){
-  attachPercentGuards(["acv","premium","otrr"]);
-} else if (p==='Cloud & AI'){
-  attachPercentGuards(["acv","tcv","penetration","ai_skus","eng1","eng2"]);
-} else { // Collaboration, Splunk
-  attachPercentGuards(["acv","tcv","eng1","eng2"]);
-}
+  // YÜZDE ALANLARI (ondalık destekli): portföye göre bağla
+  if (p==='Networking' || p==='Security'){
+    attachPercentGuards(["acv","tcv","penetration","eng1","eng2"]);
+  } else if (p==='Services'){
+    attachPercentGuards(["acv","premium","otrr"]);
+  } else if (p==='Cloud & AI'){
+    attachPercentGuards(["acv","tcv","penetration","ai_skus","eng1","eng2"]);
+  } else { // Collaboration, Splunk
+    attachPercentGuards(["acv","tcv","eng1","eng2"]);
+  }
 
+  // --- locale fix: decimal inputlarda nokta (.) için 'lang=en' ---
+  (function forceEnLocaleForDecimals(){
+    const p = el('portfolio').value;
+    const ids =
+      (p==='Networking'||p==='Security') ? ["acv","tcv","penetration","eng1","eng2"] :
+      (p==='Services')                   ? ["acv","premium","otrr"] :
+      (p==='Cloud & AI')                 ? ["acv","tcv","penetration","ai_skus","eng1","eng2"] :
+                                           ["acv","tcv","eng1","eng2"]; // Collaboration/Splunk
 
-// --- locale fix: decimal inputlarda nokta (.) i in 'lang=en' ---
-(function forceEnLocaleForDecimals(){
-  const p = el('portfolio').value;
-  const ids =
-    (p==='Networking'||p==='Security') ? ["acv","tcv","penetration","eng1","eng2"] :
-    (p==='Services')                   ? ["acv","premium","otrr"] :
-    (p==='Cloud & AI')                 ? ["acv","tcv","penetration","ai_skus","eng1","eng2"] :
-                                         ["acv","tcv","eng1","eng2"]; // Collaboration/Splunk
-
-  ids.forEach(id=>{
-    const n = document.getElementById(id);
-    if (n) {
-      n.setAttribute('lang','en');       // nokta klavyeden kabul edilir
-      n.setAttribute('inputmode','decimal');
-      n.setAttribute('step','0.1');      // sa?lamla?t?rma
-    }
-  });
-})();
-
-
+    ids.forEach(id=>{
+      const n = document.getElementById(id);
+      if (n) {
+        n.setAttribute('lang','en');
+        n.setAttribute('inputmode','decimal');
+        if (!n.getAttribute('step')) n.setAttribute('step','0.1');
+      }
+    });
+  })();
 
   // Attach handlers
   document.querySelectorAll('#foundationalInputs select, #capabilityInputs input, #capabilityInputs select, #performanceInputs input, #engagementInputs input, #capabilityInputs select').forEach(x=>{
@@ -505,8 +498,8 @@ else if(p==='Services'){
   } 
 
 else {
-    const onIdx = upperIndex(e1, NET.ONB_UP); // 0..10 ? %0?0, %10?1, %15?2, ...
-  const adIdx = upperIndex(e2, NET.ADP_UP); // 0..10 ? %0?0,  %3?1,  %6?2, ...
+    const onIdx = upperIndex(e1, NET.ONB_UP); // 0..10 ? %0→0, %10→1, %15→2, ...
+  const adIdx = upperIndex(e2, NET.ADP_UP); // 0..10 ? %0→0,  %3→1,  %6→2, ...
   eng = (onIdx/10)*(W.E*SUBW[p].eng.a)
       + (adIdx/10)*(W.E*SUBW[p].eng.b);
 }
@@ -538,7 +531,7 @@ else {
     bar.style.background = "linear-gradient(90deg,#22c55e,#4ade80)"; // green
   }
 
-  // Status + simple tips (değiştirmedim)
+  // Status + simple tips
   let status='';
   if(total<1){status='Pre-enablement'; el('unlock').textContent='Reach 1.0 to unlock NFR & Hunting/Teaming.'}
   else if(total<5){status=`Enabled – on track for Cisco ${p} Partner (≥5.0)`; el('unlock').textContent='NFR/Hunting unlocked. Push Capabilities & Performance.'}
@@ -567,39 +560,59 @@ document.getElementById('tsize').addEventListener('change', calc);
 renderInputs();
 calc();
 
-  // tüm sayfa için delegation: sonradan eklenen input'larda da çalışır
+// tüm sayfa için delegation: sonradan eklenen input'larda da çalışır
 document.addEventListener('focusin', (e) => {
   if (e.target && e.target.matches('input[type="number"]')) {
     e.target.select();
   }
 });
 
-  // number input'larda istenmeyen karakterleri engelle + ',' → '.' yap, caret'i koru
-
-
-// YERİNE GEÇER
+// === KEYDOWN: ondalık giriş (yüzdeler) için caret güvenli ekleme ===
 document.addEventListener('keydown', (e) => {
   if (!(e.target && e.target.matches('input[type="number"]'))) return;
 
   const INT_IDS = ['bb1','bb2','bb3','cert_expert','cert_prof','cert_assoc'];
-  const PCT_IDS = ['acv','tcv','penetration','ai_skus','eng1','eng2','premium','otrr']; // tüm yüzde alanları
+  const PCT_IDS = ['acv','tcv','penetration','ai_skus','eng1','eng2','premium','otrr'];
   const id = e.target.id;
+  const elx = e.target;
 
   // Bilimsel gösterim ve işaretleri kapat
   if (['e','E','+','-'].includes(e.key)) { e.preventDefault(); return; }
 
-  // Tüm tam sayılar: . , yasak
+  // Tam sayılar: nokta/virgül yasak
   if (INT_IDS.includes(id) && (e.key === '.' || e.key === ',')) { e.preventDefault(); return; }
 
-  // YÜZDE ALANLARI: . , TAMAMEN YASAK (artık ondalık yok)
-  if (PCT_IDS.includes(id) && (e.key === '.' || e.key === ',')) { e.preventDefault(); return; }
+  // Yardımcılar
+  const safeSelStart = (node) => (Number.isInteger(node.selectionStart) ? node.selectionStart : String(node.value||'').length);
+  const safeSelEnd   = (node) => (Number.isInteger(node.selectionEnd)   ? node.selectionEnd   : String(node.value||'').length);
+  const setCaret = (node, pos) => { try { node.setSelectionRange(pos, pos); } catch(_){} };
+
+  // Yüzdeler: ',' veya '.' tuşu → caret'te tek ondalık nokta olarak ekle
+  if (PCT_IDS.includes(id) && (e.key === '.' || e.key === ',')) {
+    e.preventDefault();
+    const v = String(elx.value || '');
+    const s = safeSelStart(elx);
+    const t = safeSelEnd(elx);
+
+    // Zaten nokta varsa ve seçim yoksa ikinciyi engelle
+    if (v.includes('.') && s === t) return;
+
+    const inserted = v.slice(0, s) + '.' + v.slice(t);
+    // İlk nokta kalsın, sonrakileri temizle (seçim yazma durumunda güvenli)
+    const d = inserted.indexOf('.');
+    const normalized = d === -1 ? inserted : inserted.slice(0, d + 1) + inserted.slice(d + 1).replace(/\./g, '');
+
+    elx.value = normalized;
+    setCaret(elx, Math.min(s + 1, normalized.length));
+
+    // hesap tetikle
+    elx.dispatchEvent(new Event('input', { bubbles: true }));
+    elx.dispatchEvent(new Event('change', { bubbles: true }));
+    return;
+  }
 });
 
-
-
-
-  
-// integer-only guard for Capabilities inputs
+// === Integer-only guard for capabilities (headcount) ===
 function attachIntGuards(ids){
   ids.forEach(id=>{
     const n = el(id);
@@ -611,30 +624,38 @@ function attachIntGuards(ids){
   });
 }
 
-  // decimal (ondalık) alan koruması: sadece 0-9 ve tek '.' izin ver
-
-
+// === Percent guards: ondalık destek — sadece 0-9 ve tek '.'; paste normalizasyonu ===
 function attachPercentGuards(ids){
   ids.forEach(id=>{
     const n = el(id);
     if(!n) return;
 
-    n.addEventListener("input", ()=>{
-      // Yalnızca rakam kalsın
-      let v = (n.value || '').replace(/[^0-9]/g,'');
-      // Önde sıfır normal (örn. "0"), ama boş ise 0 yapma — kullanıcı yazıyor olabilir
-      // 0–100 aralığına kırp
-      if (v !== '') {
-        let num = parseInt(v,10);
-        if (Number.isNaN(num)) num = 0;
-        v = String(num);
-      }
-      n.value = v;
-    });
+    const sanitize = (raw) => {
+      if (raw == null) return '';
+      let v = String(raw);
+      v = v.replace(/,/g, '.');        // virgülleri noktaya çevir
+      v = v.replace(/[^0-9.]/g, '');   // rakam ve nokta dışındakileri sil
+      const first = v.indexOf('.');
+      if (first !== -1) v = v.slice(0, first + 1) + v.slice(first + 1).replace(/\./g, '');
+      if (v === '.') v = '0.';         // tek '.' → '0.' yap
+      return v;
+    };
+
+    const onInput = () => {
+      const before = String(n.value || '');
+      const after  = sanitize(before);
+      if (after !== before) n.value = after;
+    };
+
+    n.addEventListener('input', onInput);
+    n.addEventListener('paste', () => { requestAnimationFrame(onInput); });
+    n.setAttribute('lang','en');
+    n.setAttribute('inputmode','decimal');
+    if (!n.getAttribute('step')) n.setAttribute('step','0.1');
   });
 }
 
-
+// Threshold inspector
 
 document.getElementById('showThresh').addEventListener('click', ()=>{
   const p=el('portfolio').value; const band=el('tsize').value; const tb=currentTB();
@@ -646,6 +667,126 @@ document.getElementById('showThresh').addEventListener('click', ()=>{
   if(p==='Services'){ obj.PremiumServices_uppers=SERVICES.PREMIUM[band]; obj.OTRR_uppers=SERVICES.OTRR; }
   el('thdump').textContent=JSON.stringify(obj,null,2);
 });
+</script>
+<script>
+// ==== DECIMAL PATCH (robust, caret-safe) ====
+(function(){
+  if (window.__decPatchApplied) return; window.__decPatchApplied = true;
+
+  function attachPercentGuards2(ids){
+    ids.forEach(id=>{
+      const n = document.getElementById(id);
+      if(!n) return;
+      // Force text-mode for decimals (number inputs can clear on '.')
+      n.setAttribute('type','text');
+      n.setAttribute('inputmode','decimal');
+      n.setAttribute('lang','en');
+
+      const sanitizeWithCaret = (value, caret) => {
+        let v = String(value ?? '');
+        let c = Math.max(0, Math.min(caret ?? v.length, v.length));
+
+        // 1) ',' -> '.'
+        const left = v.slice(0,c); const leftRepl = left.replace(/,/g,'.');
+        const deltaComma = leftRepl.length - left.length; // 0 or positive
+        v = (leftRepl + v.slice(c)).replace(/,/g,'.');
+        c += deltaComma;
+
+        // 2) strip invalids (keep digits and '.') with caret adjust
+        const before = v;
+        let kept = ''; let newC = c;
+        for (let i=0, j=0; i<before.length; i++){
+          const ch = before[i];
+          const ok = (ch>='0' && ch<='9') || ch==='.';
+          if (ok){ kept += ch; j++; } else { if (i < c) newC--; }
+        }
+        v = kept; c = Math.max(0, newC);
+
+        // 3) keep only first '.'
+        const first = v.indexOf('.');
+        if (first !== -1){
+          let rebuilt = v.slice(0, first+1);
+          for (let i=first+1; i<v.length; i++){
+            const ch = v[i];
+            if (ch !== '.'){ rebuilt += ch; }
+            else { if (i < c) c--; }
+          }
+          v = rebuilt;
+        }
+
+        // 4) lone '.' => '0.'
+        if (v === '.'){
+          v = '0.';
+          if (c === 1) c = 2;
+        }
+
+// remove leading zeros when followed by a digit (keeps '0.' intact)
+if (/^0+(?=\d)/.test(v)) {
+  const m = v.match(/^0+(?=\d)/)[0].length;
+  if (Number.isInteger(c) && c > 0) c = Math.max(0, c - m);
+  v = v.replace(/^0+(?=\d)/, '');
+}
+
+        // clamp caret
+        if (c > v.length) c = v.length;
+        return {v, c};
+      };
+
+      const onInput = () => {
+        try{
+          const s = n.selectionStart;
+          const {v, c} = sanitizeWithCaret(n.value, s);
+          if (n.value !== v){
+            n.value = v;
+            try{ n.setSelectionRange(c, c); }catch(_){}
+          }
+        }catch(_){
+          // fallback: no-caret sanitize
+          let v = String(n.value||'').replace(/,/g,'.').replace(/[^0-9.]/g,'');
+          const first = v.indexOf('.');
+          if (first !== -1) v = v.slice(0,first+1) + v.slice(first+1).replace(/\./g,'');
+          if (v === '.') v = '0.';
+          n.value = v;
+        }
+      };
+
+      n.addEventListener('input', onInput);
+      n.addEventListener('paste', ()=> requestAnimationFrame(onInput));
+    });
+  }
+
+  function pctIdsFor(p){
+    if (p==='Networking' || p==='Security') return ['acv','tcv','penetration','eng1','eng2'];
+    if (p==='Services') return ['acv','premium','otrr'];
+    if (p==='Cloud & AI') return ['acv','tcv','penetration','ai_skus','eng1','eng2'];
+    return ['acv','tcv','eng1','eng2']; // Collaboration, Splunk
+  }
+
+  // Wrap renderInputs to force text-mode + guards each time UI re-renders
+  const __oldRender = window.renderInputs;
+  window.renderInputs = function(){
+    __oldRender();
+    const p = document.getElementById('portfolio').value;
+    attachPercentGuards2(pctIdsFor(p));
+  };
+
+  // Run once for initial view
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const p = document.getElementById('portfolio').value;
+    attachPercentGuards2(pctIdsFor(p));
+  });
+
+  // Safety: block decimal punctuation ONLY on integer-only fields
+  document.addEventListener('keydown', (e)=>{
+    const target = e.target;
+    if (!(target && (target.matches('input[type="number"]') || target.matches('input[type="text"]')))) return;
+    const INT_IDS = ['bb1','bb2','bb3','cert_expert','cert_prof','cert_assoc'];
+    const id = target.id;
+    if (['e','E','+','-'].includes(e.key)) { e.preventDefault(); return; }
+    if (INT_IDS.includes(id) && (e.key === '.' || e.key === ',')) { e.preventDefault(); return; }
+  });
+})();
+// ==== /DECIMAL PATCH ====
 </script>
 </body>
 </html>
