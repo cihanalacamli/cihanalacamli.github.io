@@ -3,54 +3,55 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cisco 360 – Self-Check (Networking • Security • Collaboration • Cloud & AI • Services • Splunk)</title>
+  <title>Cisco 360 – Self‑Check (Networking • Security • Collaboration • Cloud & AI • Services • Splunk)</title>
   
-<style>
-  :root{--bg:#0b1320; --card:#111a2b; --muted:#94a3b8; --text:#e5e7eb; --accent:#38bdf8; --good:#22c55e; --warn:#f59e0b; --bad:#ef4444; --line:#1f2937}
-  *{box-sizing:border-box}
-  body{margin:0;background:linear-gradient(180deg,#0b1320,#0b1320 60%,#0c172a);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--text)}
-  a{color:var(--accent)}
-  .wrap{max-width:1100px;margin:24px auto;padding:0 16px}
-  .header{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-bottom:16px}
-  .title{font-weight:800;font-size:24px;letter-spacing:.3px}
-  .subtitle{color:var(--muted);font-size:13px}
-  .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
-  .card{background:rgba(17,26,43,.9);border:1px solid var(--line);border-radius:16px;padding:18px}
-  .card h3{margin:0 0 10px 0;font-size:16px}
-  label{display:block;font-size:12px;color:var(--muted);margin:10px 0 6px}
-  select,input[type="number"],input[type="text"]{width:100%;background:#0a1220;border:1px solid #1f2a44;color:var(--text);border-radius:10px;padding:10px;font-size:14px}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-  .hint{font-size:12px;color:var(--muted)}
-  .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
-  .kpi .k{background:#0a1220;border:1px dashed #243044;color:var(--muted);border-radius:12px;padding:10px}
-  .big{font-size:44px;font-weight:800}
-  .pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;border:1px solid #273043;color:var(--muted)}
-  .scorebar{height:10px;border-radius:6px;background:#0a1220;border:1px solid #22314e;overflow:hidden}
-  .scorebar>div{height:100%;background:linear-gradient(90deg,#22c55e,#38bdf8)}
-  .tips li{margin:6px 0}
-  .foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-  .tag{font-size:11px;border:1px solid #2a3a5f;color:#a3b2d1;padding:4px 8px;border-radius:999px}
-  .divider{height:1px;background:#1f2b43;margin:12px 0}
-  .note{font-size:12px;color:#9fb3d7}
-  .cta{background:#0a1220;border:1px solid #27406a;color:#dbe7ff;padding:10px 12px;border-radius:10px;cursor:pointer}
-  .cta:hover{border-color:#3b6fb6}
-  @media (max-width: 920px){.grid{grid-template-columns:1fr}}
-
-  /* score renkleri */
-  .bar-orange { background: linear-gradient(90deg,#f59e0b,#fbbf24); }
-  .bar-green  { background: linear-gradient(90deg,#22c55e,#4ade80); }
-</style>
-
-  
+  <style>
+    :root{--bg:#0b1320; --card:#111a2b; --muted:#94a3b8; --text:#e5e7eb; --accent:#38bdf8;
+      --good:#22c55e; --warn:#f59e0b; --bad:#ef4444; --line:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(180deg,#0b1320,#0b1320 60%,#0c172a);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--text)}
+    a{color:var(--accent)}
+    .wrap{max-width:1100px;margin:24px auto;padding:0 16px}
+    .header{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .title{font-weight:800;font-size:24px;letter-spacing:.3px}
+    .subtitle{color:var(--muted);font-size:13px}
+    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+    .card{background:rgba(17,26,43,.9);border:1px solid var(--line);border-radius:16px;padding:18px}
+    .card h3{margin:0 0 10px 0;font-size:16px}
+    label{display:block;font-size:12px;color:var(--muted);margin:10px 0 6px}
+    select,input[type="number"],input[type="text"]{width:100%;background:#0a1220;border:1px solid #1f2a44;color:var(--text);border-radius:10px;padding:10px;font-size:14px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    .hint{font-size:12px;color:var(--muted)}
+    /* hide only inline helper texts inside the LEFT (inputs) card; keep right-card hints visible */
+    .grid > .card:first-child div.hint{display:none}
+    .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+    .kpi .k{background:#0a1220;border:1px dashed #243044;color:var(--muted);border-radius:12px;padding:10px}
+    .big{font-size:44px;font-weight:800}
+    .pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;border:1px solid #273043;color:var(--muted)}
+    .scorebar{height:10px;border-radius:6px;background:#0a1220;border:1px solid #22314e;overflow:hidden}
+    .scorebar>div{height:100%;background:linear-gradient(90deg,#22c55e,#38bdf8)}
+    .tips li{margin:6px 0}
+    .foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .tag{font-size:11px;border:1px solid #2a3a5f;color:#a3b2d1;padding:4px 8px;border-radius:999px}
+    .divider{height:1px;background:#1f2b43;margin:12px 0}
+    .note{font-size:12px;color:#9fb3d7}
+    .cta{background:#0a1220;border:1px solid #27406a;color:#dbe7ff;padding:10px 12px;border-radius:10px;cursor:pointer}
+    .cta:hover{border-color:#3b6fb6}
+    @media (max-width: 920px){.grid{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
   <div class="wrap">
     <div class="header">
       <div>
-        <div class="title">Cisco 360 – Self-Check <span class="pill">Networking • Security • Collaboration • Cloud & AI • Services • Splunk</span></div> <span class="pill">v1.0</span></div>
+        <div class="title">Cisco 360 – Self‑Check <span class="pill">Networking • Security • Collaboration • Cloud & AI • Services • Splunk</span></div>
+        <div class="subtitle"><span class="pill">v2.0</span> <strong>• Last updated: 09 Oct 2025</strong> • <i>Developed by Cihan Alaçamlı</i></div>
       </div>
-      <div class="pill" style="white-space:nowrap">Developed by Cihan Alaçamlı</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="cta" id="resetAll" style="border-color:#1c6db9;color:#0b5d80;background:#b0bfbe">Reset All Fields</button>
+        <div class="pill" style="white-space:nowrap">Unofficial estimator</div>
+      </div>
     </div>
 
     <div class="grid">
@@ -59,7 +60,7 @@
         <h3>Portfolio & Size</h3>
         <div class="row">
           <div>
-            <label>Portfolio</label>
+            <label>Portfolio</label><div class="hint">Select the product portfolio to evaluate.</div>
             <select id="portfolio">
               <option selected>Networking</option>
               <option>Security</option>
@@ -70,12 +71,12 @@
             </select>
           </div>
           <div>
-            <label>T-shirt (TCV band)</label>
+            <label>T‑shirt (TCV band, prior 12 closed fiscal months)</label>
             <select id="tsize">
-              <option value="XS">XS (≤ $2M)</option>
+              <option value="XS" selected>XS (≤ $2M)</option>
               <option value="S">S ($2–10M)</option>
               <option value="M">M ($10–25M)</option>
-              <option value="L" selected>L ($25–100M)</option>
+              <option value="L">L ($25–100M)</option>
               <option value="XL">XL (≥ $100M)</option>
             </select>
           </div>
@@ -96,29 +97,29 @@
         <div class="divider"></div>
         <h3>Engagement <span id="lblEng" class="hint"></span></h3>
         <div id="engagementInputs"></div>
+<div style="margin-top:10px;text-align:center;">
+<button class="cta" id="resetAllBottom" style="border-color:#1c6db9;color:#0b5d80;background:#b0bfbe">Reset All Fields</button>
+</div>
       </div>
 
       <!-- OUTPUTS -->
       <div class="card">
         <h3>Result</h3>
         <div class="kpi">
-         
-<div class="k">
-  <div class="hint" id="totalLabel">Total (0–10)</div>
-  <div id="total" class="big">0.00</div>
-  <div class="scorebar"><div id="bar" style="width:0%"></div></div>
-</div>
-
-          
+          <div class="k">
+            <div class="hint" id="totalLabel">Total (0–10)</div>
+            <div id="total" class="big">0.00</div>
+            <div class="scorebar"><div id="bar" style="width:0%"></div></div>
+          </div>
           <div class="k">
             <div class="hint">Status</div>
             <div id="status" style="font-weight:700;font-size:18px">–</div>
-            <div class="note" id="unlock"> </div>
+            <div class="note" id="unlock"></div>
           </div>
           <div class="k">
             <div class="hint">Key thresholds</div> 
             <div class="note">1.0 – NFR & Hunting/Teaming</div>
-            <div class="note">5.0 – Cisco Partner (portfolio) + Rebate Eligible Level</div>
+            <div class="note">5.0 – Cisco Partner (portfolio) + Rebate eligible</div>
             <div class="note">7.5 – Preferred Partner (portfolio)</div>
           </div>
         </div>
@@ -139,34 +140,39 @@
         <ul class="tips" id="tips"></ul>
 
         <div class="divider"></div>
+        <h3>Info</h3>
+        <ul class="tips" id="info"></ul>
+
+        <div class="divider"></div>
         <h3>Diagnostics</h3>
         <div class="kpi" style="grid-template-columns:1fr">
           <div class="k">
             <div class="hint">Threshold tables for current selection</div>
-            <button class="cta" id="showThresh">Show thresholds</button>
-            <pre id="thdump" style="white-space:pre-wrap;max-height:240px;overflow:auto;margin-top:10px"></pre>
+            <button class="cta" id="showThresh">Show/Refresh thresholds</button>
+<button class="cta" id="hideThresh">Hide Thresholds</button>
+<pre id="thdump" style="white-space:pre-wrap;max-height:240px;overflow:auto;margin-top:10px"></pre>
+
           </div>
         </div>
 
         <div class="foot">
-          <span class="tag">Unofficial estimator</span>
-          <span class="tag">Results are indicative (non-binding)</span>
-          <span class="tag">Check PXP for official score</span>
+          <span class="tag">v2.0 — Cihan Alaçamlı @2025.</span>
+          <span class="tag">Check PXP for the official score</span>
         </div>
       </div>
     </div>
   </div>
-
+  
 <script>
 const el=id=>document.getElementById(id);
 
-// ===== Weights (out of 10) =====
+// ===== Weights (out of 10) — 07 Oct 2025 =====
 const WEIGHTS={
   "Networking":{F:2.5,C:4.5,P:2.0,E:1.0},
   "Security":{F:2.5,C:4.5,P:2.0,E:1.0},
   "Collaboration":{F:2.5,C:2.5,P:2.0,E:3.0},
   "Cloud & AI":{F:2.5,C:4.5,P:2.0,E:1.0},
-  /* CHANGED */ "Services":{F:2.5,C:2.5,P:2.5,E:3.0},
+  "Services":{F:2.5,C:2.0,P:2.5,E:3.0}, // per latest deck
   "Splunk":{F:0.0,C:5.0,P:4.0,E:1.0}
 };
 
@@ -174,9 +180,9 @@ const WEIGHTS={
 const SUBW={
   Networking:{cap:{bb:0.40,cc:0.60}, perf:{acv:0.25,tcv:0.25,buy:0.50}, eng:{a:0.50,b:0.50}},
   Security:{cap:{bb:0.40,cc:0.60}, perf:{acv:0.25,tcv:0.25,buy:0.50}, eng:{a:0.50,b:0.50}},
-  Collaboration:{cap:{bb:0.30,cc:0.40,cps:0.30}, perf:{acv:0.50,tcv:0.50,buy:0}, eng:{deploy:0.50,adopt:0.50}},
- "Cloud & AI":{cap:{bb:0.40,cc:0.60}, perf:{acv:0.25,tcv:0.25,buy:0.25,ai:0.25}, eng:{a:0.50,b:0.50}}, 
-  /* CHANGED */ Services:{cap:{bb:1.00}, perf:{acv:0.50,premium:0.50}, eng:{otrr:1.00}},
+  Collaboration:{cap:{bb:0.30,cc:0.40,cps:0.30}, perf:{acv:0.50,tcv:0.50}, eng:{deploy:0.50,adopt:0.50}},
+  "Cloud & AI":{cap:{bb:0.40,cc:0.60}, perf:{acv:0.25,tcv:0.25,buy:0.25,ai:0.25}, eng:{a:0.50,b:0.50}},
+  Services:{cap:{bb:1.00}, perf:{acv:0.50,premium:0.50}, eng:{otrr:1.00}},
   Splunk:{cap:{bb:0.40,cc:0.60}, perf:{acv:0.50,tcv:0.50,buy:0}, eng:{a:0.50,b:0.50}}
 };
 
@@ -192,18 +198,122 @@ const NET={
 };
 NET.TCV=NET.ACV;
 
-const COL={BB:NET.BB, CC:NET.CC, ACV:NET.ACV, TCV:NET.TCV, DEPLOY_UP:[6,8,12,18,24,32,40,46,54,60], ADOPT_UP:[4,6,8,12,16,20,24,28,30,40]};
-const CLOUD={BB:NET.BB, CC:NET.CC, ACV:NET.ACV, TCV:NET.ACV};
-const SERVICES={
-  BB:NET.BB, CC:NET.CC, ACV:NET.ACV,
-  PREMIUM:{XS:[0,1,2,3,4,5,6,8,10,12], S:[0,1,2,3,4,6,8,10,12,15], M:[0,2,3,4,6,8,10,12,15,20], L:[0,2,4,6,8,10,15,20,25,30], XL:[0,3,6,9,12,15,20,25,30,35]},
-  OTRR:[0,10,20,25,30,35,45,50,55,60]
+// ===== Security thresholds (UPDATED – SS1) =====
+const SEC={
+  // SS1: XL row (green) and XS row (yellow) applied; mid bands aligned per table
+  BB:{
+    XS:[10,20,30,40,50,60,70,80,90,100],
+    S: [10,20,30,40,50,60,70,80,90,100],
+    M: [10,20,30,40,50,60,70,80,90,100],
+    L: [17,34,51,68,85,102,119,136,153,170],
+    XL:[36,72,108,144,180,216,252,288,324,360]
+  },
+  CC:{XS:[4,8,12,16,20,24,28,32,36,40], S:[7,14,21,28,35,42,49,56,63,70], M:[9,18,27,36,45,54,63,72,81,90], L:[11,22,33,44,55,66,77,88,99,110], XL:[22,44,66,88,110,132,154,176,198,220]},
+  ACV:NET.ACV,
+  TCV:NET.TCV,
+  BUY:NET.BUY,
+  ONB_UP: [10,15,20,25,30,35,40,45,50,55],   // Onboard %  (alt hariç, üst dahil)
+     ADP_UP: [3,6,9,12,15,18,21,24,27,30]       // Adopt %    (alt hariç, üst dahil)
 };
+
+// Collaboration
+const COL={
+  BB:{ XS:[0,1,4,8,10,12,14,16,20,25], S:[1,5,10,15,20,25,30,35,40,50], M:[5,10,25,35,45,55,65,75,85,100], L:[10,15,30,45,60,75,90,105,130,150], XL:[15,20,40,60,80,100,120,140,160,180] },
+  CC:{ XS:[2,4,6,8,10,12,14,16,18,20], S:[6,10,14,16,20,24,28,32,36,40], M:[8,12,16,20,30,40,50,60,70,80], L:[10,20,30,40,50,60,70,80,90,100], XL:[15,20,40,60,80,100,120,140,155,175] },
+  ACV:{ XS:[0,2,4,5,6,7,8,9,10,15], S: NET.ACV.S, M: NET.ACV.M, L: NET.ACV.L, XL: NET.ACV.XL },
+  TCV:{ XS:[0,2,4,5,6,7,8,9,10,15], S: NET.ACV.S, M: NET.ACV.M, L: NET.ACV.L, XL: NET.ACV.XL },
+  DEPLOY_UP:[6,8,12,18,24,32,40,46,54,60],
+  ADOPT_UP:[4,6,8,12,16,20,24,28,30,40]
+};
+
+// Cloud & AI
+const CLAI={
+  BB:{ XS:[1,5,10,15,20,25,30,35,40,45], S:[5,10,20,30,40,50,60,70,80,90], M:[7,14,28,42,56,70,84,98,112,126], L:[9,17,34,51,68,85,102,119,136,153], XL:[15,29,58,87,116,145,174,203,232,261] },
+  CC:{ XS:[1,6,12,19,25,31,37,43,50,56], S:[7,14,27,41,54,68,82,95,109,123], M:[11,22,43,65,87,109,130,152,174,196], L:[12,24,49,73,98,122,146,171,195,220], XL:[32,64,128,192,256,320,384,448,512,577] },
+  ACV: NET.ACV,
+  TCV: NET.TCV,
+  AI_UP:[0.0,0.1,0.2,0.3,0.4,0.5,1.0,3.0,5.0,7.0],
+  BUY_UP:[0,5,10,15,20,25,30,35,40,45],
+  DEPLOY_UP:[5,8,10,12,14,16,18,20,22,24],
+  ADOPT_UP:[3,6,9,12,15,18,21,24,27,30]
+};
+
+// Services – left intact
+const SERVICES={
+  BB:{
+    XL:[0,7,14,21,28,35,42,49,56,63],
+    L: [0,6,12,18,24,30,36,42,48,54],
+    M: [0,6,10,15,20,25,30,35,40,45],
+    S: [0,2,3,5,6,8,9,11,12,14],
+    XS:[0,1,2,3,4,5,6,7,8,9]
+  },
+  ACV:{
+    XL:[0.0,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0],
+    L: [0.0,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0],
+    M: [0.0,2.0,4.0,6.0,8.0,12.0,14.0,16.0,18.0,20.0],
+    S: [0.0,2.0,4.0,6.0,8.0,12.0,14.0,16.0,18.0,20.0],
+    XS:[4.0,6.0,8.0,12.0,16.0,18.0,20.0,22.0,25.0,25.0]
+  },
+  PREMIUM:{
+    XL:[0.0,2.0,4.0,6.0,8.0,10.0,15.0,20.0,25.0,30.0],
+    L: [0.0,2.0,4.0,6.0,8.0,10.0,15.0,20.0,25.0,30.0],
+    M: [0.0,2.0,4.0,6.0,8.0,10.0,15.0,20.0,25.0,30.0],
+    S: [4.0,6.0,8.0,10.0,12.0,15.0,20.0,25.0,30.0,35.0],
+    XS:[4.0,6.0,8.0,10.0,15.0,20.0,25.0,30.0,35.0,35.0]
+  },
+  OTRR:{
+    XL:[0,10,20,25,30,35,45,50,55,60],
+    L: [0,10,20,25,30,35,45,50,55,60],
+    M: [15,30,40,50,65,70,75,80,85,85],
+    S: [15,30,40,50,65,70,75,80,85,85],
+    XS:[15,30,40,50,65,70,75,80,85,85]
+  }
+};
+
 const SPLUNK={BB:NET.BB, CC:NET.CC, ACV:NET.ACV, TCV:NET.TCV, ONB_UP:NET.ONB_UP, ONB_LO:NET.ONB_LO, ADP_UP:NET.ADP_UP, ADP_LO:NET.ADP_LO};
 
 function TB(){
   const p=el('portfolio').value;
-  return p==='Networking'?NET: p==='Security'?NET: p==='Collaboration'?COL: p==='Cloud & AI'?CLOUD: p==='Services'?SERVICES: SPLUNK;
+  if(p==='Networking') return NET;
+  if(p==='Security') return SEC;
+  if(p==='Collaboration') return COL;
+  if(p==='Cloud & AI') return CLAI;
+  if(p==='Services') return SERVICES;
+  return SPLUNK;
+}
+
+// ===== Index helpers =====
+function upperIndex(value, uppers){
+  if(!Array.isArray(uppers) || uppers.length===0) return 0;
+  for(let i=0;i<uppers.length;i++){
+    if(value<=uppers[i]) return i; // 0..9 bins
+  }
+  return 10; // > last
+}
+// Start-at-first-threshold (<= maps inside bins, > last => 10)
+function upperIndexStartAt1(value, uppers){
+  if(!Array.isArray(uppers) || uppers.length===0) return 0;
+  if(value < uppers[0]) return 0;
+  for(let i=0;i<uppers.length;i++){
+    if(value <= uppers[i]) return i+1; // shift by 1
+  }
+  return 10;
+}
+// STRICT variant for ">x" last bin (equal to last stays in 9th bin)
+function upperIndexStartAt1_GTLast(value, uppers){
+  if(!Array.isArray(uppers) || uppers.length===0) return 0;
+  const first = uppers[0];
+  const last  = uppers[uppers.length-1];
+  // NEW: values below first threshold must score 0 (no input → no points)
+  if(value < first) return 0;
+  // Strictly greater than the last threshold → full index 10
+  if(value > last) return 10;
+  // Map into bins 1..9 (<= penultimate threshold)
+  for(let i=0;i<uppers.length-1;i++){
+    if(value <= uppers[i]) return i+1;
+  }
+  // value is <= last (but not > last), so stay at index 9
+  return 9;
 }
 
 // ===== Dynamic input rendering =====
@@ -215,9 +325,9 @@ function renderInputs(){
   const e=el('engagementInputs');
   f.innerHTML=c.innerHTML=pr.innerHTML=e.innerHTML='';
 
-  // Foundational (Splunk -> disabled, others -> active)
+  // Foundational (Splunk disabled)
   if(p==='Splunk'){
-    f.innerHTML = `<div class="note">Foundational bu portföy için uygulanmıyor (ağırlık 0). Bölüm pasif.</div>`;
+    f.innerHTML = `<div class="note">Foundational is not applicable for this portfolio (weight 0). Section disabled.</div>`;
   } else {
     f.innerHTML = `
       <div class="row">
@@ -228,7 +338,7 @@ function renderInputs(){
             <option value="7">Specialized</option>
             <option value="10">Advanced</option>
           </select>
-          <div class="hint">Index: 0 / 7 / 10</div>
+          <div class="hint">Index: 0 / 7 / 10. Customer Success practice maturity.</div>
         </div>
         <div>
           <label>Managed Services Practice Maturity</label>
@@ -238,7 +348,7 @@ function renderInputs(){
             <option value="7">Premier</option>
             <option value="10">Gold</option>
           </select>
-          <div class="hint">Index: 0 / 2 / 7 / 10</div>
+          <div class="hint">Index: 0 / 2 / 7 / 10. Managed Services maturity; Cisco Powered Services counted under Cloud & AI Foundational.</div>
         </div>
       </div>`;
   }
@@ -254,17 +364,18 @@ function renderInputs(){
           <option value="1">1</option>
           <option value="2">2+</option>
         </select>
-        <div class="hint">0→0, 1→5, 2+→10</div>
+        <div class="hint">CPS count mapping: 0→0, 1→5, 2+→10. Applies only to Collaboration.</div>
       </div>
     </div>` : '';
 
   if (p === 'Services') {
-    // Services: ONLY Black Belt counts
+    // Services: ONLY Black Belt counts (no Career Cert fields)
     capsHTML = `
       <div class="row">
         <div>
-          <label>Black Belt – Stage 1 (count)</label>
+          <label>Black Belt – Stage 1 (count)</label><div class="hint">Stage weights: S1=1, S2=1.5, S3=2.</div>
           <input type="number" id="bb1" min="0" step="1" value="0">
+          <div class="hint">Services Capabilities = Black Belt only (S1=1, S2=1.5, S3=2).</div>
         </div>
         <div>
           <label>Black Belt – Stage 2 (count)</label>
@@ -278,11 +389,11 @@ function renderInputs(){
         </div>
       </div>`;
   } else {
-    // Other portfolios: BB + Career Cert (existing)
+    // Other portfolios: BB + Career Cert
     capsHTML = `
       <div class="row">
         <div>
-          <label>Black Belt – Stage 1 (count)</label>
+          <label>Black Belt – Stage 1 (count)</label><div class="hint">Stage weights: S1=1, S2=1.5, S3=2.</div>
           <input type="number" id="bb1" min="0" step="1" value="0">
         </div>
         <div>
@@ -296,7 +407,7 @@ function renderInputs(){
           <input type="number" id="bb3" min="0" step="1" value="0">
         </div>
         <div>
-          <label>Career Cert – Expert badges</label>
+          <label>Career Cert – Expert badges</label><div class="hint">Weighting: Expert=10, Professional=3, Associate/Specialist=1.</div>
           <input type="number" id="cert_expert" min="0" step="1" value="0">
         </div>
       </div>
@@ -306,7 +417,7 @@ function renderInputs(){
           <input type="number" id="cert_prof" min="0" step="1" value="0">
         </div>
         <div>
-          <label>Career Cert – Associate badges</label>
+          <label>Career Cert – Associate & Specialist badges</label>
           <input type="number" id="cert_assoc" min="0" step="1" value="0">
         </div>
       </div>`;
@@ -314,59 +425,60 @@ function renderInputs(){
   c.innerHTML = capsHTML + (p==='Collaboration' ? cpsBlock : '');
 
   // Performance
+  const prEl = pr; // just alias
   if(p==='Networking' || p==='Security'){
-    pr.innerHTML = `
+    prEl.innerHTML = `
       <div class="row">
-        <div><label>ACV YoY growth (%)</label><input type="number" id="acv" step="0.1" value="0"></div>
-        <div><label>TCV YoY growth (%)</label><input type="number" id="tcv" step="0.1" value="0"></div>
+        <div><label>ACV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div><input type="number" id="acv" step="0.1" value="0"></div>
+        <div><label>TCV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div><input type="number" id="tcv" step="0.1" value="0"></div>
       </div>
       <div class="row" id="buyRow"><div>
-        <label>Buying Program Penetration (%)</label><input type="number" id="penetration" step="0.1" value="0">
-        <div class="hint">EA / MSLA / WPA vb.</div>
+        <label>Buying Program Penetration (%)</label><div class="hint">EA / MSLA / WPA participation rate.</div><input type="number" id="penetration" step="0.1" value="0">
+        <div class="hint">EA / MSLA / WPA etc.</div>
       </div></div>`;
   } else if(p==='Services'){
-    pr.innerHTML = `
+    prEl.innerHTML = `
       <div class="row">
-        <div><label>ACV YoY growth (%)</label><input type="number" id="acv" step="0.1" value="0"></div>
-        <div><label>Premium Services Penetration (%)</label><input type="number" id="premium" step="0.1" value="0"></div>
+        <div><label>ACV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div><input type="number" id="acv" step="0.1" value="0"></div>
+        <div><label>Premium Services Penetration (%)</label><div class="hint">Share of Premium-tier services within total services TCV.</div><input type="number" id="premium" step="0.1" value="0"></div>
       </div>`;
   } else if(p==='Cloud & AI'){
-  pr.innerHTML = `
-    <div class="row">
-      <div><label>ACV YoY growth (%)</label><input type="number" id="acv" step="0.1" value="0"></div>
-      <div><label>TCV YoY growth (%)</label><input type="number" id="tcv" step="0.1" value="0"></div>
-    </div>
-    <div class="row">
-      <div>
-        <label>Buying Program Penetration (%)</label>
-        <input type="number" id="penetration" step="0.1" value="0">
-        <div class="hint">EA / MSLA / WPA etc.</div>
+    prEl.innerHTML = `
+      <div class="row">
+        <div><label>ACV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div><input type="number" id="acv" step="0.1" value="0"></div>
+        <div><label>TCV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div><input type="number" id="tcv" step="0.1" value="0"></div>
       </div>
-      <div>
-        <label>AI Booking Penetration (%)</label>
-        <input type="number" id="ai_skus" step="0.1" value="0">
-      </div>
-    </div>`;
-} else { // Collaboration, Splunk
-  pr.innerHTML = `
-    <div class="row">
-      <div><label>ACV YoY growth (%)</label><input type="number" id="acv" step="0.1" value="0"></div>
-      <div><label>TCV YoY growth (%)</label><input type="number" id="tcv" step="0.1" value="0"></div>
-    </div>`;
+      <div class="row">
+        <div>
+          <label>Buying Program Penetration (%)</label><div class="hint">EA / MSLA / WPA participation rate.</div>
+          <input type="number" id="penetration" step="0.1" value="0">
+          <div class="hint">EA / MSLA / WPA etc.</div>
+        </div>
+        <div>
+          <label>AI SKU Penetration (%)</label><div class="hint">Share of AI‑dedicated SKUs.</div>
+          <input type="number" id="ai_skus" step="0.1" value="0">
+        </div>
+      </div>`;
+  } else { // Collaboration, Splunk
+    prEl.innerHTML = `
+      <div class="row">
+        <div><label>ACV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div><input type="number" id="acv" step="0.1" value="0"></div>
+        <div><label>TCV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div><input type="number" id="tcv" step="0.1" value="0"></div>
+      </div>`;
   }
 
-  // Engagement
+  // Engagement inputs
   if(p==='Collaboration'){
     e.innerHTML = `
       <div class="row">
-        <div><label>Webex Deployment (%)</label><input type="number" id="eng1" step="0.1" value="0"></div>
-        <div><label>Webex Adoption (%)</label><input type="number" id="eng2" step="0.1" value="0"></div>
+        <div><label>Webex Deployment (%)</label><div class="hint">Rolling last 3 closed months; best monthly ratio applies.</div><input type="number" id="eng1" step="0.1" value="0"></div>
+        <div><label>Webex Adoption (%)</label><div class="hint">Rolling last 3 closed months; best monthly ratio applies.</div><input type="number" id="eng2" step="0.1" value="0"></div>
       </div>
-      <div class="hint">Collab: son 3 ay penceresi.</div>`;
-  } else if (p==='Services') {
+      <div class="hint">Rolling last 3 closed months. Best monthly ratio applies.</div>`;
+  } else if (p==='Services'){
     e.innerHTML = `
       <div class="row">
-        <div><label>On-Time Renewal Rate — OTRR (%)</label><input type="number" id="otrr" step="0.1" value="0"></div>
+        <div><label>On‑Time Renewal Rate — OTRR (%)</label><div class="hint">Contracts renewed on/before due date in the last closed period.</div><input type="number" id="otrr" step="0.1" value="0"></div>
       </div>`;
   } else {
     e.innerHTML = `
@@ -374,34 +486,25 @@ function renderInputs(){
         <div><label>Deals Completed – Onboard (%)</label><input type="number" id="eng1" step="0.1" value="0"></div>
         <div><label>Deals Completed – Adopt (%)</label><input type="number" id="eng2" step="0.1" value="0"></div>
       </div>
-      <div class="hint">Onboard/Adopt: 18 ay penceresi.</div>`;
+      <div class="hint">18‑month window. Examples include Campus Network Automation, Cloud Monitoring for Catalyst, Location Based Intelligence.</div>`;
   }
 
-    // === render sonrası input guard bağlama ===
-
-  // TAMSAYI ZORUNLU ALANLAR (headcount): BB & Career Certs
+  // Guards
   attachIntGuards(["bb1","bb2","bb3","cert_expert","cert_prof","cert_assoc"]);
 
-  // YÜZDE ALANLARI (ondalık destekli): portföye göre bağla
   if (p==='Networking' || p==='Security'){
     attachPercentGuards(["acv","tcv","penetration","eng1","eng2"]);
   } else if (p==='Services'){
     attachPercentGuards(["acv","premium","otrr"]);
   } else if (p==='Cloud & AI'){
     attachPercentGuards(["acv","tcv","penetration","ai_skus","eng1","eng2"]);
-  } else { // Collaboration, Splunk
+  } else {
     attachPercentGuards(["acv","tcv","eng1","eng2"]);
   }
 
-  // --- locale fix: decimal inputlarda nokta (.) için 'lang=en' ---
+  // decimal locale safety
   (function forceEnLocaleForDecimals(){
-    const p = el('portfolio').value;
-    const ids =
-      (p==='Networking'||p==='Security') ? ["acv","tcv","penetration","eng1","eng2"] :
-      (p==='Services')                   ? ["acv","premium","otrr"] :
-      (p==='Cloud & AI')                 ? ["acv","tcv","penetration","ai_skus","eng1","eng2"] :
-                                           ["acv","tcv","eng1","eng2"]; // Collaboration/Splunk
-
+    const ids = Array.from(document.querySelectorAll('#performanceInputs input, #engagementInputs input')).map(x=>x.id);
     ids.forEach(id=>{
       const n = document.getElementById(id);
       if (n) {
@@ -412,21 +515,16 @@ function renderInputs(){
     });
   })();
 
-  // Attach handlers
-  document.querySelectorAll('#foundationalInputs select, #capabilityInputs input, #capabilityInputs select, #performanceInputs input, #engagementInputs input, #capabilityInputs select').forEach(x=>{
+  document.querySelectorAll('#foundationalInputs select, #capabilityInputs input, #capabilityInputs select, #performanceInputs input, #engagementInputs input').forEach(x=>{
     x.addEventListener('input', calc);
     x.addEventListener('change', calc);
   });
 }
 
-function upperIndex(value, uppers){ for(let i=0;i<uppers.length;i++){ if(value<=uppers[i]) return i; } return 10; }
-function boundedIndex(value, lowers, uppers){ if(value<=uppers[0]) return 0; for(let i=1;i<lowers.length-1;i++){ if(value>lowers[i] && value<=uppers[i]) return i; } return 10; }
-
-function currentTB(){ const p=el('portfolio').value; return p==='Networking'?NET: p==='Security'?NET: p==='Collaboration'?COL: p==='Cloud & AI'?CLOUD: p==='Services'?SERVICES: SPLUNK; }
-
+// ===== Calculation engine =====
 function calc(){
   const p=el('portfolio').value;  const band=el('tsize').value;
-  const W=WEIGHTS[p]; const SW=SUBW[p]; const TB=currentTB();
+  const W=WEIGHTS[p]; const SW=SUBW[p]; const T=TB();
 
   // Foundational
   let fnd=0;
@@ -441,13 +539,16 @@ function calc(){
   const s2=Number((document.getElementById('bb2')||{value:0}).value||0);
   const s3=Number((document.getElementById('bb3')||{value:0}).value||0);
   const bbWeighted = s1*1 + s2*1.5 + s3*2;
-  const bbIdx = upperIndex(bbWeighted, TB.BB[band]);
+  const bbIdx = upperIndex(bbWeighted, T.BB?.[band]);
   const cexp=Number((document.getElementById('cert_expert')||{value:0}).value||0);
   const cpro=Number((document.getElementById('cert_prof')||{value:0}).value||0);
   const cass=Number((document.getElementById('cert_assoc')||{value:0}).value||0);
   const ccWeighted = cexp*10 + cpro*3 + cass*1;
-  const ccIdx = upperIndex(ccWeighted, TB.CC[band]);
+  const ccIdx = upperIndex(ccWeighted, T.CC?.[band]);
   let cap=(bbIdx/10)*(W.C*(SW.cap.bb||0)) + (ccIdx/10)*(W.C*(SW.cap.cc||0));
+  if(p==='Services'){
+    cap=(bbIdx/10)*(W.C*(SW.cap.bb||1));
+  }
   if(p==='Collaboration'){
     const cpsVal = Number((document.getElementById('cps')||{value:0}).value||0);
     const cpsIdx = cpsVal>=2?10 : (cpsVal===1?5:0);
@@ -455,57 +556,140 @@ function calc(){
   }
 
   // Performance
+  let perf=0;
   const acv=Number((document.getElementById('acv')||{value:0}).value||0);
   const tcv=Number((document.getElementById('tcv')||{value:0}).value||0);
-  const acvIdx = upperIndex(acv, TB.ACV[band] || NET.ACV[band]);
-  const tcvIdx = upperIndex(tcv, (TB.TCV?TB.TCV[band]:NET.TCV[band]));
-  let perf=0;
+  const acvArr = (T.ACV?.[band]||NET.ACV[band]||[]).filter(x=>x>0);
+  const tcvArr = ((T.TCV||T.ACV)?.[band]||NET.TCV[band]||[]).filter(x=>x>0);
+  const acvIdx = upperIndexStartAt1(acv, acvArr);
+  const tcvIdx = upperIndexStartAt1(tcv, tcvArr);
+
   if(p==='Networking' || p==='Security'){
     const pen=Number((document.getElementById('penetration')||{value:0}).value||0);
-    const buyIdx = upperIndex(pen, NET.BUY);
+    const buyArr = (T.BUY_UP||NET.BUY||[]).filter(x=>x>0);
+    const buyIdx = upperIndexStartAt1(pen, buyArr);
     perf=(acvIdx/10)*(W.P*SW.perf.acv)+(tcvIdx/10)*(W.P*SW.perf.tcv)+(buyIdx/10)*(W.P*SW.perf.buy);
   } else if(p==='Services'){
     const prem = Number((document.getElementById('premium')||{value:0}).value||0);
-    const premIdx = upperIndex(prem, SERVICES.PREMIUM[band]);
-    perf=(acvIdx/10)*(W.P*SW.perf.acv) + (premIdx/10)*(W.P*SW.perf.premium);
+    const acvIdxS = upperIndexStartAt1(acv, (SERVICES.ACV[band]||[]).filter(x=>x>0));
+    const premIdx = upperIndexStartAt1(prem, (SERVICES.PREMIUM[band]||[]).filter(x=>x>0));
+    perf=(acvIdxS/10)*(W.P*SW.perf.acv) + (premIdx/10)*(W.P*SW.perf.premium);
   } else if(p==='Cloud & AI'){
-  const pen = Number((document.getElementById('penetration')||{value:0}).value||0);
-  const buyIdx = upperIndex(pen, NET.BUY);
-  const aiVal = Number((document.getElementById('ai_skus')||{value:0}).value||0);
-  const aiIdx = upperIndex(aiVal, (CLOUD.AI || NET.BUY)); // AI eşikleri
-
-  perf = (acvIdx/10)*(W.P*(SW.perf.acv||0))
-       + (tcvIdx/10)*(W.P*(SW.perf.tcv||0))
-       + (buyIdx/10)*(W.P*(SW.perf.buy||0))
-       + (aiIdx/10) *(W.P*(SW.perf.ai ||0));
-} else { // Collaboration, Splunk
-  perf=(acvIdx/10)*(W.P*(SW.perf.acv||0.5))+(tcvIdx/10)*(W.P*(SW.perf.tcv||0.5));
+    const pen = Number((document.getElementById('penetration')||{value:0}).value||0);
+    const buyIdx = upperIndexStartAt1(pen, (CLAI.BUY_UP||[]).filter(x=>x>0));
+    const aiVal = Number((document.getElementById('ai_skus')||{value:0}).value||0);
+    const aiIdx = upperIndexStartAt1(aiVal, (CLAI.AI_UP||[]).filter(x=>x>0));
+    perf = (acvIdx/10)*(W.P*(SW.perf.acv||0))
+         + (tcvIdx/10)*(W.P*(SW.perf.tcv||0))
+         + (buyIdx/10)*(W.P*(SW.perf.buy||0))
+         + (aiIdx/10) *(W.P*(SW.perf.ai ||0));
+  } else { // Collaboration, Splunk – Engagement handled below
+    perf=(acvIdx/10)*(W.P*(SW.perf.acv||0.5))+(tcvIdx/10)*(W.P*(SW.perf.tcv||0.5));
   }
 
-  
+  // Engagement
   let eng=0;
   const e1=Number((document.getElementById('eng1')||{value:0}).value||0);
   const e2=Number((document.getElementById('eng2')||{value:0}).value||0);
- 
- if(p==='Collaboration'){
-    const dIdx = upperIndex(e1, COL.DEPLOY_UP);
-    const aIdx = upperIndex(e2, COL.ADOPT_UP);
-    eng=(dIdx/10)*(W.E*SUBW.Collaboration.eng.deploy)+(aIdx/10)*(W.E*SUBW.Collaboration.eng.adopt);
 
-  } 
+if (p === 'Collaboration') {
+  const uD = COL.DEPLOY_UP; // [6,8,12,18,24,32,40,46,54,60]
+  const uA = COL.ADOPT_UP;  // [4,6,8,12,16,20,24,28,30,40]
 
-else if(p==='Services'){
+  const e1v = Number((document.getElementById('eng1')||{value:0}).value||0); // Webex Deployment %
+  const e2v = Number((document.getElementById('eng2')||{value:0}).value||0); // Webex Adoption   %
+
+  // ---- alt sınır HARİÇ, üst sınır DAHİL (1..10), alt eşik ve altı -> 0
+  let dIdx = 0;
+  if (e1v > uD[0]) {
+    dIdx = 10;
+    for (let i = 1; i < uD.length; i++) {
+      if (e1v > uD[i-1] && e1v <= uD[i]) { dIdx = i; break; }
+    }
+  }
+
+  let aIdx = 0;
+  if (e2v > uA[0]) {
+    aIdx = 10;
+    for (let i = 1; i < uA.length; i++) {
+      if (e2v > uA[i-1] && e2v <= uA[i]) { aIdx = i; break; }
+    }
+  }
+
+  eng = (dIdx/10)*(W.E*(SUBW.Collaboration.eng.deploy||0.5))
+      + (aIdx/10)*(W.E*(SUBW.Collaboration.eng.adopt ||0.5));
+}  
+
+ else if(p==='Services'){
     const ot = Number((document.getElementById('otrr')||{value:0}).value||0);
-    const otIdx = upperIndex(ot, SERVICES.OTRR);
+    const otIdx = upperIndexStartAt1(ot, (SERVICES.OTRR[band]||[]).filter(x=>x>0));
     eng=(otIdx/10) * (W.E * SUBW.Services.eng.otrr);
-  } 
+  } else if (p === 'Cloud & AI') {
+  const uD = CLAI.DEPLOY_UP; // [5,8,...,24]
+  const uA = CLAI.ADOPT_UP;  // [3,6,...,30]
+
+  const e1v = Number((document.getElementById('eng1')||{value:0}).value||0); // Onboard %
+  const e2v = Number((document.getElementById('eng2')||{value:0}).value||0); // Adopt   %
+
+  // ---- alt sınır HARİÇ, üst sınır DAHİL indeksleme (1..10), alt eşik ve altı -> 0
+  let onIdx = 0;
+  if (e1v > uD[0]) {
+    onIdx = 10; // default: son eşik üstü -> 10
+    for (let i = 1; i < uD.length; i++) {
+      if (e1v > uD[i-1] && e1v <= uD[i]) { onIdx = i; break; }
+    }
+  }
+
+  let adIdx = 0;
+  if (e2v > uA[0]) {
+    adIdx = 10;
+    for (let i = 1; i < uA.length; i++) {
+      if (e2v > uA[i-1] && e2v <= uA[i]) { adIdx = i; break; }
+    }
+  }
+
+  eng = (onIdx/10)*(W.E*(SUBW[p].eng.a||0.5))
+      + (adIdx/10)*(W.E*(SUBW[p].eng.b||0.5));
+} 
+
+else if (p === 'Security') {
+  const uD = SEC.ONB_UP; // [10,15,...,55]
+  const uA = SEC.ADP_UP; // [3,6,...,30]
+
+  const e1v = Number((document.getElementById('eng1')||{value:0}).value||0); // Onboard %
+  const e2v = Number((document.getElementById('eng2')||{value:0}).value||0); // Adopt   %
+
+  // ---- alt sınır HARİÇ, üst sınır DAHİL indeksleme (1..10), alt eşik ve altı -> 0
+  let onIdx = 0;
+  if (e1v > uD[0]) {
+    onIdx = 10; // default: son eşik üstü -> 10
+    for (let i = 1; i < uD.length; i++) {
+      if (e1v > uD[i-1] && e1v <= uD[i]) { onIdx = i; break; }
+    }
+  }
+
+  let adIdx = 0;
+  if (e2v > uA[0]) {
+    adIdx = 10;
+    for (let i = 1; i < uA.length; i++) {
+      if (e2v > uA[i-1] && e2v <= uA[i]) { adIdx = i; break; }
+    }
+  }
+
+  eng = (onIdx/10)*(W.E*(SUBW[p].eng.a||0.5))
+      + (adIdx/10)*(W.E*(SUBW[p].eng.b||0.5));}
+
+
+
 
 else {
-    const onIdx = upperIndex(e1, NET.ONB_UP); // 0..10 ? %0→0, %10→1, %15→2, ...
-  const adIdx = upperIndex(e2, NET.ADP_UP); // 0..10 ? %0→0,  %3→1,  %6→2, ...
-  eng = (onIdx/10)*(W.E*SUBW[p].eng.a)
-      + (adIdx/10)*(W.E*SUBW[p].eng.b);
-}
+    // >>> FIXED: Strict “>x” behavior for last bin
+    // Onboard: last threshold 50 -> 50.0 => index 9, >50.0 => index 10
+    const onIdx = upperIndexStartAt1_GTLast(e1, NET.ONB_UP.slice(1));
+    // Adopt: last threshold 30 -> 30.0 => index 9, >30.0 => index 10
+    const adIdx = upperIndexStartAt1_GTLast(e2, NET.ADP_LO.slice(1));
+    eng = (onIdx/10)*(W.E*SUBW[p].eng.a) + (adIdx/10)*(W.E*SUBW[p].eng.b);
+  }
 
   const total = +(fnd+cap+perf+eng).toFixed(2);
   el('fnd').textContent=fnd.toFixed(2);
@@ -515,283 +699,229 @@ else {
   el('total').textContent=total.toFixed(2);
   el('bar').style.width=(total*10)+'%';
 
-  // section weight etiketlerini güncelle
-{
-  const maxTotal = (p === 'Services') ? 10.5 : 10;
-  const W = WEIGHTS[p];
-  if (el('lblFnd'))  el('lblFnd').textContent  = `(${W.F}/${maxTotal})`;
-  if (el('lblCap'))  el('lblCap').textContent  = `(${W.C}/${maxTotal})`;
-  if (el('lblPerf')) el('lblPerf').textContent = `(${W.P}/${maxTotal})`;
-  if (el('lblEng'))  el('lblEng').textContent  = `(${W.E}/${maxTotal})`;
-  // <<< eklenen satır
-  if (el('totalLabel')) el('totalLabel').textContent = `Total (0–${maxTotal})`;
+  // section labels
+  if (el('lblFnd'))  el('lblFnd').textContent  = `(${WEIGHTS[p].F}/10)`;
+  if (el('lblCap'))  el('lblCap').textContent  = `(${WEIGHTS[p].C}/10)`;
+  if (el('lblPerf')) el('lblPerf').textContent = `(${WEIGHTS[p].P}/10)`;
+  if (el('lblEng'))  el('lblEng').textContent  = `(${WEIGHTS[p].E}/10)`;
+
+  // Status
+  let st = 'In progress'; let unlock='';
+  if(total>=7.5){ st='Preferred Partner (portfolio) candidate'; unlock='Consider special campaigns and front‑page visibility.'; }
+  else if(total>=5){ st='Cisco Partner (portfolio)'; unlock='Rebate eligibility and extra benefits open up.'; }
+  else if(total>=1){ st='Welcome package'; unlock='Access to NFR and Hunting/Teaming.'; }
+  el('status').textContent=st; el('unlock').textContent=unlock;
+
+  // Recommendations
+  const tips = applyRecommendations(p, fnd, cap, perf, eng) || [];
+  el('tips').innerHTML = (tips||[]).map(t=>`<li>${t}</li>`).join('');
+  // render Info bullets (per portfolio)
+  const ib = INFO[p] || [];
+  el('info').innerHTML = ib.map(t=>`<li>${t}</li>`).join('');
 }
 
-  // renk değişimi
-  const bar = el("bar");
-  bar.style.background = "linear-gradient(90deg,#22c55e,#38bdf8)"; // default
-  if(total >= 5 && total < 7.5){
-    bar.style.background = "linear-gradient(90deg,#f59e0b,#fbbf24)"; // orange
-  } else if(total >= 7.5){
-    bar.style.background = "linear-gradient(90deg,#22c55e,#4ade80)"; // green
-  }
-
-  // Status + simple tips
-  let status='';
-  if(total<1){status='Pre-enablement'; el('unlock').textContent='Reach 1.0 to unlock NFR & Hunting/Teaming.'}
-  else if(total<5){status=`Enabled – on track for Cisco ${p} Partner (≥5.0)`; el('unlock').textContent='NFR/Hunting unlocked. Push Capabilities & Performance.'}
-  else if(total<7.5){status=`Cisco ${p} Partner (≥5.0 reached)`; el('unlock').textContent='Next: Preferred (≥7.5).'}
-  else {status=`Preferred ${p} Partner (≥7.5)`; el('unlock').textContent='Maintain momentum to stay Preferred.'}
-  el('status').textContent=status;
-
-  const tips=[];
-  if(bbIdx<7) tips.push('Increase Stage-2/3 BB to lift capabilities.');
-  if(ccIdx<7 && p!=='Services') tips.push('Add Expert/Professional badges.');
-  if(p==='Networking'||p==='Security'){
-    const pen=Number((document.getElementById('penetration')||{value:0}).value||0);
-    const buyIdx = upperIndex(pen, NET.BUY);
-    if(buyIdx<7) tips.push('Raise Buying Program penetration.');
-  }
-  if(p==='Services'){
-    tips.push('Balance ACV growth with Premium Services penetration and improve OTRR.');
-  }
-  el('tips').innerHTML=tips.map(t=>`<li>• ${t}</li>`).join('');
-}
-
-document.getElementById('portfolio').addEventListener('change', ()=>{renderInputs(); calc();});
-document.getElementById('tsize').addEventListener('change', calc);
-
-// init
-renderInputs();
-calc();
-
-// tüm sayfa için delegation: sonradan eklenen input'larda da çalışır
-document.addEventListener('focusin', (e) => {
-  if (e.target && e.target.matches('input[type="number"]')) {
-    e.target.select();
-  }
-});
-
-// === KEYDOWN: ondalık giriş (yüzdeler) için caret güvenli ekleme ===
-document.addEventListener('keydown', (e) => {
-  if (!(e.target && e.target.matches('input[type="number"]'))) return;
-
-  const INT_IDS = ['bb1','bb2','bb3','cert_expert','cert_prof','cert_assoc'];
-  const PCT_IDS = ['acv','tcv','penetration','ai_skus','eng1','eng2','premium','otrr'];
-  const id = e.target.id;
-  const elx = e.target;
-
-  // Bilimsel gösterim ve işaretleri kapat
-  if (['e','E','+','-'].includes(e.key)) { e.preventDefault(); return; }
-
-  // Tam sayılar: nokta/virgül yasak
-  if (INT_IDS.includes(id) && (e.key === '.' || e.key === ',')) { e.preventDefault(); return; }
-
-  // Yardımcılar
-  const safeSelStart = (node) => (Number.isInteger(node.selectionStart) ? node.selectionStart : String(node.value||'').length);
-  const safeSelEnd   = (node) => (Number.isInteger(node.selectionEnd)   ? node.selectionEnd   : String(node.value||'').length);
-  const setCaret = (node, pos) => { try { node.setSelectionRange(pos, pos); } catch(_){} };
-
-  // Yüzdeler: ',' veya '.' tuşu → caret'te tek ondalık nokta olarak ekle
-  if (PCT_IDS.includes(id) && (e.key === '.' || e.key === ',')) {
-    e.preventDefault();
-    const v = String(elx.value || '');
-    const s = safeSelStart(elx);
-    const t = safeSelEnd(elx);
-
-    // Zaten nokta varsa ve seçim yoksa ikinciyi engelle
-    if (v.includes('.') && s === t) return;
-
-    const inserted = v.slice(0, s) + '.' + v.slice(t);
-    // İlk nokta kalsın, sonrakileri temizle (seçim yazma durumunda güvenli)
-    const d = inserted.indexOf('.');
-    const normalized = d === -1 ? inserted : inserted.slice(0, d + 1) + inserted.slice(d + 1).replace(/\./g, '');
-
-    elx.value = normalized;
-    setCaret(elx, Math.min(s + 1, normalized.length));
-
-    // hesap tetikle
-    elx.dispatchEvent(new Event('input', { bubbles: true }));
-    elx.dispatchEvent(new Event('change', { bubbles: true }));
-    return;
-  }
-});
-
-// === Integer-only guard for capabilities (headcount) ===
+// Basic guards
 function attachIntGuards(ids){
   ids.forEach(id=>{
-    const n = el(id);
-    if(!n) return;
-    n.addEventListener("input", ()=>{
-      let v = n.value.replace(/[^0-9]/g,'');
-      n.value = v === "" ? "" : parseInt(v,10);
-    });
+    const n=document.getElementById(id); if(!n) return;
+    n.addEventListener('input',()=>{ if(n.value===''||Number(n.value)<0) n.value=0; n.value = String(Math.floor(Number(n.value)||0)); });
   });
 }
-
-// === Percent guards: ondalık destek — sadece 0-9 ve tek '.'; paste normalizasyonu ===
 function attachPercentGuards(ids){
   ids.forEach(id=>{
-    const n = el(id);
-    if(!n) return;
-
-    const sanitize = (raw) => {
-      if (raw == null) return '';
-      let v = String(raw);
-      v = v.replace(/,/g, '.');        // virgülleri noktaya çevir
-      v = v.replace(/[^0-9.]/g, '');   // rakam ve nokta dışındakileri sil
-      const first = v.indexOf('.');
-      if (first !== -1) v = v.slice(0, first + 1) + v.slice(first + 1).replace(/\./g, '');
-      if (v === '.') v = '0.';         // tek '.' → '0.' yap
-      return v;
-    };
-
-    const onInput = () => {
-      const before = String(n.value || '');
-      const after  = sanitize(before);
-      if (after !== before) n.value = after;
-    };
-
-    n.addEventListener('input', onInput);
-    n.addEventListener('paste', () => { requestAnimationFrame(onInput); });
-    n.setAttribute('lang','en');
-    n.setAttribute('inputmode','decimal');
-    if (!n.getAttribute('step')) n.setAttribute('step','0.1');
-  });
-}
-
-// Threshold inspector
-
-document.getElementById('showThresh').addEventListener('click', ()=>{
-  const p=el('portfolio').value; const band=el('tsize').value; const tb=currentTB();
-  const obj={portfolio:p, band, weights:WEIGHTS[p], subweights:SUBW[p]};
-  obj.BlackBelt_uppers=tb.BB[band]; obj.CareerCert_uppers=tb.CC[band];
-  obj.ACV_uppers=(tb.ACV||NET.ACV)[band]; obj.TCV_uppers=(tb.TCV||NET.TCV)[band];
-  if(p==='Networking'||p==='Security'){ obj.BuyingProgram_uppers=NET.BUY; }
-  if(p==='Collaboration'){ obj.WebexDeploy_uppers=COL.DEPLOY_UP; obj.WebexAdopt_uppers=COL.ADOPT_UP; obj.CPS_index_map={"0":0,"1":5,"2+":10}; }
-  if(p==='Services'){ obj.PremiumServices_uppers=SERVICES.PREMIUM[band]; obj.OTRR_uppers=SERVICES.OTRR; }
-  el('thdump').textContent=JSON.stringify(obj,null,2);
-});
-</script>
-<script>
-// ==== DECIMAL PATCH (robust, caret-safe) ====
-(function(){
-  if (window.__decPatchApplied) return; window.__decPatchApplied = true;
-
-  function attachPercentGuards2(ids){
-    ids.forEach(id=>{
-      const n = document.getElementById(id);
-      if(!n) return;
-      // Force text-mode for decimals (number inputs can clear on '.')
-      n.setAttribute('type','text');
-      n.setAttribute('inputmode','decimal');
-      n.setAttribute('lang','en');
-
-      const sanitizeWithCaret = (value, caret) => {
-        let v = String(value ?? '');
-        let c = Math.max(0, Math.min(caret ?? v.length, v.length));
-
-        // 1) ',' -> '.'
-        const left = v.slice(0,c); const leftRepl = left.replace(/,/g,'.');
-        const deltaComma = leftRepl.length - left.length; // 0 or positive
-        v = (leftRepl + v.slice(c)).replace(/,/g,'.');
-        c += deltaComma;
-
-        // 2) strip invalids (keep digits and '.') with caret adjust
-        const before = v;
-        let kept = ''; let newC = c;
-        for (let i=0, j=0; i<before.length; i++){
-          const ch = before[i];
-          const ok = (ch>='0' && ch<='9') || ch==='.';
-          if (ok){ kept += ch; j++; } else { if (i < c) newC--; }
-        }
-        v = kept; c = Math.max(0, newC);
-
-        // 3) keep only first '.'
-        const first = v.indexOf('.');
-        if (first !== -1){
-          let rebuilt = v.slice(0, first+1);
-          for (let i=first+1; i<v.length; i++){
-            const ch = v[i];
-            if (ch !== '.'){ rebuilt += ch; }
-            else { if (i < c) c--; }
-          }
-          v = rebuilt;
-        }
-
-        // 4) lone '.' => '0.'
-        if (v === '.'){
-          v = '0.';
-          if (c === 1) c = 2;
-        }
-
-// remove leading zeros when followed by a digit (keeps '0.' intact)
-if (/^0+(?=\d)/.test(v)) {
-  const m = v.match(/^0+(?=\d)/)[0].length;
-  if (Number.isInteger(c) && c > 0) c = Math.max(0, c - m);
-  v = v.replace(/^0+(?=\d)/, '');
-}
-
-        // clamp caret
-        if (c > v.length) c = v.length;
-        return {v, c};
-      };
-
-      const onInput = () => {
-        try{
-          const s = n.selectionStart;
-          const {v, c} = sanitizeWithCaret(n.value, s);
-          if (n.value !== v){
-            n.value = v;
-            try{ n.setSelectionRange(c, c); }catch(_){}
-          }
-        }catch(_){
-          // fallback: no-caret sanitize
-          let v = String(n.value||'').replace(/,/g,'.').replace(/[^0-9.]/g,'');
-          const first = v.indexOf('.');
-          if (first !== -1) v = v.slice(0,first+1) + v.slice(first+1).replace(/\./g,'');
-          if (v === '.') v = '0.';
-          n.value = v;
-        }
-      };
-
-      n.addEventListener('input', onInput);
-      n.addEventListener('paste', ()=> requestAnimationFrame(onInput));
+    const n=document.getElementById(id); if(!n) return;
+    // allow decimals via typing & spinner consistently
+    n.setAttribute('step','0.1');
+    // block scientific notation keys
+    n.addEventListener('keydown',(e)=>{
+      if(['e','E','+','-'].includes(e.key)) e.preventDefault();
     });
-  }
+    // keep transitional input states like '50.' or '.5' while typing
+    n.addEventListener('input',()=>{
+      let v = String(n.value).replace(',', '.');
+      if(!/^[0-9]*\.?[0-9]*$/.test(v)) v = v.replace(/[^0-9.]/g,'');
+      n.value = v;
+    });
+    const normalize=()=>{
+      let v = String(n.value).replace(',', '.');
+      if(v===''||v==='.') { n.value = 0; return; }
+      let x = parseFloat(v);
+      if(isNaN(x) || x<0) x=0; if(x>1000) x=1000;
+      n.value = x;
+    };
+    n.addEventListener('change', normalize);
+    n.addEventListener('blur', normalize);
+    n.addEventListener('paste', ()=>setTimeout(normalize,0));
+  });
+}
 
-  function pctIdsFor(p){
-    if (p==='Networking' || p==='Security') return ['acv','tcv','penetration','eng1','eng2'];
-    if (p==='Services') return ['acv','premium','otrr'];
-    if (p==='Cloud & AI') return ['acv','tcv','penetration','ai_skus','eng1','eng2'];
-    return ['acv','tcv','eng1','eng2']; // Collaboration, Splunk
-  }
-
-  // Wrap renderInputs to force text-mode + guards each time UI re-renders
-  const __oldRender = window.renderInputs;
-  window.renderInputs = function(){
-    __oldRender();
-    const p = document.getElementById('portfolio').value;
-    attachPercentGuards2(pctIdsFor(p));
+// Threshold dump
+function dumpThresholds(){
+  const p=el('portfolio').value; const band=el('tsize').value; const tb=TB();
+  const obj={
+    portfolio:p, band,
+    Foundational:{ CX_Index:[0,7,10], MS_Index:[0,2,7,10] },
+    Capabilities:{ BB:tb.BB?.[band], CC:tb.CC?.[band] },
+    Performance:(()=>{
+      if(p==='Networking'||p==='Security') return { ACV:tb.ACV?.[band], TCV:(tb.TCV||tb.ACV)?.[band], BuyingProgram:NET.BUY };
+      if(p==='Services') return { ACV:tb.ACV?.[band], Premium:tb.PREMIUM?.[band] };
+      if(p==='Cloud & AI') return { ACV:tb.ACV?.[band], TCV:(tb.TCV||tb.ACV)?.[band], BuyingProgram:CLAI.BUY_UP, AI:CLAI.AI_UP };
+      return { ACV:tb.ACV?.[band], TCV:(tb.TCV||tb.ACV)?.[band] };
+    })(),
+    Engagement:(()=>{
+      if(p==='Collaboration') return { Deploy:COL.DEPLOY_UP, Adopt:COL.ADOPT_UP };
+      if(p==='Services') return { OTRR:tb.OTRR?.[band] };
+      return { Onboard:NET.ONB_UP, Adopt:NET.ADP_UP };
+    })()
   };
+  el('thdump').textContent = JSON.stringify(obj,null,2);
+}
 
-  // Run once for initial view
-  document.addEventListener('DOMContentLoaded', ()=>{
-    const p = document.getElementById('portfolio').value;
-    attachPercentGuards2(pctIdsFor(p));
-  });
+// Recommendations (unchanged)
+const RECO={
+  "Networking":[
+    "Lean into lifecycle motions: drive Campus automation and Cloud Monitoring for Catalyst to accelerate adoption (S32).",
+    "Increase EA/MSLA/WPA attach to lift Buying Program penetration (S32)."
+  ],
+  "Cloud & AI":[
+    "Highlight AI outcomes and increase AI‑dedicated SKU share; position Hypershield/AI Cloud Stack (S45).",
+    "Strengthen performance via ACV/TCV growth with strategic migrations (S45)."
+  ],
+  "Security":[
+    "Prioritize Secure Access/SASE and XDR activations; land Firewall modernization as motion (S57).",
+    "Grow Buying Program participation to expand platform stickiness (S57)."
+  ],
+  "Collaboration":[
+    "Boost Webex deployment/adoption in last 3 closed months; leverage Control Hub insights (S86).",
+    "Add CPS where applicable (Cloud Calling, Webex CC) to round out capabilities (S86)."
+  ],
+  "Services":[
+    "Improve On‑Time Renewal (OTRR) and expand Premium penetration across the base (S95).",
+    "Position services earlier in the deal cycle to maximize lifecycle value (S95)."
+  ]
+};
 
-  // Safety: block decimal punctuation ONLY on integer-only fields
-  document.addEventListener('keydown', (e)=>{
-    const target = e.target;
-    if (!(target && (target.matches('input[type="number"]') || target.matches('input[type="text"]')))) return;
-    const INT_IDS = ['bb1','bb2','bb3','cert_expert','cert_prof','cert_assoc'];
-    const id = target.id;
-    if (['e','E','+','-'].includes(e.key)) { e.preventDefault(); return; }
-    if (INT_IDS.includes(id) && (e.key === '.' || e.key === ',')) { e.preventDefault(); return; }
-  });
+// Info bullets per portfolio (moved from inline hints to reduce clutter)
+const INFO={
+  "Networking":[
+    "Black Belt stage weights: S1=1, S2=1.5, S3=2.",
+    "Career Cert weights: Expert=10, Professional=3, Associate/Specialist=1.",
+    "ACV/TCV: current 12 months vs prior 12 months (YoY).",
+    "Buying Program: EA / MSLA / WPA participation rate.",
+    "Engagement window: last 18 months; Onboard/Adopt last-bin is strictly ‘greater than’ the final threshold.",
+"Highest applied value index becomes starting point at launch",
+"Designation and benefits remain for 18 months (through fiscal July 2027)"
+  ],
+
+  "Security":[
+    "Black Belt stage weights: S1=1, S2=1.5, S3=2.",
+    "Career Cert weights: Expert=10, Professional=3, Associate/Specialist=1.",
+    "ACV/TCV YoY and Buying Program (EA/MSLA/WPA) same as Networking.",
+    "Engagement window: last 18 months; last bin uses strict ‘>’ rule.",
+"Highest applied value index becomes starting point at launch",
+"Designation and benefits remain for 18 months (through fiscal July 2027)"
+  ],
+
+  "Collaboration":[
+    "Black Belt stage weights: S1=1, S2=1.5, S3=2; CPS counts only for Collaboration.",
+    "CPS mapping: 0→0, 1→5, 2+→10 (capability component).",
+    "ACV/TCV: current 12 months vs prior 12 months (YoY).",
+    "Engagement: Webex Deployment/Adoption – rolling last 3 closed months; best monthly ratio applies.",
+"Highest applied value index becomes starting point at launch",
+"Designation and benefits remain for 18 months (through fiscal July 2027)"
+  ],
+
+  "Cloud & AI":[
+    "Black Belt stage weights: S1=1, S2=1.5, S3=2.",
+    "Career Cert weights: Expert=10, Professional=3, Associate/Specialist=1.",
+    "Buying Program penetration + AI‑dedicated SKU share contribute to Performance.",
+    "ACV/TCV: current 12 months vs prior 12 months (YoY).",
+"Highest applied value index becomes starting point at launch",
+"Designation and benefits remain for 18 months (through fiscal July 2027)"
+  ],
+
+  "Services":[
+    "Capabilities: only Black Belt counts (S1=1, S2=1.5, S3=2).",
+    "Performance: ACV YoY growth and Premium Services penetration (share) are used.",
+    "Engagement: OTRR = renewals on/before due date in last closed period.",
+"Highest applied value index becomes starting point at launch",
+"Designation and benefits remain for 18 months (through fiscal July 2027)"
+  ]
+
+};
+
+function applyRecommendations(p, fnd, cap, perf, eng){
+  const base = RECO[p]||[]; const tips=[];
+  if(fnd < WEIGHTS[p].F*0.8) tips.push('Increase CX/Managed Services practice maturity (Specialized/Gold).');
+  if(cap < WEIGHTS[p].C*0.7) tips.push('Add Black Belt and (where applicable) Career badges to raise capability score.');
+  if((p==='Networking'||p==='Security'||p==='Cloud & AI') && perf < WEIGHTS[p].P*0.7) tips.push('Drive EA/MSLA/WPA adoption to lift performance.');
+  if(p==='Cloud & AI' && perf < WEIGHTS[p].P*0.9) tips.push('Grow AI‑dedicated SKU share for additional performance points.');
+  if(p==='Collaboration') tips.push('Raise Webex deployment/adoption in the last 3 months.');
+  if(p==='Services') tips.push('Improve OTRR and Premium penetration.');
+  return [...base, ...tips].slice(0,5);
+}
+
+// Reset all
+function resetAll(){
+  const currentP = document.getElementById('portfolio').value;
+  const currentT = document.getElementById('tsize').value;
+  renderInputs();
+  document.getElementById('portfolio').value = currentP;
+  document.getElementById('tsize').value = currentT;
+  document.querySelectorAll('#foundationalInputs input[type="number"], #capabilityInputs input[type="number"], #performanceInputs input[type="number"], #engagementInputs input[type="number"]').forEach(n=>{ n.value = 0; });
+  ['cx_level','ms_level','cps'].forEach(id=>{ const s=document.getElementById(id); if(s){ s.value = '0'; }});
+  calc();
+}
+
+// Self-tests (console) – boundaries
+(function selfTests(){
+  try{
+    const asrt=(name, cond)=>console[cond? 'log':'error'](`TEST ${cond?'PASS':'FAIL'} – ${name}`);
+    // Onboard boundary
+    asrt('Onboard 50 -> 9', upperIndexStartAt1_GTLast(50, NET.ONB_UP.slice(1))===9);
+    asrt('Onboard 50.1 -> 10', upperIndexStartAt1_GTLast(50.1, NET.ONB_UP.slice(1))===10);
+    asrt('Onboard 50.5 -> 10', upperIndexStartAt1_GTLast(50.5, NET.ONB_UP.slice(1))===10);
+    // Adopt boundary
+    asrt('Adopt 30 -> 9', upperIndexStartAt1_GTLast(30, NET.ADP_LO.slice(1))===9);
+    asrt('Adopt 30.1 -> 10', upperIndexStartAt1_GTLast(30.1, NET.ADP_LO.slice(1))===10);
+    asrt('Adopt 29.9 -> 9', upperIndexStartAt1_GTLast(29.9, NET.ADP_LO.slice(1))===9);
+    // NEW tests: zero inputs must not score
+    asrt('Onboard 0 -> 0', upperIndexStartAt1_GTLast(0, NET.ONB_UP.slice(1))===0);
+    asrt('Adopt 0 -> 0', upperIndexStartAt1_GTLast(0, NET.ADP_LO.slice(1))===0);
+    asrt('ACV 0 -> 0', upperIndexStartAt1(0, NET.ACV.L.filter(x=>x>0))===0);
+    // Services zeros must not score
+    asrt('Services ACV 0 -> 0', upperIndexStartAt1(0, (SERVICES.ACV.L||[]).filter(x=>x>0))===0);
+    asrt('Services Premium 0 -> 0', upperIndexStartAt1(0, (SERVICES.PREMIUM.L||[]).filter(x=>x>0))===0);
+    asrt('Services OTRR 0 -> 0', upperIndexStartAt1(0, (SERVICES.OTRR.L||[]).filter(x=>x>0))===0);
+    // Decimals sanity
+    asrt('Networking ACV 0.5 -> 0', upperIndexStartAt1(0.5, (NET.ACV.L||[]).filter(x=>x>0))===0);
+    asrt('Services ACV 1.5 >= 1', upperIndexStartAt1(1.5, (SERVICES.ACV.L||[]).filter(x=>x>0))>=1);
+  }catch(e){ console.error('Self-tests error:', e); }
 })();
-// ==== /DECIMAL PATCH ====
+
+// Init
+(function init(){
+  renderInputs();
+  calc();
+  el('portfolio').addEventListener('change',()=>{ renderInputs(); calc(); });
+  el('tsize').addEventListener('change',calc);
+  
+el('showThresh').addEventListener('click', ()=>{ 
+  const box = el('thdump'); 
+  if (box) box.style.display='block'; 
+  dumpThresholds(); 
+});
+const ht = document.getElementById('hideThresh');
+if (ht) ht.addEventListener('click', ()=>{ 
+  const box = el('thdump'); 
+  if (box) box.style.display='none'; 
+});
+
+
+
+  const rbb=document.getElementById('resetAllBottom'); if(rbb) rbb.addEventListener('click', resetAll);
+  const ra=document.getElementById('resetAll'); if(ra) ra.addEventListener('click', resetAll);
+})();
 </script>
 </body>
 </html>
