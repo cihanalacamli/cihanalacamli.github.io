@@ -679,6 +679,42 @@ else if (p === 'Security') {
   eng = (onIdx/10)*(W.E*(SUBW[p].eng.a||0.5))
       + (adIdx/10)*(W.E*(SUBW[p].eng.b||0.5));}
 
+else if (p === 'Networking') {
+  // ---- strict: >lower && ≤upper (1..9), SON BİN için de strict "> last"
+  const uD  = NET.ONB_UP.slice(1); // [10,15,20,25,30,35,40,45,50]
+  const uDlo= NET.ONB_LO.slice(1); // [10,15,...,50,55]  (son üst sınır: 55)
+
+  const uA  = NET.ADP_UP.slice(1); // [3,6,9,12,15,18,21,24,27]
+  const uAlo= NET.ADP_LO.slice(1); // [3,6,...,27,30]    (son üst sınır: 30)
+
+  const e1v = Number((document.getElementById('eng1')||{value:0}).value||0); // Onboard %
+  const e2v = Number((document.getElementById('eng2')||{value:0}).value||0); // Adopt   %
+
+  // --- ONBOARD
+  let onIdx = 0;
+  if (e1v > uD[0]) {
+    onIdx = 10; // varsayılan: son eşik üstü -> 10
+    for (let i = 1; i < uD.length; i++) {
+      if (e1v > uD[i-1] && e1v <= uD[i]) { onIdx = i; break; } // 1..9
+    }
+    // 50 < e1v ≤ 55 ise 9'a düşür (son bin strict ">55")
+    if (onIdx === 10 && e1v <= uDlo[uDlo.length-1]) onIdx = 9;
+  }
+
+  // --- ADOPT
+  let adIdx = 0;
+  if (e2v > uA[0]) {
+    adIdx = 10;
+    for (let i = 1; i < uA.length; i++) {
+      if (e2v > uA[i-1] && e2v <= uA[i]) { adIdx = i; break; } // 1..9
+    }
+    // 27 < e2v ≤ 30 ise 9'a düşür (son bin strict ">30")
+    if (adIdx === 10 && e2v <= uAlo[uAlo.length-1]) adIdx = 9;
+  }
+
+  eng = (onIdx/10) * (W.E * (SUBW[p].eng.a))
+      + (adIdx/10) * (W.E * (SUBW[p].eng.b));
+}
 
 
 
