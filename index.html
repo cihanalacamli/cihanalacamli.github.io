@@ -46,7 +46,7 @@
     <div class="header">
       <div>
         <div class="title">Cisco 360 – Self‑Check <span class="pill">Networking • Security • Collaboration • Cloud & AI • Services • Splunk</span></div>
-        <div class="subtitle"><span class="pill">v2.0</span> <strong>• Last updated: 09 Oct 2025</strong> • <i>Developed by Cihan Alaçamlı</i></div>
+        <div class="subtitle"><span class="pill">v3.0</span> <strong>• Last updated: 15 Nov 2025</strong> • <i>Developed by Cihan Alaçamlı</i></div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="cta" id="resetAll" style="border-color:#1c6db9;color:#0b5d80;background:#b0bfbe">Reset All Fields</button>
@@ -156,7 +156,7 @@
         </div>
 
         <div class="foot">
-          <span class="tag">v2.0 — Cihan Alaçamlı @2025.</span>
+          <span class="tag">v3.0 — Cihan Alaçamlı @2025.</span>
           <span class="tag">Check PXP for the official score</span>
         </div>
       </div>
@@ -335,20 +335,21 @@ function renderInputs(){
           <label>Customer Success Practice Maturity</label>
           <select id="cx_level">
             <option value="0">None</option>
+	    <option value="5">Basic</option>
             <option value="7">Specialized</option>
             <option value="10">Advanced</option>
           </select>
-          <div class="hint">Index: 0 / 7 / 10. Customer Success practice maturity.</div>
+          <div class="hint">Index: 0 / 5 / 7 / 10. Customer Success practice maturity.</div>
         </div>
         <div>
           <label>Managed Services Practice Maturity</label>
           <select id="ms_level">
             <option value="0">None</option>
-            <option value="2">Select</option>
+            <option value="5">Select</option>
             <option value="7">Premier</option>
             <option value="10">Gold</option>
           </select>
-          <div class="hint">Index: 0 / 2 / 7 / 10. Managed Services maturity; Cisco Powered Services counted under Cloud & AI Foundational.</div>
+          <div class="hint">Index: 0 / 5 / 7 / 10. Managed Services maturity; Cisco Powered Services counted under Cloud & AI Foundational.</div>
         </div>
       </div>`;
   }
@@ -753,7 +754,9 @@ else {
   el('tips').innerHTML = (tips||[]).map(t=>`<li>${t}</li>`).join('');
   // render Info bullets (per portfolio)
   const ib = INFO[p] || [];
-  el('info').innerHTML = ib.map(t=>`<li>${t}</li>`).join('');
+  el('info').innerHTML =
+  ib.map(t=>`<li>${t}</li>`).join('') +
+  GLOBAL_INFO.map(t=>`<li>${t}</li>`).join('');
 }
 
 // Basic guards
@@ -796,7 +799,7 @@ function dumpThresholds(){
   const p=el('portfolio').value; const band=el('tsize').value; const tb=TB();
   const obj={
     portfolio:p, band,
-    Foundational:{ CX_Index:[0,7,10], MS_Index:[0,2,7,10] },
+    Foundational:{ CX_Index:[0,5,7,10], MS_Index:[0,5,7,10] },
     Capabilities:{ BB:tb.BB?.[band], CC:tb.CC?.[band] },
     Performance:(()=>{
       if(p==='Networking'||p==='Security') return { ACV:tb.ACV?.[band], TCV:(tb.TCV||tb.ACV)?.[band], BuyingProgram:NET.BUY };
@@ -840,40 +843,31 @@ const RECO={
 // Info bullets per portfolio (moved from inline hints to reduce clutter)
 const INFO={
   "Networking":[
-    "Black Belt stage weights: S1=1, S2=1.5, S3=2.",
-    "Career Cert weights: Expert=10, Professional=3, Associate/Specialist=1.",
     "ACV/TCV: current 12 months vs prior 12 months (YoY).",
     "Buying Program: EA / MSLA / WPA participation rate.",
-    "Engagement window: last 18 months; Onboard/Adopt last-bin is strictly ‘greater than’ the final threshold.",
+    "Engagement window: last 18 months; Onboard/Adopt",
 "Highest applied value index becomes starting point at launch",
-"Designation and benefits remain for 18 months (through fiscal July 2027)"
   ],
 
   "Security":[
-    "Black Belt stage weights: S1=1, S2=1.5, S3=2.",
-    "Career Cert weights: Expert=10, Professional=3, Associate/Specialist=1.",
     "ACV/TCV YoY and Buying Program (EA/MSLA/WPA) same as Networking.",
     "Engagement window: last 18 months; last bin uses strict ‘>’ rule.",
 "Highest applied value index becomes starting point at launch",
-"Designation and benefits remain for 18 months (through fiscal July 2027)"
+
   ],
 
   "Collaboration":[
-    "Black Belt stage weights: S1=1, S2=1.5, S3=2; CPS counts only for Collaboration.",
-    "CPS mapping: 0→0, 1→5, 2+→10 (capability component).",
     "ACV/TCV: current 12 months vs prior 12 months (YoY).",
     "Engagement: Webex Deployment/Adoption – rolling last 3 closed months; best monthly ratio applies.",
 "Highest applied value index becomes starting point at launch",
-"Designation and benefits remain for 18 months (through fiscal July 2027)"
+
   ],
 
   "Cloud & AI":[
-    "Black Belt stage weights: S1=1, S2=1.5, S3=2.",
-    "Career Cert weights: Expert=10, Professional=3, Associate/Specialist=1.",
     "Buying Program penetration + AI‑dedicated SKU share contribute to Performance.",
     "ACV/TCV: current 12 months vs prior 12 months (YoY).",
 "Highest applied value index becomes starting point at launch",
-"Designation and benefits remain for 18 months (through fiscal July 2027)"
+
   ],
 
   "Services":[
@@ -881,10 +875,42 @@ const INFO={
     "Performance: ACV YoY growth and Premium Services penetration (share) are used.",
     "Engagement: OTRR = renewals on/before due date in last closed period.",
 "Highest applied value index becomes starting point at launch",
-"Designation and benefits remain for 18 months (through fiscal July 2027)"
+
   ]
 
 };
+
+// <<< ADD — GLOBAL INFO ENTRIES WITH BUTTON LINKS
+const GLOBAL_INFO = [
+  `Eligible Offers List<br>
+   Download the official list of eligible hardware, software, and services that qualify for the new Cisco Partner Incentive.<br>
+   <a href="https://www.cisco.com/c/dam/en_us/partners/downloads/cisco-partner-program/cisco-partner-incentive-eligible-offers-list.xlsx" 
+      target="_blank" style="display:inline-block;margin-top:4px;padding:6px 10px;background:#b00020;color:white;border-radius:6px;text-decoration:none;font-size:12px;">
+      Download List
+   </a>`,
+
+  `Webinars & Recordings<br>
+   Attend upcoming webinars or access recordings directly from Cisco’s official 360 Partner Program hub.<br>
+   <a href="https://www.cisco.com/site/us/en/partners/360-partner-program/index.html"
+      target="_blank" style="display:inline-block;margin-top:4px;padding:6px 10px;background:#0b5d80;color:white;border-radius:6px;text-decoration:none;font-size:12px;">
+      Upcoming Webinars
+   </a>`,
+
+  `Cisco Partner Incentive Estimator (PXP)<br>
+   Use the official estimator to model rebate impact across ACV/TCV and Buying Program penetration.<br>
+   <a href="https://cisco-pxp.my.site.com/"
+      target="_blank" style="display:inline-block;margin-top:4px;padding:6px 10px;background:#1c6db9;color:white;border-radius:6px;text-decoration:none;font-size:12px;">
+      Open PXP Estimator
+   </a>`, 
+
+  `Cisco 360 Partner FAQ <br>
+   Frequently asked questions for partners.<br>
+   <a href="https://www.cisco.com/c/dam/en_us/partners/downloads/cisco-partner-program/cisco-360-program-partner-faq.pdf"
+      target="_blank" style="display:inline-block;margin-top:4px;padding:6px 10px;background:#627e99;color:white;border-radius:6px;text-decoration:none;font-size:12px;">
+      Open 360 FAQ
+   </a>`
+];
+
 
 function applyRecommendations(p, fnd, cap, perf, eng){
   const base = RECO[p]||[]; const tips=[];
