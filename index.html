@@ -29,7 +29,32 @@
     .kpi .k{background:#0a1220;border:1px dashed #243044;color:var(--muted);border-radius:12px;padding:10px}
     .big{font-size:44px;font-weight:800}
     .pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;border:1px solid #273043;color:var(--muted)}
-    .scorebar{height:10px;border-radius:6px;background:#0a1220;border:1px solid #22314e;overflow:hidden}
+.last-updated {
+  color: #38bdf8; /* mevcut Cisco-mavi accent */
+}
+.author-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: #38bdf8;
+  text-underline-offset: 3px;
+}
+
+.author-link:hover {
+  color: #38bdf8;
+}
+    
+.launch-badge {
+  margin-left: 10px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px;
+  color: #0b1320;
+  background: linear-gradient(90deg,#38bdf8,#22c55e);
+  vertical-align: middle;
+}
+
+.scorebar{height:10px;border-radius:6px;background:#0a1220;border:1px solid #22314e;overflow:hidden}
     .scorebar>div{height:100%;background:linear-gradient(90deg,#22c55e,#38bdf8)}
     .tips li{margin:6px 0}
     .foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
@@ -38,6 +63,12 @@
     .note{font-size:12px;color:#9fb3d7}
     .cta{background:#0a1220;border:1px solid #27406a;color:#dbe7ff;padding:10px 12px;border-radius:10px;cursor:pointer}
     .cta:hover{border-color:#3b6fb6}
+
+    /* Minimal checkbox styling (keeps current UI look) */
+    .mincheck{display:flex;align-items:center;gap:8px;margin-top:8px}
+    .mincheck input[type="checkbox"]{width:auto;transform:scale(1.05);accent-color:#38bdf8}
+    .mincheck span{font-size:12px;color:var(--muted)}
+
     @media (max-width: 920px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
@@ -46,11 +77,30 @@
     <div class="header">
       <div>
         <div class="title">Cisco 360 – Self‑Check <span class="pill">Networking • Security • Collaboration • Cloud & AI • Services • Splunk</span></div>
-        <div class="subtitle"><span class="pill">v3.0</span> <strong>• Last updated: 15 Nov 2025</strong> • <i>Developed by Cihan Alaçamlı</i></div>
+        
+<div class="subtitle">
+  <span class="pill">v4.0</span>
+  <strong>• <span class="last-updated">Last updated: 17 Dec 2025</span></strong>
+  • <i>
+  Developed by
+  <a href="https://www.linkedin.com/in/calacamli" target="_blank" class="author-link">
+    Cihan Alaçamlı
+  </a>
+</i>
+
+</div>
+
+
       </div>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="cta" id="resetAll" style="border-color:#1c6db9;color:#0b5d80;background:#b0bfbe">Reset All Fields</button>
         <div class="pill" style="white-space:nowrap">Unofficial estimator</div>
+
+<img
+  src="https://visitor-badge.laobi.icu/badge?page_id=cihanalacamli.cisco360&left_text=visits"
+  alt="visitor counter"
+/>
+
       </div>
     </div>
 
@@ -97,9 +147,9 @@
         <div class="divider"></div>
         <h3>Engagement <span id="lblEng" class="hint"></span></h3>
         <div id="engagementInputs"></div>
-<div style="margin-top:10px;text-align:center;">
-<button class="cta" id="resetAllBottom" style="border-color:#1c6db9;color:#0b5d80;background:#b0bfbe">Reset All Fields</button>
-</div>
+        <div style="margin-top:10px;text-align:center;">
+          <button class="cta" id="resetAllBottom" style="border-color:#1c6db9;color:#0b5d80;background:#b0bfbe">Reset All Fields</button>
+        </div>
       </div>
 
       <!-- OUTPUTS -->
@@ -118,9 +168,9 @@
           </div>
           <div class="k">
             <div class="hint">Key thresholds</div> 
-            <div class="note">1.0 – NFR & Hunting/Teaming</div>
+            <div class="note">1.0 – Deal Reg., NFR, Programmatic Discounts (+MSP)</div>
             <div class="note">5.0 – Cisco Partner (portfolio) + Rebate eligible</div>
-            <div class="note">7.5 – Preferred Partner (portfolio)</div>
+            <div class="note">7.5 – Preferred Partner (portfolio) + 2x || 3x rebate</div>
           </div>
         </div>
 
@@ -140,7 +190,13 @@
         <ul class="tips" id="tips"></ul>
 
         <div class="divider"></div>
-        <h3>Info</h3>
+        
+<h3>
+  Info
+  <span class="launch-badge">Program Launch  Date • Jan 25, 2026</span>
+</h3>
+
+
         <ul class="tips" id="info"></ul>
 
         <div class="divider"></div>
@@ -149,14 +205,13 @@
           <div class="k">
             <div class="hint">Threshold tables for current selection</div>
             <button class="cta" id="showThresh">Show/Refresh thresholds</button>
-<button class="cta" id="hideThresh">Hide Thresholds</button>
-<pre id="thdump" style="white-space:pre-wrap;max-height:240px;overflow:auto;margin-top:10px"></pre>
-
+            <button class="cta" id="hideThresh">Hide Thresholds</button>
+            <pre id="thdump" style="white-space:pre-wrap;max-height:240px;overflow:auto;margin-top:10px"></pre>
           </div>
         </div>
 
         <div class="foot">
-          <span class="tag">v3.0 — Cihan Alaçamlı @2025.</span>
+          <span class="tag">v4.0 — Cihan Alaçamlı @2025.</span>
           <span class="tag">Check PXP for the official score</span>
         </div>
       </div>
@@ -200,10 +255,9 @@ NET.TCV=NET.ACV;
 
 // ===== Security thresholds (UPDATED – SS1) =====
 const SEC={
-  // SS1: XL row (green) and XS row (yellow) applied; mid bands aligned per table
   BB:{
-    XS:[10,20,30,40,50,60,70,80,90,100],
-    S: [10,20,30,40,50,60,70,80,90,100],
+    XS:[1,5,10,15,20,25,30,40,50,60],
+    S: [5,10,15,20,30,40,50,60,70,80],
     M: [10,20,30,40,50,60,70,80,90,100],
     L: [17,34,51,68,85,102,119,136,153,170],
     XL:[36,72,108,144,180,216,252,288,324,360]
@@ -212,8 +266,8 @@ const SEC={
   ACV:NET.ACV,
   TCV:NET.TCV,
   BUY:NET.BUY,
-  ONB_UP: [10,15,20,25,30,35,40,45,50,55],   // Onboard %  (alt hariç, üst dahil)
-     ADP_UP: [3,6,9,12,15,18,21,24,27,30]       // Adopt %    (alt hariç, üst dahil)
+  ONB_UP: [10,15,20,25,30,35,40,45,50,55],
+  ADP_UP: [3,6,9,12,15,18,21,24,27,30]
 };
 
 // Collaboration
@@ -238,7 +292,7 @@ const CLAI={
   ADOPT_UP:[3,6,9,12,15,18,21,24,27,30]
 };
 
-// Services – left intact
+// Services
 const SERVICES={
   BB:{
     XL:[0,7,14,21,28,35,42,49,56,63],
@@ -248,25 +302,25 @@ const SERVICES={
     XS:[0,1,2,3,4,5,6,7,8,9]
   },
   ACV:{
-    XL:[0.0,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0],
-    L: [0.0,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0],
-    M: [0.0,2.0,4.0,6.0,8.0,12.0,14.0,16.0,18.0,20.0],
+    XS:[4.0,6.0,8.0,12.0,16.0,18.0,20.0,22.0,25.0,25.0],
     S: [0.0,2.0,4.0,6.0,8.0,12.0,14.0,16.0,18.0,20.0],
-    XS:[4.0,6.0,8.0,12.0,16.0,18.0,20.0,22.0,25.0,25.0]
+    M: [0.0,2.0,4.0,6.0,8.0,12.0,14.0,16.0,18.0,20.0],
+    L: [0.0,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0],
+    XL:[0.0,1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5,5.0]
   },
   PREMIUM:{
     XL:[0.0,2.0,4.0,6.0,8.0,10.0,15.0,20.0,25.0,30.0],
     L: [0.0,2.0,4.0,6.0,8.0,10.0,15.0,20.0,25.0,30.0],
     M: [0.0,2.0,4.0,6.0,8.0,10.0,15.0,20.0,25.0,30.0],
-    S: [4.0,6.0,8.0,10.0,12.0,15.0,20.0,25.0,30.0,35.0],
-    XS:[4.0,6.0,8.0,10.0,15.0,20.0,25.0,30.0,35.0,35.0]
+    S: [0.0,2.0,4.0,6.0,8.0,10.0,15.0,20.0,25.0,30.0],
+    XS:[0.0,2.0,4.0,6.0,8.0,10.0,15.0,20.0,25.0,30.0]
   },
   OTRR:{
     XL:[0,10,20,25,30,35,45,50,55,60],
     L: [0,10,20,25,30,35,45,50,55,60],
-    M: [15,30,40,50,65,70,75,80,85,85],
-    S: [15,30,40,50,65,70,75,80,85,85],
-    XS:[15,30,40,50,65,70,75,80,85,85]
+    M: [0,10,20,25,30,35,45,50,55,60],
+    S: [0,10,20,25,30,35,45,50,55,60],
+    XS:[0,10,20,25,30,35,45,50,55,60]
   }
 };
 
@@ -304,15 +358,47 @@ function upperIndexStartAt1_GTLast(value, uppers){
   if(!Array.isArray(uppers) || uppers.length===0) return 0;
   const first = uppers[0];
   const last  = uppers[uppers.length-1];
-  // NEW: values below first threshold must score 0 (no input → no points)
   if(value < first) return 0;
-  // Strictly greater than the last threshold → full index 10
   if(value > last) return 10;
-  // Map into bins 1..9 (<= penultimate threshold)
   for(let i=0;i<uppers.length-1;i++){
     if(value <= uppers[i]) return i+1;
   }
-  // value is <= last (but not > last), so stay at index 9
+  return 9;
+}
+
+// Zero floor tables (index 0 is 0.0). Requirement:
+// value <= 0 => 0 (no points)
+// 0 < value <= next threshold => 1
+// ...
+// value > last threshold => 10
+function upperIndexStartAt1_ZeroNoScore_GTLast(value, uppersWithZero){
+  if(!Array.isArray(uppersWithZero) || uppersWithZero.length===0) return 0;
+  const v = Number(value || 0);
+  if(v <= 0) return 0;
+  for(let i=1; i<uppersWithZero.length; i++){
+    if(v <= uppersWithZero[i]) return i; // i=1 => index 1
+  }
+  return 10; // > last
+}
+
+// Engagement baseline helper (Cisco confirmed):
+// Onboard baseline: 0..(first-ε) => index 1
+// Adopt baseline:   0..(first-ε) => index 4
+// Strict last: value > last => 10, value <= last => up to 9
+function upperIndexWithBaseline(value, uppers, baselineBelowFirst){
+  if(!Array.isArray(uppers) || uppers.length===0) return 0;
+  const v = Number(value || 0);
+  if(v < 0) return 0;
+
+  const first = uppers[0];
+  const last  = uppers[uppers.length - 1];
+
+  if(v < first) return baselineBelowFirst;
+  if(v > last)  return 10;
+
+  for(let i=0; i<uppers.length-1; i++){
+    if(v <= uppers[i]) return baselineBelowFirst + 1 + i;
+  }
   return 9;
 }
 
@@ -335,7 +421,7 @@ function renderInputs(){
           <label>Customer Success Practice Maturity</label>
           <select id="cx_level">
             <option value="0">None</option>
-	    <option value="5">Basic</option>
+            <option value="5">Basic</option>
             <option value="7">Specialized</option>
             <option value="10">Advanced</option>
           </select>
@@ -345,9 +431,9 @@ function renderInputs(){
           <label>Managed Services Practice Maturity</label>
           <select id="ms_level">
             <option value="0">None</option>
-            <option value="5">Select</option>
-            <option value="7">Premier</option>
-            <option value="10">Gold</option>
+            <option value="5">Select (5)</option>
+            <option value="7">Premier (7)</option>
+            <option value="10">Gold (10)</option>
           </select>
           <div class="hint">Index: 0 / 5 / 7 / 10. Managed Services maturity; Cisco Powered Services counted under Cloud & AI Foundational.</div>
         </div>
@@ -355,7 +441,6 @@ function renderInputs(){
   }
 
   // Capabilities
-  let capsHTML = '';
   const cpsBlock = (p==='Collaboration') ? `
     <div class="row" id="cpsRow">
       <div>
@@ -369,8 +454,8 @@ function renderInputs(){
       </div>
     </div>` : '';
 
+  let capsHTML='';
   if (p === 'Services') {
-    // Services: ONLY Black Belt counts (no Career Cert fields)
     capsHTML = `
       <div class="row">
         <div>
@@ -390,7 +475,6 @@ function renderInputs(){
         </div>
       </div>`;
   } else {
-    // Other portfolios: BB + Career Cert
     capsHTML = `
       <div class="row">
         <div>
@@ -425,46 +509,105 @@ function renderInputs(){
   }
   c.innerHTML = capsHTML + (p==='Collaboration' ? cpsBlock : '');
 
-  // Performance
-  const prEl = pr; // just alias
-  if(p==='Networking' || p==='Security'){
-    prEl.innerHTML = `
+  // Performance (+ min-booking checkboxes)
+  if(p==='Networking'){
+    pr.innerHTML = `
       <div class="row">
-        <div><label>ACV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div><input type="number" id="acv" step="0.1" value="0"></div>
-        <div><label>TCV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div><input type="number" id="tcv" step="0.1" value="0"></div>
+        <div>
+          <label>ACV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div>
+          <input type="number" id="acv" step="0.1" value="0">
+          <div class="mincheck"><input type="checkbox" id="min_acv"><span>Min $25K ACV achieved</span></div>
+        </div>
+        <div>
+          <label>TCV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div>
+          <input type="number" id="tcv" step="0.1" value="0">
+          <div class="mincheck"><input type="checkbox" id="min_tcv"><span>Min $50K TCV achieved</span></div>
+        </div>
       </div>
       <div class="row" id="buyRow"><div>
-        <label>Buying Program Penetration (%)</label><div class="hint">EA / MSLA / WPA participation rate.</div><input type="number" id="penetration" step="0.1" value="0">
+        <label>Buying Program Penetration (%)</label><div class="hint">EA / MSLA / WPA participation rate.</div>
+        <input type="number" id="penetration" step="0.1" value="0">
+        <div class="mincheck"><input type="checkbox" id="min_buy"><span>Min $50K bookings achieved</span></div>
         <div class="hint">EA / MSLA / WPA etc.</div>
       </div></div>`;
-  } else if(p==='Services'){
-    prEl.innerHTML = `
+  }
+  else if(p==='Security'){
+    pr.innerHTML = `
       <div class="row">
-        <div><label>ACV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div><input type="number" id="acv" step="0.1" value="0"></div>
-        <div><label>Premium Services Penetration (%)</label><div class="hint">Share of Premium-tier services within total services TCV.</div><input type="number" id="premium" step="0.1" value="0"></div>
-      </div>`;
-  } else if(p==='Cloud & AI'){
-    prEl.innerHTML = `
+        <div>
+          <label>ACV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div>
+          <input type="number" id="acv" step="0.1" value="0">
+          <div class="mincheck"><input type="checkbox" id="min_acv"><span>Min $50K ACV achieved</span></div>
+        </div>
+        <div>
+          <label>TCV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div>
+          <input type="number" id="tcv" step="0.1" value="0">
+          <div class="mincheck"><input type="checkbox" id="min_tcv"><span>Min $50K TCV achieved</span></div>
+        </div>
+      </div>
+      <div class="row" id="buyRow"><div>
+        <label>Buying Program Penetration (%)</label><div class="hint">EA / MSLA / WPA participation rate.</div>
+        <input type="number" id="penetration" step="0.1" value="0">
+        <div class="mincheck"><input type="checkbox" id="min_buy"><span>Min $50K bookings achieved</span></div>
+        <div class="hint">EA / MSLA / WPA etc.</div>
+      </div></div>`;
+  }
+  else if(p==='Cloud & AI'){
+    pr.innerHTML = `
       <div class="row">
-        <div><label>ACV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div><input type="number" id="acv" step="0.1" value="0"></div>
-        <div><label>TCV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div><input type="number" id="tcv" step="0.1" value="0"></div>
+        <div>
+          <label>ACV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div>
+          <input type="number" id="acv" step="0.1" value="0">
+          <div class="mincheck"><input type="checkbox" id="min_acv"><span>Min $25K ACV achieved</span></div>
+        </div>
+        <div>
+          <label>TCV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div>
+          <input type="number" id="tcv" step="0.1" value="0">
+          <div class="mincheck"><input type="checkbox" id="min_tcv"><span>Min $50K TCV achieved</span></div>
+        </div>
       </div>
       <div class="row">
         <div>
           <label>Buying Program Penetration (%)</label><div class="hint">EA / MSLA / WPA participation rate.</div>
           <input type="number" id="penetration" step="0.1" value="0">
+          <div class="mincheck"><input type="checkbox" id="min_buy"><span>Min $50K bookings achieved</span></div>
           <div class="hint">EA / MSLA / WPA etc.</div>
         </div>
         <div>
           <label>AI SKU Penetration (%)</label><div class="hint">Share of AI‑dedicated SKUs.</div>
           <input type="number" id="ai_skus" step="0.1" value="0">
+          <div class="mincheck"><input type="checkbox" id="min_ai"><span>Min $25K AI bookings achieved</span></div>
         </div>
       </div>`;
-  } else { // Collaboration, Splunk
-    prEl.innerHTML = `
+  }
+  else if(p==='Services'){
+    pr.innerHTML = `
       <div class="row">
-        <div><label>ACV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div><input type="number" id="acv" step="0.1" value="0"></div>
-        <div><label>TCV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div><input type="number" id="tcv" step="0.1" value="0"></div>
+        <div>
+          <label>ACV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div>
+          <input type="number" id="acv" step="0.1" value="0">
+          <div class="mincheck"><input type="checkbox" id="min_acv"><span>Min $50K ACV achieved</span></div>
+        </div>
+        <div>
+          <label>Premium Services Penetration (%)</label><div class="hint">Share of Premium-tier services within total services TCV.</div>
+          <input type="number" id="premium" step="0.1" value="0">
+          <div class="mincheck"><input type="checkbox" id="min_premium"><span>Min $50K services bookings achieved</span></div>
+        </div>
+      </div>`;
+  }
+  else { // Collaboration, Splunk
+    pr.innerHTML = `
+      <div class="row">
+        <div>
+          <label>ACV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div>
+          <input type="number" id="acv" step="0.1" value="0">
+          <div class="mincheck"><input type="checkbox" id="min_acv"><span>Min $25K ACV achieved</span></div>
+        </div>
+        <div>
+          <label>TCV YoY growth (%)</label><div class="hint">Current 12 months vs prior 12 months.</div>
+          <input type="number" id="tcv" step="0.1" value="0">
+          <div class="mincheck"><input type="checkbox" id="min_tcv"><span>Min $50K TCV achieved</span></div>
+        </div>
       </div>`;
   }
 
@@ -479,7 +622,11 @@ function renderInputs(){
   } else if (p==='Services'){
     e.innerHTML = `
       <div class="row">
-        <div><label>On‑Time Renewal Rate — OTRR (%)</label><div class="hint">Contracts renewed on/before due date in the last closed period.</div><input type="number" id="otrr" step="0.1" value="0"></div>
+        <div>
+          <label>On‑Time Renewal Rate — OTRR (%)</label><div class="hint">Contracts renewed on/before due date in the last closed period.</div>
+          <input type="number" id="otrr" step="0.1" value="0">
+          <div class="mincheck"><input type="checkbox" id="min_otrr"><span>Min $10K renewals base achieved</span></div>
+        </div>
       </div>`;
   } else {
     e.innerHTML = `
@@ -493,6 +640,7 @@ function renderInputs(){
   // Guards
   attachIntGuards(["bb1","bb2","bb3","cert_expert","cert_prof","cert_assoc"]);
 
+  // Percent guards (numbers only)
   if (p==='Networking' || p==='Security'){
     attachPercentGuards(["acv","tcv","penetration","eng1","eng2"]);
   } else if (p==='Services'){
@@ -505,7 +653,7 @@ function renderInputs(){
 
   // decimal locale safety
   (function forceEnLocaleForDecimals(){
-    const ids = Array.from(document.querySelectorAll('#performanceInputs input, #engagementInputs input')).map(x=>x.id);
+    const ids = Array.from(document.querySelectorAll('#performanceInputs input[type="number"], #engagementInputs input[type="number"]')).map(x=>x.id);
     ids.forEach(id=>{
       const n = document.getElementById(id);
       if (n) {
@@ -547,183 +695,119 @@ function calc(){
   const ccWeighted = cexp*10 + cpro*3 + cass*1;
   const ccIdx = upperIndex(ccWeighted, T.CC?.[band]);
   let cap=(bbIdx/10)*(W.C*(SW.cap.bb||0)) + (ccIdx/10)*(W.C*(SW.cap.cc||0));
-  if(p==='Services'){
-    cap=(bbIdx/10)*(W.C*(SW.cap.bb||1));
-  }
+  if(p==='Services') cap=(bbIdx/10)*(W.C*(SW.cap.bb||1));
   if(p==='Collaboration'){
     const cpsVal = Number((document.getElementById('cps')||{value:0}).value||0);
     const cpsIdx = cpsVal>=2?10 : (cpsVal===1?5:0);
     cap += (cpsIdx/10)*(W.C*(SW.cap.cps||0));
   }
 
-  // Performance
+  // Performance (with min-booking gates)
   let perf=0;
   const acv=Number((document.getElementById('acv')||{value:0}).value||0);
   const tcv=Number((document.getElementById('tcv')||{value:0}).value||0);
   const acvArr = (T.ACV?.[band]||NET.ACV[band]||[]).filter(x=>x>0);
   const tcvArr = ((T.TCV||T.ACV)?.[band]||NET.TCV[band]||[]).filter(x=>x>0);
-  const acvIdx = upperIndexStartAt1(acv, acvArr);
-  const tcvIdx = upperIndexStartAt1(tcv, tcvArr);
+
+  const minACV = !!(document.getElementById('min_acv') && document.getElementById('min_acv').checked);
+  const minTCV = !!(document.getElementById('min_tcv') && document.getElementById('min_tcv').checked);
+  const minBUY = !!(document.getElementById('min_buy') && document.getElementById('min_buy').checked);
+  const minAI  = !!(document.getElementById('min_ai') && document.getElementById('min_ai').checked);
+  const minPREM= !!(document.getElementById('min_premium') && document.getElementById('min_premium').checked);
+
+  const acvIdx = minACV ? upperIndexStartAt1(acv, acvArr) : 0;
+  const tcvIdx = minTCV ? upperIndexStartAt1(tcv, tcvArr) : 0;
 
   if(p==='Networking' || p==='Security'){
     const pen=Number((document.getElementById('penetration')||{value:0}).value||0);
     const buyArr = (T.BUY_UP||NET.BUY||[]).filter(x=>x>0);
-    const buyIdx = upperIndexStartAt1(pen, buyArr);
+    const buyIdx = minBUY ? upperIndexStartAt1(pen, buyArr) : 0;
     perf=(acvIdx/10)*(W.P*SW.perf.acv)+(tcvIdx/10)*(W.P*SW.perf.tcv)+(buyIdx/10)*(W.P*SW.perf.buy);
   } else if(p==='Services'){
     const prem = Number((document.getElementById('premium')||{value:0}).value||0);
-    const acvIdxS = upperIndexStartAt1(acv, (SERVICES.ACV[band]||[]).filter(x=>x>0));
-    const premIdx = upperIndexStartAt1(prem, (SERVICES.PREMIUM[band]||[]).filter(x=>x>0));
+    const acvIdxS = minACV ? upperIndexStartAt1(acv, (SERVICES.ACV[band]||[]).filter(x=>x>0)) : 0;
+    const premIdx = minPREM ? upperIndexStartAt1_ZeroNoScore_GTLast(prem, (SERVICES.PREMIUM[band]||[])) : 0;
     perf=(acvIdxS/10)*(W.P*SW.perf.acv) + (premIdx/10)*(W.P*SW.perf.premium);
   } else if(p==='Cloud & AI'){
     const pen = Number((document.getElementById('penetration')||{value:0}).value||0);
-    const buyIdx = upperIndexStartAt1(pen, (CLAI.BUY_UP||[]).filter(x=>x>0));
+    const buyIdx = minBUY ? upperIndexStartAt1(pen, (CLAI.BUY_UP||[]).filter(x=>x>0)) : 0;
     const aiVal = Number((document.getElementById('ai_skus')||{value:0}).value||0);
-    const aiIdx = upperIndexStartAt1(aiVal, (CLAI.AI_UP||[]).filter(x=>x>0));
+    const aiIdx = minAI ? upperIndexStartAt1(aiVal, (CLAI.AI_UP||[]).filter(x=>x>0)) : 0;
     perf = (acvIdx/10)*(W.P*(SW.perf.acv||0))
          + (tcvIdx/10)*(W.P*(SW.perf.tcv||0))
          + (buyIdx/10)*(W.P*(SW.perf.buy||0))
          + (aiIdx/10) *(W.P*(SW.perf.ai ||0));
-  } else { // Collaboration, Splunk – Engagement handled below
+  } else { // Collaboration, Splunk
     perf=(acvIdx/10)*(W.P*(SW.perf.acv||0.5))+(tcvIdx/10)*(W.P*(SW.perf.tcv||0.5));
   }
 
   // Engagement
   let eng=0;
-  const e1=Number((document.getElementById('eng1')||{value:0}).value||0);
-  const e2=Number((document.getElementById('eng2')||{value:0}).value||0);
 
-if (p === 'Collaboration') {
-  const uD = COL.DEPLOY_UP; // [6,8,12,18,24,32,40,46,54,60]
-  const uA = COL.ADOPT_UP;  // [4,6,8,12,16,20,24,28,30,40]
+  if (p === 'Collaboration') {
+    const uD = COL.DEPLOY_UP;
+    const uA = COL.ADOPT_UP;
+    const e1v = Number((document.getElementById('eng1')||{value:0}).value||0);
+    const e2v = Number((document.getElementById('eng2')||{value:0}).value||0);
 
-  const e1v = Number((document.getElementById('eng1')||{value:0}).value||0); // Webex Deployment %
-  const e2v = Number((document.getElementById('eng2')||{value:0}).value||0); // Webex Adoption   %
-
-  // ---- alt sınır HARİÇ, üst sınır DAHİL (1..10), alt eşik ve altı -> 0
-  let dIdx = 0;
-  if (e1v > uD[0]) {
-    dIdx = 10;
-    for (let i = 1; i < uD.length; i++) {
-      if (e1v > uD[i-1] && e1v <= uD[i]) { dIdx = i; break; }
+    let dIdx = 0;
+    if (e1v > uD[0]) {
+      dIdx = 10;
+      for (let i = 1; i < uD.length; i++) {
+        if (e1v > uD[i-1] && e1v <= uD[i]) { dIdx = i; break; }
+      }
     }
+
+    let aIdx = 0;
+    if (e2v > uA[0]) {
+      aIdx = 10;
+      for (let i = 1; i < uA.length; i++) {
+        if (e2v > uA[i-1] && e2v <= uA[i]) { aIdx = i; break; }
+      }
+    }
+
+    eng = (dIdx/10)*(W.E*(SUBW.Collaboration.eng.deploy||0.5))
+        + (aIdx/10)*(W.E*(SUBW.Collaboration.eng.adopt ||0.5));
   }
 
-  let aIdx = 0;
-  if (e2v > uA[0]) {
-    aIdx = 10;
-    for (let i = 1; i < uA.length; i++) {
-      if (e2v > uA[i-1] && e2v <= uA[i]) { aIdx = i; break; }
-    }
-  }
-
-  eng = (dIdx/10)*(W.E*(SUBW.Collaboration.eng.deploy||0.5))
-      + (aIdx/10)*(W.E*(SUBW.Collaboration.eng.adopt ||0.5));
-}  
-
- else if(p==='Services'){
+  else if(p==='Services'){
     const ot = Number((document.getElementById('otrr')||{value:0}).value||0);
-    const otIdx = upperIndexStartAt1(ot, (SERVICES.OTRR[band]||[]).filter(x=>x>0));
+    const minOT = !!(document.getElementById('min_otrr') && document.getElementById('min_otrr').checked);
+    const otIdx = minOT ? upperIndexStartAt1_ZeroNoScore_GTLast(ot, (SERVICES.OTRR[band]||[])) : 0;
     eng=(otIdx/10) * (W.E * SUBW.Services.eng.otrr);
-  } else if (p === 'Cloud & AI') {
-  const uD = CLAI.DEPLOY_UP; // [5,8,...,24]
-  const uA = CLAI.ADOPT_UP;  // [3,6,...,30]
-
-  const e1v = Number((document.getElementById('eng1')||{value:0}).value||0); // Onboard %
-  const e2v = Number((document.getElementById('eng2')||{value:0}).value||0); // Adopt   %
-
-  // ---- alt sınır HARİÇ, üst sınır DAHİL indeksleme (1..10), alt eşik ve altı -> 0
-  let onIdx = 0;
-  if (e1v > uD[0]) {
-    onIdx = 10; // default: son eşik üstü -> 10
-    for (let i = 1; i < uD.length; i++) {
-      if (e1v > uD[i-1] && e1v <= uD[i]) { onIdx = i; break; }
-    }
   }
 
-  let adIdx = 0;
-  if (e2v > uA[0]) {
-    adIdx = 10;
-    for (let i = 1; i < uA.length; i++) {
-      if (e2v > uA[i-1] && e2v <= uA[i]) { adIdx = i; break; }
-    }
+  else if (p === 'Cloud & AI') {
+    const e1v = Number((document.getElementById('eng1')||{value:0}).value||0);
+    const e2v = Number((document.getElementById('eng2')||{value:0}).value||0);
+    const onIdx = upperIndexWithBaseline(e1v, CLAI.DEPLOY_UP, 2);
+    const adIdx = upperIndexWithBaseline(e2v, CLAI.ADOPT_UP, 5);
+    eng = (onIdx/10)*(W.E*(SUBW[p].eng.a||0.5))
+        + (adIdx/10)*(W.E*(SUBW[p].eng.b||0.5));
   }
 
-  eng = (onIdx/10)*(W.E*(SUBW[p].eng.a||0.5))
-      + (adIdx/10)*(W.E*(SUBW[p].eng.b||0.5));
-} 
-
-else if (p === 'Security') {
-  const uD = SEC.ONB_UP; // [10,15,...,55]
-  const uA = SEC.ADP_UP; // [3,6,...,30]
-
-  const e1v = Number((document.getElementById('eng1')||{value:0}).value||0); // Onboard %
-  const e2v = Number((document.getElementById('eng2')||{value:0}).value||0); // Adopt   %
-
-  // ---- alt sınır HARİÇ, üst sınır DAHİL indeksleme (1..10), alt eşik ve altı -> 0
-  let onIdx = 0;
-  if (e1v > uD[0]) {
-    onIdx = 10; // default: son eşik üstü -> 10
-    for (let i = 1; i < uD.length; i++) {
-      if (e1v > uD[i-1] && e1v <= uD[i]) { onIdx = i; break; }
-    }
+  else if (p === 'Security') {
+    const e1v = Number((document.getElementById('eng1')||{value:0}).value||0);
+    const e2v = Number((document.getElementById('eng2')||{value:0}).value||0);
+    const onIdx = upperIndexWithBaseline(e1v, SEC.ONB_UP, 2);
+    const adIdx = upperIndexWithBaseline(e2v, SEC.ADP_UP, 5);
+    eng = (onIdx/10)*(W.E*(SUBW[p].eng.a||0.5))
+        + (adIdx/10)*(W.E*(SUBW[p].eng.b||0.5));
   }
 
-  let adIdx = 0;
-  if (e2v > uA[0]) {
-    adIdx = 10;
-    for (let i = 1; i < uA.length; i++) {
-      if (e2v > uA[i-1] && e2v <= uA[i]) { adIdx = i; break; }
-    }
+  else if (p === 'Networking') {
+    const e1v = Number((document.getElementById('eng1')||{value:0}).value||0);
+    const e2v = Number((document.getElementById('eng2')||{value:0}).value||0);
+    const onIdx = upperIndexWithBaseline(e1v, NET.ONB_UP.slice(1), 2);
+    const adIdx = upperIndexWithBaseline(e2v, NET.ADP_UP.slice(1), 5);
+    eng = (onIdx/10) * (W.E * (SUBW[p].eng.a))
+        + (adIdx/10) * (W.E * (SUBW[p].eng.b));
   }
 
-  eng = (onIdx/10)*(W.E*(SUBW[p].eng.a||0.5))
-      + (adIdx/10)*(W.E*(SUBW[p].eng.b||0.5));}
-
-else if (p === 'Networking') {
-  // ---- strict: >lower && ≤upper (1..9), SON BİN için de strict "> last"
-  const uD  = NET.ONB_UP.slice(1); // [10,15,20,25,30,35,40,45,50]
-  const uDlo= NET.ONB_LO.slice(1); // [10,15,...,50,55]  (son üst sınır: 55)
-
-  const uA  = NET.ADP_UP.slice(1); // [3,6,9,12,15,18,21,24,27]
-  const uAlo= NET.ADP_LO.slice(1); // [3,6,...,27,30]    (son üst sınır: 30)
-
-  const e1v = Number((document.getElementById('eng1')||{value:0}).value||0); // Onboard %
-  const e2v = Number((document.getElementById('eng2')||{value:0}).value||0); // Adopt   %
-
-  // --- ONBOARD
-  let onIdx = 0;
-  if (e1v > uD[0]) {
-    onIdx = 10; // varsayılan: son eşik üstü -> 10
-    for (let i = 1; i < uD.length; i++) {
-      if (e1v > uD[i-1] && e1v <= uD[i]) { onIdx = i; break; } // 1..9
-    }
-    // 50 < e1v ≤ 55 ise 9'a düşür (son bin strict ">55")
-    if (onIdx === 10 && e1v <= uDlo[uDlo.length-1]) onIdx = 9;
-  }
-
-  // --- ADOPT
-  let adIdx = 0;
-  if (e2v > uA[0]) {
-    adIdx = 10;
-    for (let i = 1; i < uA.length; i++) {
-      if (e2v > uA[i-1] && e2v <= uA[i]) { adIdx = i; break; } // 1..9
-    }
-    // 27 < e2v ≤ 30 ise 9'a düşür (son bin strict ">30")
-    if (adIdx === 10 && e2v <= uAlo[uAlo.length-1]) adIdx = 9;
-  }
-
-  eng = (onIdx/10) * (W.E * (SUBW[p].eng.a))
-      + (adIdx/10) * (W.E * (SUBW[p].eng.b));
-}
-
-
-
-else {
-    // >>> FIXED: Strict “>x” behavior for last bin
-    // Onboard: last threshold 50 -> 50.0 => index 9, >50.0 => index 10
+  else {
+    const e1=Number((document.getElementById('eng1')||{value:0}).value||0);
+    const e2=Number((document.getElementById('eng2')||{value:0}).value||0);
     const onIdx = upperIndexStartAt1_GTLast(e1, NET.ONB_UP.slice(1));
-    // Adopt: last threshold 30 -> 30.0 => index 9, >30.0 => index 10
     const adIdx = upperIndexStartAt1_GTLast(e2, NET.ADP_LO.slice(1));
     eng = (onIdx/10)*(W.E*SUBW[p].eng.a) + (adIdx/10)*(W.E*SUBW[p].eng.b);
   }
@@ -736,27 +820,22 @@ else {
   el('total').textContent=total.toFixed(2);
   el('bar').style.width=(total*10)+'%';
 
-  // section labels
   if (el('lblFnd'))  el('lblFnd').textContent  = `(${WEIGHTS[p].F}/10)`;
   if (el('lblCap'))  el('lblCap').textContent  = `(${WEIGHTS[p].C}/10)`;
   if (el('lblPerf')) el('lblPerf').textContent = `(${WEIGHTS[p].P}/10)`;
   if (el('lblEng'))  el('lblEng').textContent  = `(${WEIGHTS[p].E}/10)`;
 
-  // Status
   let st = 'In progress'; let unlock='';
   if(total>=7.5){ st='Preferred Partner (portfolio) candidate'; unlock='Consider special campaigns and front‑page visibility.'; }
   else if(total>=5){ st='Cisco Partner (portfolio)'; unlock='Rebate eligibility and extra benefits open up.'; }
   else if(total>=1){ st='Welcome package'; unlock='Access to NFR and Hunting/Teaming.'; }
   el('status').textContent=st; el('unlock').textContent=unlock;
 
-  // Recommendations
   const tips = applyRecommendations(p, fnd, cap, perf, eng) || [];
   el('tips').innerHTML = (tips||[]).map(t=>`<li>${t}</li>`).join('');
-  // render Info bullets (per portfolio)
+
   const ib = INFO[p] || [];
-  el('info').innerHTML =
-  ib.map(t=>`<li>${t}</li>`).join('') +
-  GLOBAL_INFO.map(t=>`<li>${t}</li>`).join('');
+  el('info').innerHTML = ib.map(t=>`<li>${t}</li>`).join('') + GLOBAL_INFO.map(t=>`<li>${t}</li>`).join('');
 }
 
 // Basic guards
@@ -769,13 +848,8 @@ function attachIntGuards(ids){
 function attachPercentGuards(ids){
   ids.forEach(id=>{
     const n=document.getElementById(id); if(!n) return;
-    // allow decimals via typing & spinner consistently
     n.setAttribute('step','0.1');
-    // block scientific notation keys
-    n.addEventListener('keydown',(e)=>{
-      if(['e','E','+','-'].includes(e.key)) e.preventDefault();
-    });
-    // keep transitional input states like '50.' or '.5' while typing
+    n.addEventListener('keydown',(e)=>{ if(['e','E','+','-'].includes(e.key)) e.preventDefault(); });
     n.addEventListener('input',()=>{
       let v = String(n.value).replace(',', '.');
       if(!/^[0-9]*\.?[0-9]*$/.test(v)) v = v.replace(/[^0-9.]/g,'');
@@ -819,90 +893,49 @@ function dumpThresholds(){
 // Recommendations (unchanged)
 const RECO={
   "Networking":[
-    "Lean into lifecycle motions: drive Campus automation and Cloud Monitoring for Catalyst to accelerate adoption (S32).",
-    "Increase EA/MSLA/WPA attach to lift Buying Program penetration (S32)."
+    "Lean into lifecycle motions: drive Campus automation and Cloud Monitoring for Catalyst to accelerate adoption.",
+    "Increase EA/MSLA/WPA attach to lift Buying Program penetration."
   ],
   "Cloud & AI":[
-    "Highlight AI outcomes and increase AI‑dedicated SKU share; position Hypershield/AI Cloud Stack (S45).",
-    "Strengthen performance via ACV/TCV growth with strategic migrations (S45)."
+    "Highlight AI outcomes and increase AI‑dedicated SKU share; position Hypershield/AI Cloud Stack.",
+    "Strengthen performance via ACV/TCV growth with strategic migrations."
   ],
   "Security":[
-    "Prioritize Secure Access/SASE and XDR activations; land Firewall modernization as motion (S57).",
-    "Grow Buying Program participation to expand platform stickiness (S57)."
+    "Prioritize Secure Access/SASE and XDR activations; land Firewall modernization as motion.",
+    "Grow Buying Program participation to expand platform stickiness."
   ],
   "Collaboration":[
-    "Boost Webex deployment/adoption in last 3 closed months; leverage Control Hub insights (S86).",
-    "Add CPS where applicable (Cloud Calling, Webex CC) to round out capabilities (S86)."
+    "Boost Webex deployment/adoption in last 3 closed months; leverage Control Hub insights.",
+    "Add CPS where applicable (Cloud Calling, Webex CC) to round out capabilities."
   ],
   "Services":[
-    "Improve On‑Time Renewal (OTRR) and expand Premium penetration across the base (S95).",
-    "Position services earlier in the deal cycle to maximize lifecycle value (S95)."
+    "Improve On‑Time Renewal (OTRR) and expand Premium penetration across the base.",
+    "Position services earlier in the deal cycle to maximize lifecycle value."
   ]
 };
 
-// Info bullets per portfolio (moved from inline hints to reduce clutter)
+// Info bullets per portfolio
 const INFO={
-  "Networking":[
-    "ACV/TCV: current 12 months vs prior 12 months (YoY).",
-    "Buying Program: EA / MSLA / WPA participation rate.",
-    "Engagement window: last 18 months; Onboard/Adopt",
-"Highest applied value index becomes starting point at launch",
-  ],
+  "Networking":[],
 
-  "Security":[
-    "ACV/TCV YoY and Buying Program (EA/MSLA/WPA) same as Networking.",
-    "Engagement window: last 18 months; last bin uses strict ‘>’ rule.",
-"Highest applied value index becomes starting point at launch",
+  "Security":[],
 
-  ],
+  "Collaboration":[],
 
-  "Collaboration":[
-    "ACV/TCV: current 12 months vs prior 12 months (YoY).",
-    "Engagement: Webex Deployment/Adoption – rolling last 3 closed months; best monthly ratio applies.",
-"Highest applied value index becomes starting point at launch",
+  "Cloud & AI":[],
 
-  ],
-
-  "Cloud & AI":[
-    "Buying Program penetration + AI‑dedicated SKU share contribute to Performance.",
-    "ACV/TCV: current 12 months vs prior 12 months (YoY).",
-"Highest applied value index becomes starting point at launch",
-
-  ],
-
-  "Services":[
-    "Capabilities: only Black Belt counts (S1=1, S2=1.5, S3=2).",
-    "Performance: ACV YoY growth and Premium Services penetration (share) are used.",
-    "Engagement: OTRR = renewals on/before due date in last closed period.",
-"Highest applied value index becomes starting point at launch",
-
-  ]
-
+  "Services":[]
 };
 
-// <<< ADD — GLOBAL INFO ENTRIES WITH BUTTON LINKS
 const GLOBAL_INFO = [
-  `Eligible Offers List<br>
+  `\n Eligible Offers List<br>
    Download the official list of eligible hardware, software, and services that qualify for the new Cisco Partner Incentive.<br>
    <a href="https://www.cisco.com/c/dam/en_us/partners/downloads/cisco-partner-program/cisco-partner-incentive-eligible-offers-list.xlsx" 
-      target="_blank" style="display:inline-block;margin-top:4px;padding:6px 10px;background:#b00020;color:white;border-radius:6px;text-decoration:none;font-size:12px;">
-      Download List
+      target="_blank" style="display:inline-block;margin-top:4px;padding:6px 10px;background:#005282;color:white;border-radius:6px;text-decoration:none;font-size:12px;">
+      Download CPI Rebate SKU List
    </a>`,
-
-  `Webinars & Recordings<br>
-   Attend upcoming webinars or access recordings directly from Cisco’s official 360 Partner Program hub.<br>
-   <a href="https://www.cisco.com/site/us/en/partners/360-partner-program/index.html"
-      target="_blank" style="display:inline-block;margin-top:4px;padding:6px 10px;background:#0b5d80;color:white;border-radius:6px;text-decoration:none;font-size:12px;">
-      Upcoming Webinars
-   </a>`,
-
-  `Cisco Partner Incentive Estimator (PXP)<br>
-   Use the official estimator to model rebate impact across ACV/TCV and Buying Program penetration.<br>
-   <a href="https://cisco-pxp.my.site.com/"
-      target="_blank" style="display:inline-block;margin-top:4px;padding:6px 10px;background:#1c6db9;color:white;border-radius:6px;text-decoration:none;font-size:12px;">
-      Open PXP Estimator
-   </a>`, 
-
+  
+  
   `Cisco 360 Partner FAQ <br>
    Frequently asked questions for partners.<br>
    <a href="https://www.cisco.com/c/dam/en_us/partners/downloads/cisco-partner-program/cisco-360-program-partner-faq.pdf"
@@ -910,7 +943,6 @@ const GLOBAL_INFO = [
       Open 360 FAQ
    </a>`
 ];
-
 
 function applyRecommendations(p, fnd, cap, perf, eng){
   const base = RECO[p]||[]; const tips=[];
@@ -930,36 +962,13 @@ function resetAll(){
   renderInputs();
   document.getElementById('portfolio').value = currentP;
   document.getElementById('tsize').value = currentT;
+
   document.querySelectorAll('#foundationalInputs input[type="number"], #capabilityInputs input[type="number"], #performanceInputs input[type="number"], #engagementInputs input[type="number"]').forEach(n=>{ n.value = 0; });
+  document.querySelectorAll('#performanceInputs input[type="checkbox"], #engagementInputs input[type="checkbox"]').forEach(ch=>{ ch.checked = false; });
+
   ['cx_level','ms_level','cps'].forEach(id=>{ const s=document.getElementById(id); if(s){ s.value = '0'; }});
   calc();
 }
-
-// Self-tests (console) – boundaries
-(function selfTests(){
-  try{
-    const asrt=(name, cond)=>console[cond? 'log':'error'](`TEST ${cond?'PASS':'FAIL'} – ${name}`);
-    // Onboard boundary
-    asrt('Onboard 50 -> 9', upperIndexStartAt1_GTLast(50, NET.ONB_UP.slice(1))===9);
-    asrt('Onboard 50.1 -> 10', upperIndexStartAt1_GTLast(50.1, NET.ONB_UP.slice(1))===10);
-    asrt('Onboard 50.5 -> 10', upperIndexStartAt1_GTLast(50.5, NET.ONB_UP.slice(1))===10);
-    // Adopt boundary
-    asrt('Adopt 30 -> 9', upperIndexStartAt1_GTLast(30, NET.ADP_LO.slice(1))===9);
-    asrt('Adopt 30.1 -> 10', upperIndexStartAt1_GTLast(30.1, NET.ADP_LO.slice(1))===10);
-    asrt('Adopt 29.9 -> 9', upperIndexStartAt1_GTLast(29.9, NET.ADP_LO.slice(1))===9);
-    // NEW tests: zero inputs must not score
-    asrt('Onboard 0 -> 0', upperIndexStartAt1_GTLast(0, NET.ONB_UP.slice(1))===0);
-    asrt('Adopt 0 -> 0', upperIndexStartAt1_GTLast(0, NET.ADP_LO.slice(1))===0);
-    asrt('ACV 0 -> 0', upperIndexStartAt1(0, NET.ACV.L.filter(x=>x>0))===0);
-    // Services zeros must not score
-    asrt('Services ACV 0 -> 0', upperIndexStartAt1(0, (SERVICES.ACV.L||[]).filter(x=>x>0))===0);
-    asrt('Services Premium 0 -> 0', upperIndexStartAt1(0, (SERVICES.PREMIUM.L||[]).filter(x=>x>0))===0);
-    asrt('Services OTRR 0 -> 0', upperIndexStartAt1(0, (SERVICES.OTRR.L||[]).filter(x=>x>0))===0);
-    // Decimals sanity
-    asrt('Networking ACV 0.5 -> 0', upperIndexStartAt1(0.5, (NET.ACV.L||[]).filter(x=>x>0))===0);
-    asrt('Services ACV 1.5 >= 1', upperIndexStartAt1(1.5, (SERVICES.ACV.L||[]).filter(x=>x>0))>=1);
-  }catch(e){ console.error('Self-tests error:', e); }
-})();
 
 // Init
 (function init(){
@@ -967,19 +976,17 @@ function resetAll(){
   calc();
   el('portfolio').addEventListener('change',()=>{ renderInputs(); calc(); });
   el('tsize').addEventListener('change',calc);
-  
-el('showThresh').addEventListener('click', ()=>{ 
-  const box = el('thdump'); 
-  if (box) box.style.display='block'; 
-  dumpThresholds(); 
-});
-const ht = document.getElementById('hideThresh');
-if (ht) ht.addEventListener('click', ()=>{ 
-  const box = el('thdump'); 
-  if (box) box.style.display='none'; 
-});
 
-
+  el('showThresh').addEventListener('click', ()=>{ 
+    const box = el('thdump'); 
+    if (box) box.style.display='block'; 
+    dumpThresholds(); 
+  });
+  const ht = document.getElementById('hideThresh');
+  if (ht) ht.addEventListener('click', ()=>{ 
+    const box = el('thdump'); 
+    if (box) box.style.display='none'; 
+  });
 
   const rbb=document.getElementById('resetAllBottom'); if(rbb) rbb.addEventListener('click', resetAll);
   const ra=document.getElementById('resetAll'); if(ra) ra.addEventListener('click', resetAll);
